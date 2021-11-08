@@ -1,4 +1,4 @@
-import tl_icon from './img/tl_icon.png';
+import tl_icon from '../img/tl_icon.png';
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import OurButton from './OurButton';

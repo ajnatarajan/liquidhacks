@@ -8,7 +8,6 @@ import {
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import App from "./App";
-import Landing from "./Landing";
 import Host from "./routes/Host";
 import 'bootstrap/dist/css/bootstrap.min.css';
 

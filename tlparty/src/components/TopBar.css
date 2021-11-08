@@ -13,3 +13,8 @@
     font-size: 150%;
     margin-top: 0.5%;
 }
+
+@font-face {
+    font-family: "Valorant";
+    src: url("../fonts/valorant.ttf");
+}

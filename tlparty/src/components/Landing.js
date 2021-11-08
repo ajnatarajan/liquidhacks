@@ -1,4 +1,4 @@
-import tl_background from './img/tl_background.png';
+import tl_background from '../img/tl_background.png';
 import './Landing.css';
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';

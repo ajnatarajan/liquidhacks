@@ -1,5 +1,6 @@
 .Host {
-    text-align: center;
+    /* text-align: center; */
+    background-color: #aaaaaa;
 }
 
 .Host-logo {
@@ -26,6 +27,27 @@
 
 .Host-link {
     color: #61dafb;
+}
+
+.host-modal {
+    background-color: white;
+    min-width: 50vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(20px + 2vmin);
+    color: orange;
+}
+
+.host-form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.host-form {
+    width: 50vw;
 }
 
 @keyframes Host-logo-spin {

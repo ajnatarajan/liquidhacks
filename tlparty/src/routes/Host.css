@@ -40,7 +40,17 @@
     color: orange;
 }
 
-.host-form @keyframes Host-logo-spin {
+.host-form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.host-form {
+    width: 50vw;
+}
+
+@keyframes Host-logo-spin {
     from {
         transform: rotate(0deg);
     }

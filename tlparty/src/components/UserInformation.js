@@ -15,19 +15,19 @@ class UserInformation extends React.Component {
                         <div class="mb-3">
                             <div class="form-group info-block">
                                 <label for="name" class="input-label">Name:</label>
-                                <input type="name" class="form-control info-input" id="user-name" placeholder={this.props.placeholder_name}/>
+                                <input type="name" class="form-control info-input page-background-theme" id="user-name" placeholder={this.props.placeholder_name}/>
                             </div>
                         </div>
                         <div class="mb-3">
                             <div class="form-group info-block">
                                 <label for="email" class="input-label">Email address:</label>
-                                <input type="email" class="form-control info-input" id="user-email" placeholder={this.props.placeholder_email}/>
+                                <input type="email" class="form-control info-input page-background-theme" id="user-email" placeholder={this.props.placeholder_email}/>
                             </div>
                         </div>
                         <div class="mb-3">
                             <div class="form-group info-block">
                                 <label for="subject" class="input-label">Phone Number:</label>
-                                <input type="subject" class="form-control info-input" id="user-phone" placeholder={this.props.placeholder_phone}/>
+                                <input type="subject" class="form-control info-input page-background-theme" id="user-phone" placeholder={this.props.placeholder_phone}/>
                             </div>
                         </div>
                         <div class="mb-3">

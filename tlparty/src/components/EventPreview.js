@@ -7,23 +7,25 @@ import valorant_icon from '../img/valorant_icon.png';
 class EventPreview extends React.Component {
     render() {
       return (
-        <div onclick="location.href='#';" style={{cursor: "pointer"}} class="square">
-            <img src={tl_background_old} class="event-pic"/>
-            <div class="title-text">
-                LCS Opening Day Party
-            </div>
-            <div class="box black-opaque-box"/>
-            <div>
-                <div class="people-box">
-                    12
+        <a href="#">
+            <span style={{cursor: "pointer", display: "block"}} class="square">
+                <img src={tl_background_old} class="event-pic"/>
+                <div class="title-text">
+                    LCS Opening Day Party
                 </div>
-                <img src={valorant_icon} class="event-game-icon"/>
-                <div class="event-time">
-                    Sunday November 25
+                <div class="box black-opaque-box"/>
+                <div>
+                    <div class="people-box">
+                        12
+                    </div>
+                    <img src={valorant_icon} class="event-game-icon"/>
+                    <div class="event-time">
+                        Sunday November 25
+                    </div>
                 </div>
-            </div>
-            
-        </div>
+                
+            </span>
+        </a>
       );
     }
   }

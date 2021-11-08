@@ -7,7 +7,7 @@ import EventPreview from './components/EventPreview';
 
 function App() {
   return (
-    <Landing />
+    <ProfilePage user_name="Ajay" user_email="ajnatarajan@gmail.com" user_phone="626-353-8000"/>
   );
 }
 

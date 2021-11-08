@@ -9,6 +9,7 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import App from "./App";
 import Host from "./routes/Host";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 const rootElement = document.getElementById("root");

@@ -28,6 +28,92 @@
     color: #61dafb;
 }
 
+.dark-theme {
+    background-color: #111;
+}
+
+.tl_background {
+    max-width: 100%;
+    min-width: 100%;
+    height: auto;
+}
+
+.tl_icon {
+    width: 5%;
+}
+
+.tl_party {
+    color: #FFF;
+    font-family: "Valorant";
+    font-weight: bold;
+    font-size: 150%;
+    margin-top: 0.5%;
+}
+
+.btn-join-the-party {
+    color: #FFF !important;
+    border-color: #ff4655 !important;
+    font-family: "FFMark";
+    font-size: 100%;
+    border-radius: 10%;
+    padding: 0;
+    border: none;
+}
+
+.party:hover {
+    color: #FFF;
+}
+
+.btn-join-the-party:hover {
+    transform: translateY(-5%);
+    background-color: #ff4655;
+    color: #fff;
+    transition: all 0.3s cubic-bezier(0.645, 0.045, 0.36, 1);
+}
+
+.main-area-container {
+    position: relative;
+    text-align: center;
+    color: #FFF;
+}
+
+.title-text {
+    position: absolute;
+    top: 15%;
+    left: 5%;
+    right: 5%;
+    font-family: "Valorant";
+    font-weight: bold;
+    font-size: calc(8vmin);
+}
+
+.one-liner {
+    position: absolute;
+    bottom: 20%;
+    left: 1%;
+    right: 1%;
+    font-family: "Valorant";
+    font-weight: bold;
+    font-size: calc(2.5vmin);
+}
+
+.main-button-position {
+    position: absolute;
+    bottom: 4%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@font-face {
+    font-family: "FFMark";
+    src: url("./fonts/ffmark.otf");
+}
+
+@font-face {
+    font-family: "Valorant";
+    src: url("./fonts/valorant.ttf");
+}
+
 @keyframes App-logo-spin {
     from {
         transform: rotate(0deg);

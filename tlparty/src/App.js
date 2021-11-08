@@ -5,15 +5,7 @@ import Landing from './Landing';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Currently on <code>src/App.js</code>.
-        </p>
-        <Link to='/host' className='App-link'>Visit <code>/host</code></Link>
-      </header>
-    </div>
+    <Landing />
   );
 }
 

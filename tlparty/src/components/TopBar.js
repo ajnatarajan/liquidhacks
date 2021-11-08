@@ -13,7 +13,7 @@ class TopBar extends React.Component {
             <div class="container-fluid mx-4">
               <img class="tl_icon" src={tl_icon}/>
               <div class="tl_party">Team Liquid Party</div>
-              <OurButton text="Sign up"/>
+              <OurButton text={this.props.button_text}/>
             </div>
           </nav>
         </header>

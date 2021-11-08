@@ -28,7 +28,7 @@ class Landing extends React.Component {
   render() {
     return (
         <div className="landing">
-            <TopBar />
+            <TopBar button_text="Sign up"/>
             <LandingMainArea />
         </div>
     );

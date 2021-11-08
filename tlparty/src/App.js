@@ -5,10 +5,8 @@ import Landing from './components/Landing';
 import ProfilePage from './components/ProfilePage';
 import EventPreview from './components/EventPreview';
 
-function App() {
+export default function App() {
   return (
     <ProfilePage user_name="Ajay" user_email="ajnatarajan@gmail.com" user_phone="626-353-8000"/>
   );
 }
-
-export default App;

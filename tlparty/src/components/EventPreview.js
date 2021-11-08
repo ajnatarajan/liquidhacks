@@ -38,29 +38,25 @@ export const GameIcon = (props) => {
     return Output;
 };
 
-class EventPreview extends React.Component {
-    render() {
-      return (
-        <a href="#" class="event-preview-clickable-region">
-            <span style={{display: "inline-block"}} class="square">
-                <img src={tl_background_old} class="event-pic"/>
-                <div class="event-preview-title-text">
-                    {this.props.title}
+export default function EventPreview(props) {
+    return (
+    <a href="#" class="event-preview-clickable-region">
+        <span style={{display: "inline-block"}} class="square">
+            <img src={tl_background_old} class="event-pic"/>
+            <div class="event-preview-title-text">
+                {props.title}
+            </div>
+            <div class="box black-opaque-box"/>
+            <div>
+                <div class="people-box">
+                    {props.num_attendees}
                 </div>
-                <div class="box black-opaque-box"/>
-                <div>
-                    <div class="people-box">
-                        {this.props.num_attendees}
-                    </div>
-                    <GameIcon {...this.props} />
-                    <div class="event-time">
-                        {this.props.date}
-                    </div>
+                <GameIcon {...props} />
+                <div class="event-time">
+                    {props.date}
                 </div>
-            </span>
-        </a>
-      );
-    }
-  }
-
-export default EventPreview;
+            </div>
+        </span>
+    </a>
+    );
+}

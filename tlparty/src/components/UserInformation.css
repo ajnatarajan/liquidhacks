@@ -1,0 +1,31 @@
+.profile-title-text {
+    color: #FFF;
+    font-family: "Valorant";
+    font-size: calc(8vmin);
+    padding-left: 5%;
+    padding-top: 1%;
+}
+
+.profile-info-outer-container {
+    width: 50%;
+    margin-left: 5%;
+    margin-bottom: 3%;
+}
+
+.info-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 400px;
+}
+
+.input-label {
+    margin-bottom: 1%;
+    color: #FFF;
+    font-family: "FFMark";
+}
+
+.info-input {
+    font-family: "FFMark";
+    color: #000 !important;
+}

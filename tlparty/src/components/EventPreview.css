@@ -1,3 +1,10 @@
+.event-preview-clickable-region {
+    margin: 2%;
+    border: 1px;
+    border-color: #FFF;
+    border-style: solid;
+    border-radius: 30px;
+}
 .square {
     position: relative;
     width: 300px;
@@ -13,7 +20,7 @@
     top: 10%;
     left: 10%;
     color: #FFF;
-    font-size: 100%;
+    font-size: 100% !important;
     font-family: "Valorant";
 }
 

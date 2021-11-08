@@ -41,7 +41,7 @@ export const GameIcon = (props) => {
 class EventPreview extends React.Component {
     render() {
       return (
-        <a href="#">
+        <a href="#" class="event-preview-clickable-region">
             <span style={{display: "inline-block"}} class="square">
                 <img src={tl_background_old} class="event-pic"/>
                 <div class="event-preview-title-text">
@@ -57,7 +57,6 @@ class EventPreview extends React.Component {
                         {this.props.date}
                     </div>
                 </div>
-                
             </span>
         </a>
       );

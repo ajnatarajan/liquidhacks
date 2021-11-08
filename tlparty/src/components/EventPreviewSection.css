@@ -1,0 +1,16 @@
+.event-listing-container {
+    margin-left: 5%;
+    margin-top: 3%;
+}
+
+.event-listing-title {
+    color: #FFF;
+    font-family: "Valorant";
+    font-size: calc(6vmin);
+    margin-bottom: 1%;
+}
+
+.event-listing-container-inner {
+    display: flex;
+    flex-flow: row wrap;
+}

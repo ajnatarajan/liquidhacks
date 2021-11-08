@@ -1,0 +1,16 @@
+.btn-join-the-party {
+    color: #FFF !important;
+    border-color: #ff4655 !important;
+    font-family: "FFMark";
+    font-size: 100%;
+    border-radius: 10%;
+    padding: 0;
+    border: none;
+}
+
+.btn-join-the-party:hover {
+    transform: translateY(-5%);
+    background-color: #ff4655;
+    color: #fff;
+    transition: all 0.3s cubic-bezier(0.645, 0.045, 0.36, 1);
+}

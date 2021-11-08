@@ -1,0 +1,15 @@
+.dark-theme {
+    background-color: #111;
+}
+
+.tl_icon {
+    width: 5%;
+}
+
+.tl_party {
+    color: #FFF;
+    font-family: "Valorant";
+    font-weight: bold;
+    font-size: 150%;
+    margin-top: 0.5%;
+}

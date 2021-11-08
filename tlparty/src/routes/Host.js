@@ -10,8 +10,8 @@ export default function Host() {
   const [formFields, setFormFields] = useState({
     eventName: '',
     eventLocation: '',
-    eventTime: '', // TODO: Change to datetime format
-    eventDate: '', // TODO: Change to datetime format
+    eventTime: new Date(), // TODO: Change to datetime format
+    eventDate: new Date(), // TODO: Change to datetime format
     firstName: '',
     lastName: '',
     email: '',
@@ -36,6 +36,7 @@ export default function Host() {
     setTimeout(() => {
       alert('Submitted to the "database"');
     }, 500);
+    console.log('Form fields', formFields);
   }
 
   function handleHostButtonClick() {
@@ -97,7 +98,7 @@ export default function Host() {
                   <Form.Label>Event Date</Form.Label>
                   <Form.Control
                     autoFocus
-                    type="text"
+                    type="date"
                     placeholder='Event Date'
                     value={values.eventDate}
                     onChange={(e) => {
@@ -112,7 +113,7 @@ export default function Host() {
                   <Form.Label>Event Time</Form.Label>
                   <Form.Control
                     autoFocus
-                    type="text"
+                    type="time"
                     placeholder='Event Time'
                     value={values.eventTime}
                     onChange={(e) => {

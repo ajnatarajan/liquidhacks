@@ -8,12 +8,13 @@
     border-radius: 30px;
 }
 
-.title-text {
+.event-preview-title-text {
     position: absolute;
     top: 10%;
     left: 10%;
     color: #FFF;
     font-size: 100%;
+    font-family: "Valorant";
 }
 
 .black-opaque-box {
@@ -56,9 +57,4 @@
     padding-bottom: 2px;
     border-style: solid;
     border-color: #FFF;
-}
-
-@font-face {
-    font-family: "FFMark";
-    src: url("../fonts/ffmark.otf");
 }

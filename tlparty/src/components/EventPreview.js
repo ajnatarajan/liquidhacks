@@ -44,7 +44,7 @@ class EventPreview extends React.Component {
         <a href="#">
             <span style={{display: "inline-block"}} class="square">
                 <img src={tl_background_old} class="event-pic"/>
-                <div class="title-text">
+                <div class="event-preview-title-text">
                     {this.props.title}
                 </div>
                 <div class="box black-opaque-box"/>

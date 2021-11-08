@@ -8,6 +8,7 @@ import {
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import App from "./App";
+import Landing from "./Landing";
 import Host from "./routes/Host";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -16,7 +17,7 @@ const rootElement = document.getElementById("root");
 render(
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<App />} />
+      <Route path="/" element={<Landing />} />
       <Route path="host" element={<Host />} />
     </Routes>
   </BrowserRouter>,

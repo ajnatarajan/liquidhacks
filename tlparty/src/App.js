@@ -6,7 +6,7 @@ import EventPreview from './components/EventPreview'
 
 function App() {
   return (
-    <EventPreview title="LCS Opening Day Party" date="Friday November 12" num_attendees="12" game="Valorant"/>
+    <Landing />
   );
 }
 

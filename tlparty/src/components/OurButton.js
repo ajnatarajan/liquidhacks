@@ -4,6 +4,12 @@ import './OurButton.css'
 
 export default function OurButton(props) {
     return (
-        <button class="btn btn-join-the-party">{props.text}</button>
+        <button
+            type={props.type}
+            onClick={props.onClick}
+            className="btn btn-join-the-party"
+        >
+            {props.children}
+        </button>
     );
 }

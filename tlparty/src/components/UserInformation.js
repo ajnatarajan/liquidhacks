@@ -40,7 +40,7 @@ export default function UserInformation(props) {
                         </div>
                     </div>
                     <div class="mb-3">
-                        <OurButton text={props.submit_text}/>
+                        <OurButton type='button' onClick={null}>{props.submit_text}</OurButton>
                     </div>
                 </form>
             </div>

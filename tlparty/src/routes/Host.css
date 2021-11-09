@@ -1,6 +1,6 @@
 .Host {
     /* text-align: center; */
-    background-color: #aaaaaa;
+    background-color: rgb(6, 3, 48) !important;
 }
 
 .Host-logo {
@@ -48,6 +48,36 @@
 
 .host-form {
     width: 50vw;
+}
+
+.host-form-label {
+    margin-bottom: 1%;
+    color: white;
+    font-family: "FFMark";
+    font-weight: bold;
+    font-size: 2vmin;
+}
+
+.host-form-title {
+    color: white;
+    font-family: "FFMark";
+    font-weight: bold;
+    font-size: 3vmin;
+}
+
+.host-form-input {
+    background-color: rgb(6, 3, 48) !important;
+    font-family: "FFMark";
+    color: white !important;
+    font-weight: normal;
+    font-size: 2vmin;
+}
+
+.host-form-error-msg {
+    color: red !important;
+    font-family: "FFMark";
+    font-weight: 100;
+    font-size: 1.5vmin;
 }
 
 @keyframes Host-logo-spin {

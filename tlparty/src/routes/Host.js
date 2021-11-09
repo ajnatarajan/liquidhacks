@@ -61,12 +61,13 @@ export default function Host() {
             errors,
           }) => (
             <Form noValidate className='host-form my-3' onSubmit={handleSubmit}>
-              <Form.Label><b>Event Details</b></Form.Label>
+              <Form.Label className="mt-3 host-form-title">Event Details</Form.Label>
               <Form.Group className='mb-3' controlId="eventName">
-                <Form.Label>Event Name</Form.Label>
+                <Form.Label className="host-form-label">Event Name</Form.Label>
                 <Form.Control
                   autoFocus
                   type="text"
+                  className="host-form-input"
                   name='eventName'
                   placeholder='Event Name'
                   value={values.eventName}
@@ -76,13 +77,14 @@ export default function Host() {
                   }}
                   isInvalid={!!errors.eventName}
                 />
-                <Form.Control.Feedback type='invalid'>{errors.eventName}</Form.Control.Feedback>
+                <Form.Control.Feedback className='host-form-error-msg' type='invalid'>{errors.eventName}</Form.Control.Feedback>
               </Form.Group>
               <Form.Group className='mb-3' controlId="eventLocation">
-                <Form.Label>Event Location</Form.Label>
+                <Form.Label className="host-form-label">Event Location</Form.Label>
                 <Form.Control
                   autoFocus
                   type="text"
+                  className="host-form-input"
                   name='eventLocation'
                   placeholder='Event Location'
                   value={values.eventLocation}
@@ -92,14 +94,16 @@ export default function Host() {
                   }}
                   isInvalid={!!errors.eventLocation}
                 />
-                <Form.Control.Feedback type='invalid'>{errors.eventLocation}</Form.Control.Feedback>
+                <Form.Control.Feedback className='host-form-error-msg' type='invalid'>{errors.eventLocation}</Form.Control.Feedback>
               </Form.Group>
               <Row className="mb-3">
                 <Form.Group as={Col} controlId="eventDate">
-                  <Form.Label>Event Date</Form.Label>
+                  <Form.Label className="host-form-label">Event Date</Form.Label>
                   <Form.Control
                     autoFocus
                     type="date"
+                    className="host-form-input"
+                    name='eventDate'
                     placeholder='Event Date'
                     value={values.eventDate}
                     onChange={(e) => {
@@ -108,13 +112,15 @@ export default function Host() {
                     }}
                     isInvalid={!!errors.eventDate}
                   />
-                  <Form.Control.Feedback type='invalid'>{errors.eventDate}</Form.Control.Feedback>
+                  <Form.Control.Feedback className='host-form-error-msg' type='invalid'>{errors.eventDate}</Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group as={Col} controlId="eventTime">
-                  <Form.Label>Event Time</Form.Label>
+                  <Form.Label className="host-form-label">Event Time</Form.Label>
                   <Form.Control
                     autoFocus
                     type="time"
+                    className="host-form-input"
+                    name='eventTime'
                     placeholder='Event Time'
                     value={values.eventTime}
                     onChange={(e) => {
@@ -123,16 +129,18 @@ export default function Host() {
                     }}
                     isInvalid={!!errors.eventTime}
                   />
-                  <Form.Control.Feedback type='invalid'>{errors.eventTime}</Form.Control.Feedback>
+                  <Form.Control.Feedback className='host-form-error-msg' type='invalid'>{errors.eventTime}</Form.Control.Feedback>
                 </Form.Group>
               </Row>
-              <Form.Label className="mt-3"><b>Contact Information</b></Form.Label>
+              <Form.Label className="mt-3 host-form-title">Contact Information</Form.Label>
               <Row className="mb-3">
                 <Form.Group as={Col} controlId="firstName">
-                  <Form.Label>First Name</Form.Label>
+                  <Form.Label className="host-form-label">First Name</Form.Label>
                   <Form.Control
                     autoFocus
                     type="text"
+                    className="host-form-input"
+                    name='firstName'
                     placeholder='First Name'
                     value={values.firstName}
                     onChange={(e) => {
@@ -141,13 +149,15 @@ export default function Host() {
                     }}
                     isInvalid={!!errors.firstName}
                   />
-                  <Form.Control.Feedback type='invalid'>{errors.firstName}</Form.Control.Feedback>
+                  <Form.Control.Feedback className='host-form-error-msg' type='invalid'>{errors.firstName}</Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group as={Col} controlId="lastName">
-                  <Form.Label>Last Name</Form.Label>
+                  <Form.Label className="host-form-label">Last Name</Form.Label>
                   <Form.Control
                     autoFocus
                     type="text"
+                    className="host-form-input"
+                    name='lastName'
                     placeholder='Last Name'
                     value={values.lastName}
                     onChange={(e) => {
@@ -156,14 +166,16 @@ export default function Host() {
                     }}
                     isInvalid={!!errors.lastName}
                   />
-                  <Form.Control.Feedback type='invalid'>{errors.lastName}</Form.Control.Feedback>
+                  <Form.Control.Feedback className='host-form-error-msg' type='invalid'>{errors.lastName}</Form.Control.Feedback>
                 </Form.Group>
               </Row>
               <Form.Group className='mb-3' controlId="email">
-                <Form.Label>Email</Form.Label>
+                <Form.Label className="host-form-label">Email</Form.Label>
                 <Form.Control
                   autoFocus
                   type="email"
+                  className="host-form-input"
+                  name='email'
                   placeholder='Email'
                   value={values.email}
                   onChange={(e) => {
@@ -172,13 +184,14 @@ export default function Host() {
                   }}
                   isInvalid={!!errors.email}
                 />
-                <Form.Control.Feedback type='invalid'>{errors.email}</Form.Control.Feedback>
+                <Form.Control.Feedback className='host-form-error-msg' type='invalid'>{errors.email}</Form.Control.Feedback>
               </Form.Group>
               <Form.Group className="mb-3" controlId="terms">
                 <Form.Check
                   required
                   name="terms"
                   label="Agree to terms and conditions"
+                  className="host-form-input"
                   value={values.terms}
                   onChange={handleChange}
                   isInvalid={!!errors.terms}
@@ -186,7 +199,7 @@ export default function Host() {
                   feedbackType="invalid"
                 />
               </Form.Group>
-              <Button type="submit">Submit</Button>
+              <OurButton type="submit" onClick={handleSubmit}>Submit</OurButton>
             </Form>
           )}
         </Formik>
@@ -202,13 +215,13 @@ export default function Host() {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        backgroundColor: 'white'}}>
-        <button
-          type="button"
-          className="host-button"
-          onClick={handleHostButtonClick}>
+        backgroundColor: 'black',
+        color: 'white'}}>
+        <div className='my-3'>
+          <OurButton type='button' onClick={handleHostButtonClick}>
             Host a watch party!
-        </button>
+          </OurButton>
+        </div>
       </div>
       {showForm ? renderForm() : null}
     </div>

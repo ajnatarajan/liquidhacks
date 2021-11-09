@@ -16,7 +16,7 @@ function LandingMainArea() {
         Discover in-person esports watch parties near you
       </div>
       <div class="main-button-position">
-          <OurButton text="JOIN THE PARTY"/>
+          <OurButton type='button' onClick={null}>JOIN THE PARTY</OurButton>
       </div>
     </div>
   );

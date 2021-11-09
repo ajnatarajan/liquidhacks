@@ -12,7 +12,7 @@ export default function TopBar(props) {
         <div class="container-fluid mx-4">
           <img class="tl_icon" src={tl_icon}/>
           <div class="tl_party">Team Liquid Party</div>
-          <OurButton text={props.button_text}/>
+          <OurButton type='button' onClick={null}>{props.button_text}</OurButton>
         </div>
       </nav>
     </header>

@@ -25,7 +25,7 @@ function LandingMainArea() {
 export default function Landing() {
   return (
       <div className="landing">
-          <TopBar button_text="Sign up"/>
+          <TopBar button_text="SIGN UP"/>
           <LandingMainArea />
       </div>
   );

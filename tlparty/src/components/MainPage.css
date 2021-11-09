@@ -1,0 +1,60 @@
+.main-page-title-text {
+    color: #FFF !important;
+    font-family: "FFMark";
+    font-size: calc(6vmin);
+    padding-top: 1%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.game-filter-text-and-menu-bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px;
+    border-color: #FFF;
+    border-style: solid;
+    border-radius: 30px;
+    margin-left: 25%;
+    margin-right: 25%;
+    margin-top: 5%;
+}
+
+.main-page-game-text {
+    color: #FFF !important;
+    font-family: "FFMark";
+    font-size: calc(2vmin);
+}
+
+.game-filter-menu-bar {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    margin-top: 3%;
+}
+
+.main-page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 97%;
+}
+
+.btn-main-page-game-icon-filter {
+    color: #FFF !important;
+    border-color: #ff4655 !important;
+    font-family: "FFMark";
+    font-size: 100%;
+    margin-right: 3%;
+}
+
+.btn-main-page-game-icon-filter:hover {
+    transform: translateY(-5%);
+    background-color: #ff4655;
+    color: #fff;
+    transition: all 0.3s cubic-bezier(0.645, 0.045, 0.36, 1);
+}
+
+.main-page-filter-game-icon {
+    width: 30px;
+}

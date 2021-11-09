@@ -11,8 +11,8 @@ export default function Host() {
   const [formFields, setFormFields] = useState({
     eventName: '',
     eventLocation: '',
-    eventTime: new Date(), // TODO: Change to datetime format
-    eventDate: new Date(), // TODO: Change to datetime format
+    eventDateTime: new Date(), // TODO: Change to datetime format
+    eventVibes: '',
     firstName: '',
     lastName: '',
     email: '',
@@ -22,12 +22,12 @@ export default function Host() {
   const formSchema = Yup.object().shape({
     eventName: Yup.string().required('Event name is a required field'),
     eventLocation: Yup.string().required('Event location is a required field'),
-    eventTime: Yup.date().required('Event time is a required field'),
-    eventDate: Yup.date().required('Event date is a required field'),
+    eventDateTime: Yup.date().required('Event time is a required field'),
+    eventVibes: null,
     firstName: Yup.string().required('First name is a required field'),
     lastName: Yup.string().required('Last name is a required field'),
     email: Yup.string().email().required('Email is a required field'),
-    terms: Yup.bool().required().oneOf([true], 'Terms must be accepted'),
+    terms: Yup.bool().required().oneOf([true], 'Vaccination is required to keep TL fans safe :)'),
   });
 
   const [showForm, setShowForm] = useState(false);
@@ -69,7 +69,7 @@ export default function Host() {
                   type="text"
                   className="host-form-input"
                   name='eventName'
-                  placeholder='Event Name'
+                  placeholder='Gen vs TL Tiebreaker Worlds Day 7'
                   value={values.eventName}
                   onChange={(e) => {
                     handleChange(e);
@@ -80,13 +80,13 @@ export default function Host() {
                 <Form.Control.Feedback className='host-form-error-msg' type='invalid'>{errors.eventName}</Form.Control.Feedback>
               </Form.Group>
               <Form.Group className='mb-3' controlId="eventLocation">
-                <Form.Label className="host-form-label">Event Location</Form.Label>
+                <Form.Label className="host-form-label">Location</Form.Label>
                 <Form.Control
                   autoFocus
                   type="text"
                   className="host-form-input"
                   name='eventLocation'
-                  placeholder='Event Location'
+                  placeholder='Avery 215'
                   value={values.eventLocation}
                   onChange={(e) => {
                     handleChange(e);
@@ -96,42 +96,88 @@ export default function Host() {
                 />
                 <Form.Control.Feedback className='host-form-error-msg' type='invalid'>{errors.eventLocation}</Form.Control.Feedback>
               </Form.Group>
-              <Row className="mb-3">
-                <Form.Group as={Col} controlId="eventDate">
-                  <Form.Label className="host-form-label">Event Date</Form.Label>
+              <Row className='mb-3'>
+                <Form.Group as={Col} md={6} controlId="eventDateTime">
+                  <Form.Label className="host-form-label">When</Form.Label>
                   <Form.Control
                     autoFocus
-                    type="date"
+                    type="datetime-local"
                     className="host-form-input"
-                    name='eventDate'
-                    placeholder='Event Date'
-                    value={values.eventDate}
-                    onChange={(e) => {
-                      handleChange(e);
-                      setFormFields({...formFields, eventDate: e.target.value});
-                    }}
-                    isInvalid={!!errors.eventDate}
-                  />
-                  <Form.Control.Feedback className='host-form-error-msg' type='invalid'>{errors.eventDate}</Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group as={Col} controlId="eventTime">
-                  <Form.Label className="host-form-label">Event Time</Form.Label>
-                  <Form.Control
-                    autoFocus
-                    type="time"
-                    className="host-form-input"
-                    name='eventTime'
+                    name='eventDateTime'
                     placeholder='Event Time'
-                    value={values.eventTime}
+                    value={values.eventDateTime}
                     onChange={(e) => {
                       handleChange(e);
-                      setFormFields({...formFields, eventTime: e.target.value});
+                      setFormFields({...formFields, eventDateTime: e.target.value});
                     }}
-                    isInvalid={!!errors.eventTime}
+                    isInvalid={!!errors.eventDateTime}
                   />
-                  <Form.Control.Feedback className='host-form-error-msg' type='invalid'>{errors.eventTime}</Form.Control.Feedback>
+                  <Form.Control.Feedback className='host-form-error-msg' type='invalid'>{errors.eventDateTime}</Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group as={Col} md={6} controlId="eventPST">
+                  <Form.Label className="host-form-label">Timezone</Form.Label>
+                  <Form.Select className="host-form-input" aria-label="Default select example">
+                    <option>Open this select menu</option>
+                    <option value="-12:00">(GMT -12:00) Eniwetok, Kwajalein</option>
+                    <option value="-11:00">(GMT -11:00) Midway Island, Samoa</option>
+                    <option value="-10:00">(GMT -10:00) Hawaii</option>
+                    <option value="-09:50">(GMT -9:30) Taiohae</option>
+                    <option value="-09:00">(GMT -9:00) Alaska</option>
+                    <option value="-08:00" selected="selected">(GMT -8:00) Pacific Time (US &amp; Canada)</option>
+                    <option value="-07:00">(GMT -7:00) Mountain Time (US &amp; Canada)</option>
+                    <option value="-06:00">(GMT -6:00) Central Time (US &amp; Canada), Mexico City</option>
+                    <option value="-05:00">(GMT -5:00) Eastern Time (US &amp; Canada), Bogota, Lima</option>
+                    <option value="-04:50">(GMT -4:30) Caracas</option>
+                    <option value="-04:00">(GMT -4:00) Atlantic Time (Canada), Caracas, La Paz</option>
+                    <option value="-03:50">(GMT -3:30) Newfoundland</option>
+                    <option value="-03:00">(GMT -3:00) Brazil, Buenos Aires, Georgetown</option>
+                    <option value="-02:00">(GMT -2:00) Mid-Atlantic</option>
+                    <option value="-01:00">(GMT -1:00) Azores, Cape Verde Islands</option>
+                    <option value="+00:00">(GMT) Western Europe Time, London, Lisbon, Casablanca</option>
+                    <option value="+01:00">(GMT +1:00) Brussels, Copenhagen, Madrid, Paris</option>
+                    <option value="+02:00">(GMT +2:00) Kaliningrad, South Africa</option>
+                    <option value="+03:00">(GMT +3:00) Baghdad, Riyadh, Moscow, St. Petersburg</option>
+                    <option value="+03:50">(GMT +3:30) Tehran</option>
+                    <option value="+04:00">(GMT +4:00) Abu Dhabi, Muscat, Baku, Tbilisi</option>
+                    <option value="+04:50">(GMT +4:30) Kabul</option>
+                    <option value="+05:00">(GMT +5:00) Ekaterinburg, Islamabad, Karachi, Tashkent</option>
+                    <option value="+05:50">(GMT +5:30) Bombay, Calcutta, Madras, New Delhi</option>
+                    <option value="+05:75">(GMT +5:45) Kathmandu, Pokhara</option>
+                    <option value="+06:00">(GMT +6:00) Almaty, Dhaka, Colombo</option>
+                    <option value="+06:50">(GMT +6:30) Yangon, Mandalay</option>
+                    <option value="+07:00">(GMT +7:00) Bangkok, Hanoi, Jakarta</option>
+                    <option value="+08:00">(GMT +8:00) Beijing, Perth, Singapore, Hong Kong</option>
+                    <option value="+08:75">(GMT +8:45) Eucla</option>
+                    <option value="+09:00">(GMT +9:00) Tokyo, Seoul, Osaka, Sapporo, Yakutsk</option>
+                    <option value="+09:50">(GMT +9:30) Adelaide, Darwin</option>
+                    <option value="+10:00">(GMT +10:00) Eastern Australia, Guam, Vladivostok</option>
+                    <option value="+10:50">(GMT +10:30) Lord Howe Island</option>
+                    <option value="+11:00">(GMT +11:00) Magadan, Solomon Islands, New Caledonia</option>
+                    <option value="+11:50">(GMT +11:30) Norfolk Island</option>
+                    <option value="+12:00">(GMT +12:00) Auckland, Wellington, Fiji, Kamchatka</option>
+                    <option value="+12:75">(GMT +12:45) Chatham Islands</option>
+                    <option value="+13:00">(GMT +13:00) Apia, Nukualofa</option>
+                    <option value="+14:00">(GMT +14:00) Line Islands, Tokelau</option>
+                  </Form.Select>
                 </Form.Group>
               </Row>
+              <Form.Group className='mb-3' controlId="eventVibes">
+                <Form.Label className="host-form-label">Vibes</Form.Label>
+                <Form.Control
+                  autoFocus
+                  type="text"
+                  className="host-form-input"
+                  name='eventVibes'
+                  placeholder='chill'
+                  value={values.eventVibes}
+                  onChange={(e) => {
+                    handleChange(e);
+                    setFormFields({...formFields, eventVibes: e.target.value});
+                  }}
+                  isInvalid={!!errors.eventVibes}
+                />
+                <Form.Control.Feedback className='host-form-error-msg' type='invalid'>{errors.eventLocation}</Form.Control.Feedback>
+              </Form.Group>
               <Form.Label className="mt-3 host-form-title">Contact Information</Form.Label>
               <Row className="mb-3">
                 <Form.Group as={Col} controlId="firstName">
@@ -141,7 +187,7 @@ export default function Host() {
                     type="text"
                     className="host-form-input"
                     name='firstName'
-                    placeholder='First Name'
+                    placeholder='TL'
                     value={values.firstName}
                     onChange={(e) => {
                       handleChange(e);
@@ -158,7 +204,7 @@ export default function Host() {
                     type="text"
                     className="host-form-input"
                     name='lastName'
-                    placeholder='Last Name'
+                    placeholder='Blue'
                     value={values.lastName}
                     onChange={(e) => {
                       handleChange(e);
@@ -176,7 +222,7 @@ export default function Host() {
                   type="email"
                   className="host-form-input"
                   name='email'
-                  placeholder='Email'
+                  placeholder='blue@teamliquid.com'
                   value={values.email}
                   onChange={(e) => {
                     handleChange(e);
@@ -190,7 +236,7 @@ export default function Host() {
                 <Form.Check
                   required
                   name="terms"
-                  label="Agree to terms and conditions"
+                  label="I have received 2 doses of the COVID-19 vaccine"
                   className="host-form-input"
                   value={values.terms}
                   onChange={handleChange}

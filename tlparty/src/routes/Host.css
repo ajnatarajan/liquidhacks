@@ -73,6 +73,10 @@
     font-size: 2vmin;
 }
 
+::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+
 .host-form-error-msg {
     color: red !important;
     font-family: "FFMark";

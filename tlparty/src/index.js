@@ -9,6 +9,7 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import App from "./App";
 import Host from "./routes/Host";
+import Login from "./routes/Login";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -18,6 +19,7 @@ render(
     <Routes>
       <Route path="/" element={<App />} />
       <Route path="host" element={<Host />} />
+      <Route path="login" element={<Login />} />
     </Routes>
   </BrowserRouter>,
   rootElement

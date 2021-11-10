@@ -8,6 +8,7 @@ import csgo_icon from '../img/csgo_icon.png';
 import dota_icon from '../img/dota_icon.png';
 import pubg_icon from '../img/pubg_icon.png';
 import smash_icon from '../img/smash_icon.png';
+import attendee_icon from '../img/attendee_icon.png';
 
 export const GameIcon = (props) => {
     let Output;
@@ -46,9 +47,9 @@ export default function EventPreview(props) {
             <div class="event-preview-title-text">
                 {props.title}
             </div>
-            <div class="box black-opaque-box"/>
-            <div>
+            <div class="box black-opaque-box">
                 <div class="people-box">
+                    <img src={attendee_icon} class="event-game-icon"/>
                     {props.num_attendees}
                 </div>
                 <GameIcon {...props} />

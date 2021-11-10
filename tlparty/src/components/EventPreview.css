@@ -1,14 +1,12 @@
 .event-preview-clickable-region {
     margin: 1%;
-    border: 1px;
-    border-color: #FFF;
-    border-style: solid;
     border-radius: 5px;
     overflow: hidden;
 }
 .square {
     position: relative;
-    width: 300px;
+    width: 20vw;
+    min-width: 300px;
 }
 
 .event-pic {
@@ -25,43 +23,42 @@
 }
 
 .black-opaque-box {
-    background-color: #000;
+    background-color: rgba(0, 0, 0, 0.65);
     color: #FFF;
-    opacity: .5 !important;
     position: absolute;
-    top: 70%;
+    bottom: 0;
     width: 100%;
-    height: 30%;
-    border-radius: 0px 0px 30px 30px;
+    height: 25%;
 }
 
 .event-time {
     position: absolute;
-    bottom: 5%;
     right: 5%;
     color: #FFF;
     font-family: "FFMark";
     font-size: 80%;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .event-game-icon {
     position: absolute;
-    bottom: 5%;
-    left: 30%;
-    width: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 23%;
+    height: 46%
 }
 
 .people-box {
     position: absolute;
-    bottom: 5%;
-    left: 10%;
+    left: 1.5%;
+    padding-left: 11.5%;
     color: #FFF;
     font-family: "FFMark";
-    border: 1px;
-    padding-left: 8px;
-    padding-right: 8px;
-    padding-top: 2px;
-    padding-bottom: 2px;
-    border-style: solid;
-    border-color: #FFF;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 100%;
+    line-height: 100%;
+    display: flex;
+    align-items: center;
 }

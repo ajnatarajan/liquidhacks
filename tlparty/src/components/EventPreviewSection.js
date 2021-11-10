@@ -13,10 +13,10 @@ export default function EventPreviewSection(props) {
             </div>
             {props.children}
             <div class="event-listing-container-inner">
-                <EventPreview title="LCS Opening Day Party" game="Valorant" num_attendees="12" date="Friday November 12" />
-                <EventPreview title="LCS Opening Day Party" game="Valorant" num_attendees="12" date="Friday November 12" />
-                <EventPreview title="LCS Opening Day Party" game="Valorant" num_attendees="12" date="Friday November 12" />
-                <EventPreview title="LCS Opening Day Party" game="Valorant" num_attendees="12" date="Friday November 12" />
+                <EventPreview title="LCS Opening Day Party" game="Valorant" num_attendees="12" date="Friday November 12" event_pic="tledm"/>
+                <EventPreview title="LCS Opening Day Party" game="Valorant" num_attendees="12" date="Friday November 12" event_pic="tlvsmad"/>
+                <EventPreview title="LCS Opening Day Party" game="Valorant" num_attendees="12" date="Friday November 12" event_pic="tledm"/>
+                <EventPreview title="LCS Opening Day Party" game="Valorant" num_attendees="12" date="Friday November 12" event_pic="tlvsmad"/>
             </div>
         </div>
     );

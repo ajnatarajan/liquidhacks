@@ -5,32 +5,41 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import OurButton from '../components/OurButton';
+import TagList from '../components/TagList';
 
+const KeyCodes = {
+  comma: 188,
+  enter: [10, 13],
+};
+
+const delimiters = [...KeyCodes.enter, KeyCodes.comma];
 
 export default function Host() {
   const [formFields, setFormFields] = useState({
     eventName: '',
     eventLocation: '',
     eventDateTime: new Date(), // TODO: Change to datetime format
-    eventVibes: '',
+    tags: [],
+    tagInput: '',
     firstName: '',
     lastName: '',
     email: '',
-    terms: false,
+    vaccinated: false,
   });
 
   const formSchema = Yup.object().shape({
     eventName: Yup.string().required('Event name is a required field'),
     eventLocation: Yup.string().required('Event location is a required field'),
     eventDateTime: Yup.date().required('Event time is a required field'),
-    eventVibes: null,
     firstName: Yup.string().required('First name is a required field'),
     lastName: Yup.string().required('Last name is a required field'),
     email: Yup.string().email().required('Email is a required field'),
-    terms: Yup.bool().required().oneOf([true], 'Vaccination is required to keep TL fans safe :)'),
+    vaccinated: Yup.bool().required().oneOf([true], 'Vaccination is required to keep TL fans safe :)'),
   });
 
   const [showForm, setShowForm] = useState(false);
+
+  const [isKeyReleased, setIsKeyReleased] = useState(true);
 
 
   function handleFormSubmit() {
@@ -43,7 +52,44 @@ export default function Host() {
   function handleHostButtonClick() {
     setShowForm(!showForm);
   }
+
+  function handleDeleteTag(index) {
+    setFormFields({...formFields, tags: formFields.tags.filter((tag, i) => i !== index)});
+    console.log('HELP why am I deleting something');
+  }
+
+  function handleTagInput(e) {
+    setFormFields({...formFields, tagInput: e.target.value});
+  }
+
+  function handleTagInputKeyDown(e) {
+    const trimmedInput = formFields.tagInput.trim();
+    if (delimiters.includes(e.keyCode) && trimmedInput.length && !formFields.tags.includes(trimmedInput)) {
+      e.preventDefault();
+      setFormFields({...formFields, tags: [...formFields.tags, trimmedInput], tagInput: ''});
+      console.log('adding', trimmedInput);
+    }
+
+    if (e.key === "Backspace" && !formFields.tagInput.length && formFields.tags.length && isKeyReleased) {
+      e.preventDefault();
+      const tagsCopy = [...formFields.tags];
+      const poppedTag = tagsCopy.pop();
   
+      setFormFields({...formFields, tags: tagsCopy, tagInput: poppedTag});
+      console.log('popping');
+    }
+
+    setIsKeyReleased(false);
+  }
+
+  function handleTagInputKeyUp() {
+    setIsKeyReleased(true);
+  }
+
+  function handleClearTags() {
+    setFormFields({...formFields, tags: []});
+  }
+
   function renderForm() {
     return (
       <div className='host-form-container'>
@@ -117,13 +163,13 @@ export default function Host() {
                 <Form.Group as={Col} md={6} controlId="eventPST">
                   <Form.Label className="host-form-label">Timezone</Form.Label>
                   <Form.Select className="host-form-input" aria-label="Default select example">
-                    <option>Open this select menu</option>
+                    <option>Select a timezone</option>
                     <option value="-12:00">(GMT -12:00) Eniwetok, Kwajalein</option>
                     <option value="-11:00">(GMT -11:00) Midway Island, Samoa</option>
                     <option value="-10:00">(GMT -10:00) Hawaii</option>
                     <option value="-09:50">(GMT -9:30) Taiohae</option>
                     <option value="-09:00">(GMT -9:00) Alaska</option>
-                    <option value="-08:00" selected="selected">(GMT -8:00) Pacific Time (US &amp; Canada)</option>
+                    <option value="-08:00" defaultValue="selected">(GMT -8:00) Pacific Time (US &amp; Canada)</option>
                     <option value="-07:00">(GMT -7:00) Mountain Time (US &amp; Canada)</option>
                     <option value="-06:00">(GMT -6:00) Central Time (US &amp; Canada), Mexico City</option>
                     <option value="-05:00">(GMT -5:00) Eastern Time (US &amp; Canada), Bogota, Lima</option>
@@ -161,23 +207,20 @@ export default function Host() {
                   </Form.Select>
                 </Form.Group>
               </Row>
-              <Form.Group className='mb-3' controlId="eventVibes">
-                <Form.Label className="host-form-label">Vibes</Form.Label>
-                <Form.Control
-                  autoFocus
-                  type="text"
-                  className="host-form-input"
-                  name='eventVibes'
-                  placeholder='chill'
-                  value={values.eventVibes}
-                  onChange={(e) => {
-                    handleChange(e);
-                    setFormFields({...formFields, eventVibes: e.target.value});
-                  }}
-                  isInvalid={!!errors.eventVibes}
+              <Form.Group className='mb-3' controlId='vibesList'>
+                <Form.Label className="host-form-label">Vibes list</Form.Label>
+                <TagList
+                  className='host-form-tags'
+                  tags={formFields.tags}
+                  input={formFields.tagInput}
+                  deleteTag={handleDeleteTag}
+                  onChange={handleTagInput}
+                  onKeyDown={handleTagInputKeyDown}
+                  onKeyUp={handleTagInputKeyUp}
+                  clearTags={handleClearTags}
                 />
-                <Form.Control.Feedback className='host-form-error-msg' type='invalid'>{errors.eventLocation}</Form.Control.Feedback>
               </Form.Group>
+
               <Form.Label className="mt-3 host-form-title">Contact Information</Form.Label>
               <Row className="mb-3">
                 <Form.Group as={Col} controlId="firstName">
@@ -232,16 +275,16 @@ export default function Host() {
                 />
                 <Form.Control.Feedback className='host-form-error-msg' type='invalid'>{errors.email}</Form.Control.Feedback>
               </Form.Group>
-              <Form.Group className="mb-3" controlId="terms">
+              <Form.Group className="mb-3" controlId="vaccinated">
                 <Form.Check
                   required
-                  name="terms"
+                  name="vaccinated"
                   label="I have received 2 doses of the COVID-19 vaccine"
                   className="host-form-input"
-                  value={values.terms}
+                  value={values.vaccinated}
                   onChange={handleChange}
-                  isInvalid={!!errors.terms}
-                  feedback={errors.terms}
+                  isInvalid={!!errors.vaccinated}
+                  feedback={errors.vaccinated}
                   feedbackType="invalid"
                 />
               </Form.Group>

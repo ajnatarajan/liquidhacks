@@ -3,7 +3,7 @@
 }
 
 .tl_icon {
-    width: 5%;
+    width: calc(2.5vmin + 45px);
 }
 
 .tl_party {
@@ -12,6 +12,13 @@
     font-weight: bold;
     font-size: 150%;
     margin-top: 0.5%;
+}
+
+.top-bar-right-side-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 220px;
 }
 
 @font-face {

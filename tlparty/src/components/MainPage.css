@@ -1,0 +1,66 @@
+.main-page-title-text {
+    color: #FFF !important;
+    font-family: "FFMark";
+    font-size: calc(2vmin + 40px);
+    padding-top: 1%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.game-filter-text-and-menu-bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 30px;
+    margin-left: 25%;
+    margin-right: 25%;
+    padding-bottom: 1%;
+}
+
+.main-page-game-text {
+    color: #FFF !important;
+    font-family: "FFMark";
+    font-size: calc(1vmin + 12px);
+}
+
+.game-filter-menu-bar {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    margin-top: 1.5%;
+}
+
+.main-page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 97%;
+}
+
+.btn-main-page-game-icon-filter {
+    color: #FFF !important;
+    border-color: #ff4655 !important;
+    font-family: "FFMark";
+    font-size: 100%;
+    border-radius: 0 !important;
+    border-width: 1px 1px 1px 0 !important;
+}
+
+.btn-main-page-game-icon-filter.left {
+    border-radius: 0.25rem 0 0 0.25rem !important;
+    border-left-width: 1px !important;
+}
+
+.btn-main-page-game-icon-filter.right {
+    border-radius: 0 0.25rem 0.25rem 0 !important;
+}
+
+.btn-main-page-game-icon-filter:hover {
+    background-color: #ff4655;
+    color: #fff;
+    transition: all 0.3s cubic-bezier(0.645, 0.045, 0.36, 1);
+}
+
+.main-page-filter-game-icon {
+    width: 30px;
+}

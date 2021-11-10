@@ -1,0 +1,41 @@
+.page-background-theme {
+    /* text-align: center; */
+    background-image: linear-gradient(#000330, #1A0330);
+}
+
+.login-form-container {
+    width: calc(25vw + 100px);
+    margin: 3vh auto;
+}
+
+.login-title-text {
+    color: #FFF;
+    font-family: "Valorant";
+    font-size: calc(6vmin + 20px);
+}
+
+.login-info-outer-container {
+    margin-bottom: 3%;
+}
+
+.info-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.input-label {
+    margin-bottom: 1%;
+    color: #FFF;
+    font-family: "FFMark";
+}
+
+.info-input {
+    font-family: "FFMark";
+    color: #FFF !important;
+}
+
+.login-form-container {
+    /* width: 50%; */
+}

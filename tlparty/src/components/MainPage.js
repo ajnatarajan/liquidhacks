@@ -35,19 +35,17 @@ function getUpcomingEvents(upcoming_dictionary, game) { // make our Liquipedia D
 }
 
 
-function MainPageMainArea() {
+function MainPageMainArea(props) {
     const { logout } = useAuth0();
     const navigate = useNavigate();
     const goToProfile = useCallback(() => navigate('/profile'), [navigate]);
-    const [upcoming_events, setUpcomingEvents] = useState({});
+    const { setUpcomingEvents } = props;
     // Fetch the most recent API data every time the main page is reloaded
     let upcoming_dictionary = {};
     var games = ["leagueoflegends", "valorant", "dota2", "starcraft2","counterstrike","rainbowsix"];
     for(let i=0; i < games.length; i++) {
         getUpcomingEvents(upcoming_dictionary, games[i]);
     }
-    
-    console.log("UPCOMING EVENTS: ", upcoming_dictionary);
     useEffect(() => {
         setUpcomingEvents(upcoming_dictionary);
     }, []);
@@ -93,8 +91,10 @@ function MainPageMainArea() {
 
 export default function MainPage() {
     const {isAuthenticated} = useAuth0();
+    const [upcoming_events, setUpcomingEvents] = useState({});
     if (!isAuthenticated) {
         return <Landing />;
     }
-    return <MainPageMainArea />;
+    console.log("UPCOMING EVENTS: ", upcoming_events);
+    return <MainPageMainArea setUpcomingEvents={setUpcomingEvents}/>;
 }

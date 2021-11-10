@@ -3,7 +3,7 @@
 }
 
 .tl_icon {
-    width: 5%;
+    width: calc(2.5vmin + 45px);
 }
 
 .tl_party {

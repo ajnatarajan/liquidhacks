@@ -1,7 +1,7 @@
 import './ProfilePage.css'
-import React, {useState} from 'react';
+import React, {useCallback} from 'react';
+import {useNavigate} from 'react-router-dom';
 import { useAuth0 } from "@auth0/auth0-react";
-import Login from '../routes/Login';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import UserInformation from './UserInformation';
 import TopBar from './TopBar';
@@ -9,7 +9,9 @@ import EventPreviewSection from './EventPreviewSection';
 import Landing from './Landing';
 
 export default function ProfilePage(props) {
-    const { logout, user, isAuthenticated, isLoading } = useAuth0();
+    const { logout, user, isAuthenticated } = useAuth0();
+    const navigate = useNavigate();
+    const goToProfile = useCallback(() => navigate('/profile'), [navigate]);
     if (!isAuthenticated) {
         return <Landing />
     }
@@ -17,7 +19,7 @@ export default function ProfilePage(props) {
         <div>
             {/* if you change returnTo, talk to Ajay. He needs to change something
             in his auth0 account otherwise this will break*/}
-            <TopBar button_text="PROFILE" button_text_2="LOG OUT" on_click_2={() => logout({ returnTo: "http://localhost:3000" })}/>
+            <TopBar button_text="PROFILE" on_click={goToProfile} button_text_2="LOG OUT" on_click_2={() => logout({ returnTo: "http://localhost:3000" })}/>
             <div class="page-background-theme">
                 <UserInformation
                     title="Profile"

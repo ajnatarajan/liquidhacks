@@ -1,5 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React from 'react';
+import React, {useCallback} from 'react';
+import {useNavigate} from 'react-router-dom';
 import TopBar from './TopBar';
 import OurButton from './OurButton'
 import Landing from './Landing'
@@ -15,6 +16,8 @@ import smash_icon from '../img/smash_icon.png';
 
 export default function MainPage() {
     const { logout, isAuthenticated } = useAuth0();
+    const navigate = useNavigate();
+    const goToProfile = useCallback(() => navigate('/profile'), [navigate]);
     if (!isAuthenticated) {
         return <Landing />
     }
@@ -22,7 +25,7 @@ export default function MainPage() {
         <div class="page-background-theme" style={{height: '100vh'}}>
             {/* if you change returnTo, talk to Ajay. He needs to change something
             in his auth0 account otherwise this will break*/}
-            <TopBar button_text="PROFILE" button_text_2="LOG OUT" on_click_2={() => logout({ returnTo: "http://localhost:3000" })}/>
+            <TopBar button_text="PROFILE" on_click={goToProfile} button_text_2="LOG OUT" on_click_2={() => logout({ returnTo: "http://localhost:3000" })}/>
             <EventPreviewSection preview_section_title="Events Near You">
                 <div class="game-filter-text-and-menu-bar">
                     <div class="main-page-game-text">

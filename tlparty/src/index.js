@@ -21,6 +21,8 @@ render(
     domain="dev-3u3zqf0o.us.auth0.com"
     clientId="27xAeB9Z0IK0JJuHMn7S1s4I7YIt7D5t"
     redirectUri="http://localhost:3000/profile"
+    useRefreshTokens={ true }
+    cacheLocation="localstorage"
   >
     <BrowserRouter>
       <Routes>

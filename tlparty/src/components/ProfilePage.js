@@ -9,8 +9,11 @@ import EventPreviewSection from './EventPreviewSection';
 import Landing from './Landing';
 
 export default function ProfilePage(props) {
-    const { logout } = useAuth0();
-    
+    const { logout, user, isAuthenticated, isLoading } = useAuth0();
+    console.log("IS AUTHENTICATED: ", isAuthenticated);
+    if (!isAuthenticated) {
+        return <Landing />
+    }
     return (
         <div>
             <TopBar button_text="PROFILE" button_text_2="LOG OUT" on_click_2={() => logout({ returnTo: "http://localhost:3000" })}/>
@@ -19,7 +22,7 @@ export default function ProfilePage(props) {
                     title="Profile"
                     submit_text="Update Information"
                     placeholder_name={props.user_name}
-                    placeholder_email={props.user_email}
+                    placeholder_email={user.email}
                     placeholder_phone={props.user_phone}
                 />
                 <EventPreviewSection preview_section_title="My Upcoming Events"/>

@@ -15,6 +15,8 @@ export default function ProfilePage(props) {
     }
     return (
         <div>
+            {/* if you change returnTo, talk to Ajay. He needs to change something
+            in his auth0 account otherwise this will break*/}
             <TopBar button_text="PROFILE" button_text_2="LOG OUT" on_click_2={() => logout({ returnTo: "http://localhost:3000" })}/>
             <div class="page-background-theme">
                 <UserInformation

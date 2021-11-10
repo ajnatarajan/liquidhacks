@@ -10,7 +10,6 @@ import Landing from './Landing';
 
 export default function ProfilePage(props) {
     const { logout, user, isAuthenticated, isLoading } = useAuth0();
-    console.log("IS AUTHENTICATED: ", isAuthenticated);
     if (!isAuthenticated) {
         return <Landing />
     }

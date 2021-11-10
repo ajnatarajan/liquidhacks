@@ -9,10 +9,7 @@ import EventPreviewSection from './EventPreviewSection';
 import Landing from './Landing';
 
 export default function ProfilePage(props) {
-    const { logout, isAuthenticated } = useAuth0();
-    if (!isAuthenticated) {
-        return <Landing />
-    }
+    const { logout } = useAuth0();
     
     return (
         <div>

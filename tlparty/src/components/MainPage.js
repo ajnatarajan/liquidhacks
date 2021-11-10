@@ -11,8 +11,8 @@ import valorant_icon from '../img/valorant_icon.png';
 import league_icon from '../img/league_icon.png';
 import csgo_icon from '../img/csgo_icon.png';
 import dota_icon from '../img/dota_icon.png';
-import pubg_icon from '../img/pubg_icon.png';
-import smash_icon from '../img/smash_icon.png';
+import rainbowsix_icon from '../img/rainbowsix_icon.png';
+import starcraft_icon from '../img/starcraft_icon.png';
 import axios from 'axios';
 
 function getUpcomingEvents() { // make our Liquipedia DB call here and store it
@@ -67,10 +67,10 @@ export default function MainPage() {
                             <img src={dota_icon} class="main-page-filter-game-icon"/>
                         </button>
                         <button className="btn btn-main-page-game-icon-filter">
-                            <img src={pubg_icon} class="main-page-filter-game-icon"/>
+                            <img src={starcraft_icon} class="main-page-filter-game-icon"/>
                         </button>
                         <button className="btn btn-main-page-game-icon-filter right">
-                            <img src={smash_icon} class="main-page-filter-game-icon"/>
+                            <img src={rainbowsix_icon} class="main-page-filter-game-icon"/>
                         </button>
                     </div>
                 </div>

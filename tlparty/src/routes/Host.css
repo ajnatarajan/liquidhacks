@@ -73,6 +73,18 @@
     font-size: 2vmin;
 }
 
+.host-form-tags {
+    background-color: rgb(6, 3, 48) !important;
+    font-family: "FFMark";
+    color: white !important;
+    font-weight: normal;
+    font-size: 2vmin;
+}
+
+.host-form-tags>span {
+    border-color: red !important;
+}
+
 ::-webkit-calendar-picker-indicator {
     filter: invert(1);
 }

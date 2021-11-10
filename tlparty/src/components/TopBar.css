@@ -14,6 +14,13 @@
     margin-top: 0.5%;
 }
 
+.top-bar-right-side-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 220px;
+}
+
 @font-face {
     font-family: "Valorant";
     src: url("../fonts/valorant.ttf");

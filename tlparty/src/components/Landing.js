@@ -4,8 +4,10 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import OurButton from './OurButton';
 import TopBar from './TopBar';
+import { useAuth0 } from "@auth0/auth0-react";
 
 function LandingMainArea() {
+  const { loginWithRedirect } = useAuth0();
   return (
     <div class="main-area-container">
       <img class="tl_background" src={tl_background}/>
@@ -16,16 +18,17 @@ function LandingMainArea() {
         Discover in-person esports watch parties near you
       </div>
       <div class="main-button-position">
-          <OurButton type='button' onClick={null}>JOIN THE PARTY</OurButton>
+          <OurButton type='button' onClick={() => loginWithRedirect()}>JOIN THE PARTY</OurButton>
       </div>
     </div>
   );
 }
 
 export default function Landing() {
+  const { loginWithRedirect } = useAuth0();
   return (
       <div className="landing">
-          <TopBar button_text="SIGN UP"/>
+          <TopBar button_text="LOG IN" on_click={() => loginWithRedirect()} button_text_2="SIGN UP" on_click_2={() => loginWithRedirect()}/>
           <LandingMainArea />
       </div>
   );

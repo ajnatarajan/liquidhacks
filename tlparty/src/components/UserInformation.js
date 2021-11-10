@@ -20,7 +20,7 @@ export default function UserInformation(props) {
                     <div class="mb-3">
                         <div class="form-group info-block">
                             <label for="email" class="input-label">Email address:</label>
-                            <input type="email" class="form-control info-input page-background-theme" id="user-email" placeholder={props.placeholder_email}/>
+                            <input type="email" class="form-control info-input page-background-theme" id="user-email" placeholder={props.placeholder_email} disabled/>
                         </div>
                     </div>
                     <div class="mb-3">

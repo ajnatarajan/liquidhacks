@@ -4,6 +4,7 @@ import TopBar from './TopBar';
 import OurButton from './OurButton'
 import './MainPage.css'
 import EventPreviewSection from './EventPreviewSection';
+import { useAuth0 } from "@auth0/auth0-react";
 import valorant_icon from '../img/valorant_icon.png';
 import league_icon from '../img/league_icon.png';
 import csgo_icon from '../img/csgo_icon.png';
@@ -12,10 +13,10 @@ import pubg_icon from '../img/pubg_icon.png';
 import smash_icon from '../img/smash_icon.png';
 
 export default function MainPage() {
-
+    const { logout } = useAuth0();
     return (
         <div class="page-background-theme" style={{height: '100vh'}}>
-            <TopBar button_text="Profile"/>
+            <TopBar button_text="PROFILE" button_text_2="LOG OUT" on_click_2={() => logout({ returnTo: "http://localhost:3000" })}/>
             <EventPreviewSection preview_section_title="Events Near You">
                 <div class="game-filter-text-and-menu-bar">
                     <div class="main-page-game-text">

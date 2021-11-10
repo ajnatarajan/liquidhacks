@@ -14,24 +14,16 @@ import smash_icon from '../img/smash_icon.png';
 export default function MainPage() {
 
     return (
-        <div>
+        <div class="page-background-theme" style={{height: '100vh'}}>
             <TopBar button_text="Profile"/>
-            <div class="page-background-theme">
-                <div class="main-page-header">
-                    <div class="main-page-title-text">
-                        Find a Watch Party Near You!
-                    </div>
-                    <OurButton>
-                        I want to host
-                    </OurButton>
-                </div>
+            <EventPreviewSection preview_section_title="Events Near You">
                 <div class="game-filter-text-and-menu-bar">
                     <div class="main-page-game-text">
                         Filter by game
                     </div>
                     <div class="game-filter-menu-bar">
 
-                        <button className="btn btn-main-page-game-icon-filter">
+                        <button className="btn btn-main-page-game-icon-filter left">
                             <img src={valorant_icon} class="main-page-filter-game-icon"/>
                         </button>
                         <button className="btn btn-main-page-game-icon-filter">
@@ -46,13 +38,12 @@ export default function MainPage() {
                         <button className="btn btn-main-page-game-icon-filter">
                             <img src={pubg_icon} class="main-page-filter-game-icon"/>
                         </button>
-                        <button className="btn btn-main-page-game-icon-filter">
+                        <button className="btn btn-main-page-game-icon-filter right">
                             <img src={smash_icon} class="main-page-filter-game-icon"/>
                         </button>
                     </div>
                 </div>
-                <EventPreviewSection preview_section_title="Events Near You"/>
-            </div>
+            </EventPreviewSection>
         </div>
     );
 }

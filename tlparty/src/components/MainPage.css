@@ -11,26 +11,23 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 1px;
-    border-color: #FFF;
-    border-style: solid;
     border-radius: 30px;
     margin-left: 25%;
     margin-right: 25%;
-    margin-top: 5%;
+    padding-bottom: 1%;
 }
 
 .main-page-game-text {
     color: #FFF !important;
     font-family: "FFMark";
-    font-size: calc(2vmin);
+    font-size: calc(1vmin + 12px);
 }
 
 .game-filter-menu-bar {
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-    margin-top: 3%;
+    margin-top: 1.5%;
 }
 
 .main-page-header {
@@ -45,11 +42,20 @@
     border-color: #ff4655 !important;
     font-family: "FFMark";
     font-size: 100%;
-    margin-right: 3%;
+    border-radius: 0 !important;
+    border-width: 1px 1px 1px 0 !important;
+}
+
+.btn-main-page-game-icon-filter.left {
+    border-radius: 0.25rem 0 0 0.25rem !important;
+    border-left-width: 1px !important;
+}
+
+.btn-main-page-game-icon-filter.right {
+    border-radius: 0 0.25rem 0.25rem 0 !important;
 }
 
 .btn-main-page-game-icon-filter:hover {
-    transform: translateY(-5%);
     background-color: #ff4655;
     color: #fff;
     transition: all 0.3s cubic-bezier(0.645, 0.045, 0.36, 1);

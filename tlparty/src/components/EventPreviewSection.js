@@ -1,6 +1,4 @@
 import './EventPreviewSection.css'
-import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import UserInformation from './UserInformation';
 import TopBar from './TopBar';
 import EventPreview from './EventPreview';

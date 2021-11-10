@@ -13,6 +13,26 @@ import csgo_icon from '../img/csgo_icon.png';
 import dota_icon from '../img/dota_icon.png';
 import pubg_icon from '../img/pubg_icon.png';
 import smash_icon from '../img/smash_icon.png';
+import axios from 'axios';
+
+function getUpcomingEvents() { // make our Liquipedia DB call here and store it
+    const FormData = require('form-data');
+    const fs = require('fs');
+    require('dotenv').config();
+
+    const formData = new FormData();
+    formData.append("apikey", process.env.REACT_APP_API_KEY);
+    formData.append("wiki", "starcraft2");
+    formData.append("limit", 2);
+    formData.append("conditions", "([[opponent1::Team Liquid]] OR [[opponent2::Team Liquid]]) AND [[date::>2021-11-10 00:00:00]]");
+
+    axios.post(
+        'https://gentle-beyond-32691.herokuapp.com/https://api.liquipedia.net/api/v1/match',
+        formData
+    ).then(response => {
+        console.log(response);
+    });
+}
 
 export default function MainPage() {
     const { logout, isAuthenticated } = useAuth0();
@@ -27,9 +47,10 @@ export default function MainPage() {
             in his auth0 account otherwise this will break*/}
             <TopBar button_text="PROFILE" on_click={goToProfile} button_text_2="LOG OUT" on_click_2={() => logout({ returnTo: "http://localhost:3000" })}/>
             <EventPreviewSection preview_section_title="Events Near You">
+                <OurButton type="button" onClick={getUpcomingEvents}> I want to host! </OurButton>
                 <div class="game-filter-text-and-menu-bar">
                     <div class="main-page-game-text">
-                        Filter by game
+                        FILTER BY GAME
                     </div>
                     <div class="game-filter-menu-bar">
 

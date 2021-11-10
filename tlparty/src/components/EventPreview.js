@@ -4,10 +4,10 @@ import './EventPreview.css'
 import tl_background_old from '../img/tl_background_old.jpg';
 import valorant_icon from '../img/valorant_icon.png';
 import league_icon from '../img/league_icon.png';
-import csgo_icon from '../img/csgo_icon.svg';
-import dota_icon from '../img/dota_icon.jpg';
+import csgo_icon from '../img/csgo_icon.png';
+import dota_icon from '../img/dota_icon.png';
 import pubg_icon from '../img/pubg_icon.png';
-import smash_icon from '../img/smash_icon.webp';
+import smash_icon from '../img/smash_icon.png';
 
 export const GameIcon = (props) => {
     let Output;

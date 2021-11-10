@@ -2,6 +2,7 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './EventPreview.css'
 import tl_background_old from '../img/tl_background_old.jpg';
+import tlvsmad from '../img/tlvsmad.jpg';
 import valorant_icon from '../img/valorant_icon.png';
 import league_icon from '../img/league_icon.png';
 import csgo_icon from '../img/csgo_icon.png';
@@ -38,11 +39,28 @@ export const GameIcon = (props) => {
     return Output;
 };
 
+export const EventPic = (props) => {
+    let Output;
+    switch (props.event_pic) {
+        case 'tledm':
+            Output = (<img src={tl_background_old} class="event-pic"/>);
+            break;
+        case 'tlvsmad':
+            Output = (<img src={tlvsmad} class="event-pic"/>);
+            break;
+        default:
+            Output = (null);
+            break;
+    }
+
+    return Output;
+};
+
 export default function EventPreview(props) {
     return (
     <a href="#" class="event-preview-clickable-region">
         <span style={{display: "inline-block"}} class="square">
-            <img src={tl_background_old} class="event-pic"/>
+            <EventPic {...props}/>
             <div class="event-preview-title-text">
                 {props.title}
             </div>

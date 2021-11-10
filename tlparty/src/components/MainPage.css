@@ -1,7 +1,7 @@
 .main-page-title-text {
     color: #FFF !important;
     font-family: "FFMark";
-    font-size: calc(6vmin);
+    font-size: calc(2vmin + 40px);
     padding-top: 1%;
     margin-left: 5%;
     margin-right: 5%;

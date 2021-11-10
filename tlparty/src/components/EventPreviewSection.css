@@ -6,7 +6,7 @@
 .event-listing-title {
     color: #FFF;
     font-family: "Valorant";
-    font-size: calc(6vmin);
+    font-size: calc(2vmin + 40px);
     margin-bottom: 1%;
 }
 

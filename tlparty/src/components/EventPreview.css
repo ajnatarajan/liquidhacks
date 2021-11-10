@@ -1,9 +1,10 @@
 .event-preview-clickable-region {
-    margin: 2%;
+    margin: 1%;
     border: 1px;
     border-color: #FFF;
     border-style: solid;
-    border-radius: 30px;
+    border-radius: 5px;
+    overflow: hidden;
 }
 .square {
     position: relative;
@@ -11,8 +12,7 @@
 }
 
 .event-pic {
-    width: 300px;
-    border-radius: 30px;
+    width: 100%;
 }
 
 .event-preview-title-text {

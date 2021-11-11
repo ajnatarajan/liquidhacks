@@ -115,23 +115,7 @@ export default function EventModal(props) {
     );
   }
 
-
   return (
-
-    <div className="EventModal">
-      <div style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        backgroundColor: 'black',
-        color: 'white'}}>
-        <div className='my-3'>
-          <OurButton type='button' onClick={handleHostButtonClick}>
-            Host a watch party!
-          </OurButton>
-        </div>
-      </div>
-      {showForm ? renderForm() : null}
-    </div>
+    renderForm()
   );
 }

@@ -16,6 +16,7 @@ import dota_icon from '../img/dota_icon.png';
 import rainbowsix_icon from '../img/rainbowsix_icon.png';
 import starcraft_icon from '../img/starcraft_icon.png';
 import DropdownUsingAPI from './DropdownUsingAPI';
+import EventModal from './EventModal';
 
 function getUpcomingEvents(upcoming_dictionary, game, setFunction) { // make our Liquipedia DB call here and store it
     const FormData = require('form-data');
@@ -130,7 +131,15 @@ function MainPageMainArea(props) {
                 </div>
             </EventPreviewSection>
             <Modal title="Test Event" isOpen={isModalOpen} setIsOpen={setIsModalOpen}>
-                <HostForm/>
+                <EventModal
+                    name="Event Name"
+                    host="me"
+                    game="csgo"
+                    location="somewhere"
+                    date="tmrw sometime pst lol"
+                    vibes={["this", "category", "is", "deadass", "stupid"]}
+                    snacks={["pogger", "wogger", "logger"]}
+                />
             </Modal>
         </div>
     );

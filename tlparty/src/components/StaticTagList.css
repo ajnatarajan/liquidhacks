@@ -1,0 +1,47 @@
+.taglist-container {
+    display: flex;
+    max-width: 100%;
+    flex-wrap: wrap;
+    color: black;
+}
+
+.taglist-clear-button {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.taglist-input-row {
+    display: flex;
+}
+
+.static-taglist-tag {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    padding: 3px 9px;
+    border: 1px solid red;
+    border-radius: 8px;
+    background-color: red;
+    white-space: nowrap;
+    color: white;
+}
+
+.taglist-tag button {
+    margin-left: 5px;
+    display: flex;
+    padding: 3px;
+    border: none;
+    background-color: unset;
+    cursor: pointer;
+    color: white;
+}
+
+.static-taglist-container {
+    display: flex;
+    max-width: 100%;
+    flex-wrap: wrap;
+    color: black;
+    margin-left: 5px;
+}

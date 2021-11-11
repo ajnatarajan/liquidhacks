@@ -15,7 +15,7 @@ import rainbowsix_icon from '../img/rainbowsix_icon.png';
 import starcraft_icon from '../img/starcraft_icon.png';
 import axios from 'axios';
 
-function getUpcomingEvents(upcoming_dictionary, game) { // make our Liquipedia DB call here and store it
+function getUpcomingEvents(upcoming_dictionary, game, setFunction) { // make our Liquipedia DB call here and store it
     const FormData = require('form-data');
     const fs = require('fs');
     require('dotenv').config();
@@ -23,14 +23,23 @@ function getUpcomingEvents(upcoming_dictionary, game) { // make our Liquipedia D
     const formData = new FormData();
     formData.append("apikey", process.env.REACT_APP_API_KEY);
     formData.append("wiki", game);
-    formData.append("limit", 5);
+    formData.append("limit", 10);
     formData.append("conditions", "([[opponent1::Team Liquid]] OR [[opponent2::Team Liquid]]) AND [[date::>2021-11-10 00:00:00]]");
 
-    axios.post(
-        'https://gentle-beyond-32691.herokuapp.com/https://api.liquipedia.net/api/v1/match',
-        formData
-    ).then(response => {
-        upcoming_dictionary[game] = response.data.result;
+    // axios.post(
+    //     'https://gentle-beyond-32691.herokuapp.com/https://api.liquipedia.net/api/v1/match',
+    //     formData
+    // )
+
+    fetch('https://gentle-beyond-32691.herokuapp.com/https://api.liquipedia.net/api/v1/match',
+    {
+        body: formData,
+        method: "post"
+    }).then(response => response.json())
+    .then(data => {
+        upcoming_dictionary[game] = Array.from(data.result);
+        // console.log(Array.from(data.result), "ARRAY");
+        setFunction({...upcoming_dictionary});
     });
 }
 
@@ -41,13 +50,12 @@ function MainPageMainArea(props) {
     const goToProfile = useCallback(() => navigate('/profile'), [navigate]);
     const { setUpcomingEvents } = props;
     // Fetch the most recent API data every time the main page is reloaded
-    let upcoming_dictionary = {};
-    var games = ["leagueoflegends", "valorant", "dota2", "starcraft2","counterstrike","rainbowsix"];
-    for(let i=0; i < games.length; i++) {
-        getUpcomingEvents(upcoming_dictionary, games[i]);
-    }
     useEffect(() => {
-        setUpcomingEvents(upcoming_dictionary);
+        let upcoming_dictionary = {};
+        var games = ["leagueoflegends", "valorant", "dota2", "starcraft2","counterstrike","rainbowsix"];
+        for(let i=0; i < games.length; i++) {
+            getUpcomingEvents(upcoming_dictionary, games[i], setUpcomingEvents);
+        }
     }, []);
 
     return (
@@ -88,13 +96,46 @@ function MainPageMainArea(props) {
     );
 }
 
+function clean_pagename(pagename) {
+    var one = pagename.replaceAll("/", " ");
+    var two = one.replaceAll("_", " ");
+    return two;
+}
+
 
 export default function MainPage() {
     const {isAuthenticated} = useAuth0();
     const [upcoming_events, setUpcomingEvents] = useState({});
+    var cleaned_event_names = [];
     if (!isAuthenticated) {
         return <Landing />;
     }
-    console.log("UPCOMING EVENTS: ", upcoming_events);
-    return <MainPageMainArea setUpcomingEvents={setUpcomingEvents}/>;
+
+    var cleaned_names = []
+    let gameCodeToName = {
+        "counterstrike": "CSGO",
+        "dota2": "DOTA",
+        "leagueoflegends": "LoL",
+        "rainbowsix": "R6",
+        "starcraft2": "SC2",
+        "valorant": "VAL"
+    };
+    for (var game_code in upcoming_events) {
+        upcoming_events[game_code].forEach((event, index) => {
+            var opp1 = event["opponent1"];
+            var opp2 = event["opponent2"];
+            var pagename = event["pagename"]
+            var event_name = [gameCodeToName[game_code], "-", opp1, "vs.", opp2, ":", clean_pagename(pagename)];
+            cleaned_names.push(event_name.reduce(function(pre, next) {
+                return pre + ' ' + next;
+            }));
+        });
+    }
+
+    console.log("CLEANED EVENTS: ", cleaned_names);
+    return  (
+        <div>
+            <MainPageMainArea setUpcomingEvents={setUpcomingEvents}/>;
+        </div>
+    );
 }

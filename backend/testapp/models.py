@@ -15,7 +15,7 @@ class Event(models.Model):
     location = models.CharField(max_length=100)
     game = models.TextField()
     video_game = models.CharField(max_length=50)
-    image = models.BinaryField()
+    image = models.ImageField()
     num_attendees = models.IntegerField()
     date_time = models.DateTimeField()
     timezone = models.CharField(max_length=10)

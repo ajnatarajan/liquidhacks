@@ -1,0 +1,114 @@
+.EventModal {
+    /* text-align: center; */
+    background-color: rgb(6, 3, 48) !important;
+}
+
+.Host-logo {
+    height: 40vmin;
+    pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .Host-logo {
+        animation: Host-logo-spin infinite 20s linear;
+    }
+}
+
+.Host-header {
+    background-color: #663a82;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+}
+
+.Host-link {
+    color: #61dafb;
+}
+
+.host-modal {
+    background-color: white;
+    min-width: 50vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(20px + 2vmin);
+    color: orange;
+}
+
+.host-form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.host-form {
+    width: 50vw;
+}
+
+.host-form-label {
+    margin-bottom: 1%;
+    color: white;
+    font-family: "FFMark";
+    font-weight: bold;
+    font-size: 2vmin;
+}
+
+.host-form-title {
+    color: white;
+    font-family: "FFMark";
+    font-weight: bold;
+    font-size: 3vmin;
+}
+
+.host-form-input {
+    background-color: rgb(6, 3, 48) !important;
+    font-family: "FFMark";
+    color: white !important;
+    font-weight: normal;
+    font-size: 2vmin;
+}
+
+.host-form-tags {
+    background-color: rgb(6, 3, 48) !important;
+    font-family: "FFMark";
+    color: white !important;
+    font-weight: normal;
+    font-size: 2vmin;
+}
+
+.host-form-tags>span {
+    border-color: red !important;
+}
+
+::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+
+.host-form-error-msg {
+    color: red !important;
+    font-family: "FFMark";
+    font-weight: 100;
+    font-size: 1.5vmin;
+}
+
+@keyframes Host-logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.flexbox {
+    display: flex;    
+}
+
+.submit-button {
+    align-items: center;
+}

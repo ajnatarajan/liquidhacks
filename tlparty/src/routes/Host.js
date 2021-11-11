@@ -219,6 +219,7 @@ export default function Host() {
                   onKeyDown={handleTagInputKeyDown}
                   onKeyUp={handleTagInputKeyUp}
                   clearTags={handleClearTags}
+                  placeholderText={"What's the vibe?"}
                 />
               </Form.Group>
 

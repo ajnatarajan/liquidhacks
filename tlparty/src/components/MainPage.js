@@ -83,6 +83,8 @@ function MainPageMainArea(props) {
         }
     }, []);
 
+    console.log("CLEANED EVENTS INSIDE: ", props.cleanedNames);
+
     return (
         <div class="page-background-theme" style={{minHeight: '100vh'}}>
             {/* if you change returnTo, talk to Ajay. He needs to change something
@@ -123,6 +125,7 @@ function MainPageMainArea(props) {
                         </button>
                     </div>
                 </div>
+                <DropdownUsingAPI options={props.cleanedNames} allowOther={true}/>
             </EventPreviewSection>
             <Modal title="Test Event" isOpen={isModalOpen} setIsOpen={setIsModalOpen}>
                 <HostForm/>
@@ -167,11 +170,9 @@ export default function MainPage() {
         });
     }
 
-    console.log("CLEANED EVENTS: ", cleaned_names);
     return  (
         <div>
-            <MainPageMainArea setUpcomingEvents={setUpcomingEvents}/>
-            <DropdownUsingAPI options={cleaned_names} allow_other={true}/>
+            <MainPageMainArea setUpcomingEvents={setUpcomingEvents} cleanedNames={cleaned_names}/>
         </div>
     );
 }

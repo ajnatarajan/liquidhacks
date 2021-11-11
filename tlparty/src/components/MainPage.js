@@ -14,7 +14,7 @@ import csgo_icon from '../img/csgo_icon.png';
 import dota_icon from '../img/dota_icon.png';
 import rainbowsix_icon from '../img/rainbowsix_icon.png';
 import starcraft_icon from '../img/starcraft_icon.png';
-import axios from 'axios';
+import DropdownUsingAPI from './DropdownUsingAPI';
 
 function getUpcomingEvents(upcoming_dictionary, game, setFunction) { // make our Liquipedia DB call here and store it
     const FormData = require('form-data');
@@ -144,7 +144,8 @@ export default function MainPage() {
     console.log("CLEANED EVENTS: ", cleaned_names);
     return  (
         <div>
-            <MainPageMainArea setUpcomingEvents={setUpcomingEvents}/>;
+            <MainPageMainArea setUpcomingEvents={setUpcomingEvents}/>
+            <DropdownUsingAPI options={cleaned_names} allow_other={true}/>
         </div>
     );
 }

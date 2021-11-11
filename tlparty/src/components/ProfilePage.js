@@ -21,13 +21,13 @@ export default function ProfilePage(props) {
             in his auth0 account otherwise this will break*/}
             <TopBar button_text="PROFILE" on_click={goToProfile} button_text_2="LOG OUT" on_click_2={() => logout({ returnTo: "http://localhost:3000" })}/>
             <div class="page-background-theme">
-                <UserInformation
+                {/* <UserInformation
                     title="Profile"
                     submit_text="Update Information"
                     placeholder_name={props.user_name}
                     placeholder_email={user.email}
                     placeholder_phone={props.user_phone}
-                />
+                /> */}
                 <EventPreviewSection preview_section_title="My Upcoming Events"/>
                 <EventPreviewSection preview_section_title="Past Events"/>
             </div>

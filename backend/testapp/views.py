@@ -33,38 +33,44 @@ def omg(request):
 def getUserEvents(request):
     if request.method == 'GET':
         params = request.GET.dict()
-        user_email = params['email'].strip('"')
-        results = {
-            "past_events": [pe.event_id for pe in PastEvent.objects.filter(email_address=user_email)],
-            "upcoming_events": [ue.event_id for ue in UpcomingEvent.objects.filter(email_address=user_email)],
-        }
-        return HttpResponse(json.dumps(results))
+        if params:
+            user_email = params['email'].strip('"')
+            results = {
+                "past_events": [pe.event_id for pe in PastEvent.objects.filter(email_address=user_email)],
+                "upcoming_events": [ue.event_id for ue in UpcomingEvent.objects.filter(email_address=user_email)],
+            }
+            return HttpResponse(json.dumps(results))
+        else:
+            return HttpResponse("There are no user events")
 
 
 def getEvent(request):
     if request.method == 'GET':
         params = request.GET.dict()
-        event_id = params['event_id'].strip('"')
-        events = Event.objects.filter(event_id=event_id)
-        results = {
-            'event': [{
-                'event_id': e.event_id,
-                'event_name': e.event_name,
-                'location': e.location,
-                'game': e.game,
-                'video_game': e.video_game,
-                'image': e.image,
-                'num_attendees': e.num_attendees,
-                'date_time': e.date_time,
-                'timezone': e.timezone,
-                'vibes': e.vibes,
-                'snacks': e.snacks,
-                'contact_firstname': e.contact_firstname,
-                'contact_lastname': e.contact_lastname,
-                'contact_email': e.contact_email
-            } for e in events]
-        }
-        return HttpResponse(json.dumps(results)) 
+        if params:
+            event_id = params['event_id'].strip('"')
+            events = Event.objects.filter(event_id=event_id)
+            results = {
+                'event': [{
+                    'event_id': e.event_id,
+                    'event_name': e.event_name,
+                    'location': e.location,
+                    'game': e.game,
+                    'video_game': e.video_game,
+                    'image': e.image,
+                    'num_attendees': e.num_attendees,
+                    'date_time': e.date_time,
+                    'timezone': e.timezone,
+                    'vibes': e.vibes,
+                    'snacks': e.snacks,
+                    'contact_firstname': e.contact_firstname,
+                    'contact_lastname': e.contact_lastname,
+                    'contact_email': e.contact_email
+                } for e in events]
+            }
+            return HttpResponse(json.dumps(results))
+        else:
+            return HttpResponse("There are no events")
 
 
 def getAllEvents(request):

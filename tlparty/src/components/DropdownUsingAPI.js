@@ -7,7 +7,7 @@ import { Form, Row, Col, Button } from 'react-bootstrap';
 
 export default function DropdownUsingAPI(props) {
     if (props.allowOther) {
-        props.options.unshift("Any")
+        props.options.unshift(props.otherName)
     }
     console.log(props.options, "BOKEH");
     var event = (

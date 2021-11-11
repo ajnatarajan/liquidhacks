@@ -125,7 +125,9 @@ function MainPageMainArea(props) {
                         </button>
                     </div>
                 </div>
-                <DropdownUsingAPI options={props.cleanedNames} allowOther={true}/>
+                <div class="event-filter-dropdown">
+                    <DropdownUsingAPI options={props.cleanedNames} allowOther={true} otherName="Any"/>
+                </div>
             </EventPreviewSection>
             <Modal title="Test Event" isOpen={isModalOpen} setIsOpen={setIsModalOpen}>
                 <HostForm/>

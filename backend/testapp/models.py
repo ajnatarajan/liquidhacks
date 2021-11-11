@@ -6,8 +6,10 @@
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.contrib.postgres.fields import ArrayField
+from django.core.files.storage import FileSystemStorage
 from django.db import models
 
+fs = FileSystemStorage(location='/media/photos')
 
 class Event(models.Model):
     event_id = models.UUIDField(primary_key=True)
@@ -15,7 +17,7 @@ class Event(models.Model):
     location = models.CharField(max_length=100)
     game = models.TextField()
     video_game = models.CharField(max_length=50)
-    image = models.ImageField(blank=True, null=True, upload_to='images')
+    image = models.ImageField(storage=fs)
     num_attendees = models.IntegerField()
     date_time = models.DateTimeField()
     timezone = models.CharField(max_length=10)

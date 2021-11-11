@@ -2,6 +2,7 @@ from django.db.models.fields import EmailField
 from django.http import HttpResponse
 from django.shortcuts import render
 from testapp.models import Event, UserEvent, User
+from django.views.decorators.csrf import csrf_exempt
 
 
 import os
@@ -30,7 +31,7 @@ def omg(request):
     times = random.randint(1, 1000)
     return HttpResponse("OMG HI! " * times)
 
-
+@csrf_exempt
 def getUserEvents(request):
     if request.method == 'GET':
         params = request.GET.dict()
@@ -47,7 +48,7 @@ def getUserEvents(request):
         else:
             return HttpResponse("There are no user events")
 
-
+@csrf_exempt
 def getPastUserEvents(request):
     if request.method == 'GET':
         params = request.GET.dict()
@@ -65,7 +66,7 @@ def getPastUserEvents(request):
         else:
             return HttpResponse("There are no user events")
 
-
+@csrf_exempt
 def getUpcomingUserEvents(request):
     if request.method == 'GET':
         params = request.GET.dict()
@@ -83,7 +84,7 @@ def getUpcomingUserEvents(request):
         else:
             return HttpResponse("There are no user events")
 
-
+@csrf_exempt
 def getEvent(request):
     if request.method == 'GET':
         params = request.GET.dict()
@@ -112,7 +113,7 @@ def getEvent(request):
         else:
             return HttpResponse("There are no events")
 
-
+@csrf_exempt
 def getAllEvents(request):
     if request.method == 'GET':
         events = {
@@ -135,7 +136,7 @@ def getAllEvents(request):
         }
         return HttpResponse(json.dumps(events, indent=4, sort_keys=True, default=str))
 
-
+@csrf_exempt
 def getAllPastEvents(request):
     if request.method == 'GET':
         events = {
@@ -158,7 +159,7 @@ def getAllPastEvents(request):
         }
         return HttpResponse(json.dumps(events, indent=4, sort_keys=True, default=str))
 
-
+@csrf_exempt
 def getAllUpcomingEvents(request):
     if request.method == 'GET':
         events = {
@@ -181,7 +182,7 @@ def getAllUpcomingEvents(request):
         }
         return HttpResponse(json.dumps(events, indent=4, sort_keys=True, default=str))
 
-
+@csrf_exempt
 def addEvent(request):
     if request.method == 'GET':
         params = request.GET.dict()
@@ -208,7 +209,7 @@ def addEvent(request):
             e.save()
             print('{} was added to the database'.format(e.__str__()))
 
-
+@csrf_exempt
 def addUserEvent(request):
     if request.method == 'GET':
         params = request.GET.dict()
@@ -225,7 +226,7 @@ def addUserEvent(request):
             ue.save()
             print('{} was added to the database'.format(ue.__str__()))
 
-
+@csrf_exempt
 def addUser(request):
     if request.method == 'GET':
         params = request.GET.dict()

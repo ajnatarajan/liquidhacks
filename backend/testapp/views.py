@@ -37,7 +37,7 @@ def getUserEvents(request):
             user_email = params['email'].strip('"')
             results = {
                 "user_events": [
-                    ue.event_id for ue in UserEvent.objects.filter(
+                    str(ue.event_id) for ue in UserEvent.objects.filter(
                         email_address=user_email
                     )
                 ]
@@ -55,7 +55,7 @@ def getEvent(request):
             events = Event.objects.filter(event_id=event_id)
             results = {
                 'event': [{
-                    'event_id': e.event_id,
+                    'event_id': str(e.event_id),
                     'event_name': e.event_name,
                     'location': e.location,
                     'game': e.game,
@@ -80,7 +80,7 @@ def getAllEvents(request):
     if request.method == 'GET':
         events = {
             'events': [{
-                'event_id': e.event_id,
+                'event_id': str(e.event_id),
                 'event_name': e.event_name,
                 'location': e.location,
                 'game': e.game,

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './TagList.css'
@@ -24,7 +24,7 @@ export default function TagList(props) {
                     <Form.Control
                         className={props.className}
                         value={input}
-                        placeholder={props.placeholderText}
+                        placeholder="what's the mood?"
                         onKeyDown={onKeyDown}
                         onChange={onChange}
                         onKeyUp={onKeyUp}

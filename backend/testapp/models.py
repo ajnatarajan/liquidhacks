@@ -44,6 +44,9 @@ class PastEvent(models.Model):
 
     class Meta:
         db_table = 'past_event'
+    
+    def __str__(self):
+        return "{}, <{}>".format(self.event_id, self.email_address)
 
 
 class UpcomingEvent(models.Model):
@@ -52,6 +55,9 @@ class UpcomingEvent(models.Model):
 
     class Meta:
         db_table = 'upcoming_event'
+    
+    def __str__(self):
+        return "{}, <{}>".format(self.event_id, self.email_address)
 
 
 class User(models.Model):
@@ -63,3 +69,8 @@ class User(models.Model):
 
     class Meta:
         db_table = 'user'
+    
+    def __str__(self):
+        return "{} {}, <{}>".format(
+            self.first_name, self.last_name, self.email_address
+        )

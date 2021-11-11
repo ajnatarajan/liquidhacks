@@ -41,8 +41,8 @@ def getUserEvents(request):
                         email_address=user_email
                     )
                 ]
-            }
-            return HttpResponse(json.dumps(results))
+            },
+            return HttpResponse(json.dumps(results, indent=4, sort_keys=True, default=str))
         else:
             return HttpResponse("There are no user events")
 
@@ -60,7 +60,7 @@ def getEvent(request):
                     'location': e.location,
                     'game': e.game,
                     'video_game': e.video_game,
-                    'image': e.image,
+                    'image': str(e.image),
                     'num_attendees': e.num_attendees,
                     'date_time': e.date_time,
                     'timezone': e.timezone,
@@ -71,7 +71,7 @@ def getEvent(request):
                     'contact_email': e.contact_email
                 } for e in events]
             }
-            return HttpResponse(json.dumps(results))
+            return HttpResponse(json.dumps(results, indent=4, sort_keys=True, default=str))
         else:
             return HttpResponse("There are no events")
 
@@ -85,7 +85,7 @@ def getAllEvents(request):
                 'location': e.location,
                 'game': e.game,
                 'video_game': e.video_game,
-                'image': e.image,
+                'image': str(e.image),
                 'num_attendees': e.num_attendees,
                 'date_time': e.date_time,
                 'timezone': e.timezone,
@@ -96,7 +96,7 @@ def getAllEvents(request):
                 'contact_email': e.contact_email
             } for e in Event.objects.all()]
         }
-        return HttpResponse(json.dumps(events))
+        return HttpResponse(json.dumps(events, indent=4, sort_keys=True, default=str))
 
 
 def addEvent(request):

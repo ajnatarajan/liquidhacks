@@ -49,7 +49,7 @@ function LoginForm() {
 export default function Login() {
     return (
         <div class="page-background-theme" style={{
-            height: '100vh'
+            minHeight: '100vh'
         }}>
             <TopBar button_text="Sign up"/>
             <LoginForm/>

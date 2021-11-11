@@ -1,0 +1,70 @@
+.modal-overlay {
+    position: absolute;
+    top: calc(2.5vmin + 45px + 2rem); bottom: 0; left: 0; right: 0;
+    background-color: rgba(0,0,0,0.6);
+    border-radius: 10px;
+    padding: calc(5vh + 30px) 0;
+    backdrop-filter: blur(12px);
+    cursor: pointer;
+}
+
+.modal-container {
+    width: calc(20vw + 400px);
+    margin: 0 auto;
+    background-color: rgba(200, 200, 255, 0.25);
+    border-radius: 15px;
+    padding: calc(1vw + 40px);
+    color: #fff;
+    backdrop-filter: blur(30px);
+    cursor: auto;
+    max-height: calc(100vh - 10vh - 60px - 2.5vmin - 45px - 2rem);
+    overflow-y: auto;
+}
+
+.modal-container::-webkit-scrollbar {
+  width: 10px;
+}
+
+.modal-container::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+.modal-container::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.35);
+  border-radius: 10px;
+}
+
+.modal-container::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.modal-title {
+    font-family: 'Valorant';
+    font-size: calc(35px + 1vw);
+}
+
+.modal-overlay.closed {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 0.5s, opacity 0.5s;
+}
+
+.modal-overlay.open {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.5s;
+}
+
+.modal-close {
+    position: absolute;
+    top: calc(0.5vw + 15px);
+    right: calc(0.5vw + 15px);
+    width: calc(1vw + 25px);
+    cursor: pointer;
+    transition: transform 0.35s;
+}
+
+.modal-close:hover {
+    transform: scale(1.1);
+}

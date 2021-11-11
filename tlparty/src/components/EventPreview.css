@@ -2,7 +2,15 @@
     margin: 1%;
     border-radius: 5px;
     overflow: hidden;
+    border: solid 1px transparent;
+    transition: transform 0.25s, border 0.25s;
 }
+
+.event-preview-clickable-region:hover {
+    transform: scale(1.01);
+    border: solid 1px rgba(255, 255, 255, 0.35);
+}
+
 .square {
     position: relative;
     width: 20vw;
@@ -16,10 +24,11 @@
 .event-preview-title-text {
     position: absolute;
     top: 10%;
-    left: 10%;
+    left: 8%;
     color: #FFF;
     font-size: 100% !important;
     font-family: "Valorant";
+    text-shadow: 2px 2px 20px black;
 }
 
 .black-opaque-box {

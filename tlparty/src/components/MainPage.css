@@ -17,6 +17,13 @@
     padding-bottom: 1%;
 }
 
+.event-filter-dropdown {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 50%;
+}
+
 .main-page-game-text {
     color: #FFF !important;
     font-family: "FFMark";
@@ -59,6 +66,10 @@
     background-color: #ff4655;
     color: #fff;
     transition: all 0.3s cubic-bezier(0.645, 0.045, 0.36, 1);
+}
+
+.btn-main-page-game-icon-filter.active {
+    background-color: #ff4655;
 }
 
 .main-page-filter-game-icon {

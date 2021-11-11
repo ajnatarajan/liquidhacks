@@ -1,23 +1,92 @@
-import './Host.css';
+import './HostForm.css';
 import React, { useState } from 'react';
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import OurButton from '../components/OurButton';
-import HostForm from '../components/HostForm';
 import TagList from '../components/TagList';
 import DropdownUsingAPI from '../components/DropdownUsingAPI';
 
-export default function Host() {
-    const [showForm, setShowForm] = useState(false);
+const KeyCodes = {
+  comma: 188,
+  enter: [10, 13],
+};
 
-    function handleHostButtonClick() {
-        setShowForm(!showForm);
+const delimiters = [...KeyCodes.enter, KeyCodes.comma];
+
+export default function Host() {
+  const [formFields, setFormFields] = useState({
+    eventName: '',
+    eventLocation: '',
+    eventDateTime: new Date(), // TODO: Change to datetime format
+    tags: [],
+    tagInput: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    vaccinated: false,
+  });
+
+  const formSchema = Yup.object().shape({
+    eventName: Yup.string().required('Event name is a required field'),
+    eventLocation: Yup.string().required('Event location is a required field'),
+    eventDateTime: Yup.date().required('Event time is a required field'),
+    firstName: Yup.string().required('First name is a required field'),
+    lastName: Yup.string().required('Last name is a required field'),
+    email: Yup.string().email().required('Email is a required field'),
+    vaccinated: Yup.bool().required().oneOf([true], 'Vaccination is required to keep TL fans safe :)'),
+  });
+
+  const [isKeyReleased, setIsKeyReleased] = useState(true);
+
+
+  function handleFormSubmit() {
+    setTimeout(() => {
+      alert('Submitted to the "database"');
+    }, 500);
+    console.log('Form fields', formFields);
+  }
+
+  function handleDeleteTag(index) {
+    setFormFields({...formFields, tags: formFields.tags.filter((tag, i) => i !== index)});
+    console.log('HELP why am I deleting something');
+  }
+
+  function handleTagInput(e) {
+    setFormFields({...formFields, tagInput: e.target.value});
+  }
+
+  function handleTagInputKeyDown(e) {
+    const trimmedInput = formFields.tagInput.trim();
+    if (delimiters.includes(e.keyCode) && trimmedInput.length && !formFields.tags.includes(trimmedInput)) {
+      e.preventDefault();
+      setFormFields({...formFields, tags: [...formFields.tags, trimmedInput], tagInput: ''});
+      console.log('adding', trimmedInput);
     }
 
+    if (e.key === "Backspace" && !formFields.tagInput.length && formFields.tags.length && isKeyReleased) {
+      e.preventDefault();
+      const tagsCopy = [...formFields.tags];
+      const poppedTag = tagsCopy.pop();
+
+      setFormFields({...formFields, tags: tagsCopy, tagInput: poppedTag});
+      console.log('popping');
+    }
+
+    setIsKeyReleased(false);
+  }
+
+  function handleTagInputKeyUp() {
+    setIsKeyReleased(true);
+  }
+
+  function handleClearTags() {
+    setFormFields({...formFields, tags: []});
+  }
+
+  function renderForm() {
     return (
-<<<<<<< HEAD
       <div className='host-form-container'>
         <Formik
           validationSchema={formSchema}
@@ -144,7 +213,6 @@ export default function Host() {
                   onKeyDown={handleTagInputKeyDown}
                   onKeyUp={handleTagInputKeyUp}
                   clearTags={handleClearTags}
-                  placeholderText={"What's the vibe?"}
                 />
               </Form.Group>
 
@@ -225,38 +293,6 @@ export default function Host() {
 
 
   return (
-
-    <div className="Host">
-      <div style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        backgroundColor: 'black',
-        color: 'white'}}>
-        <div className='my-3'>
-          <OurButton type='button' onClick={handleHostButtonClick}>
-            Host a watch party!
-          </OurButton>
-=======
-        <div className="Host">
-            <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                backgroundColor: 'black',
-                color: 'white'}}>
-                <div className='my-3'>
-                    <OurButton type='button' onClick={handleHostButtonClick}>
-                    Host a watch party!
-                    </OurButton>
-                </div>
-            </div>
-            <div style={{
-                margin: '0 25vw',
-            }}>
-                {showForm ? <HostForm /> : null}
-            </div>
->>>>>>> main
-        </div>
-    );
+      renderForm()
+  );
 }

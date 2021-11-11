@@ -7,6 +7,7 @@ import Landing from './Landing'
 import './MainPage.css'
 import EventPreviewSection from './EventPreviewSection';
 import Modal from './Modal';
+import HostForm from './HostForm';
 import { useAuth0 } from "@auth0/auth0-react";
 import valorant_icon from '../img/valorant_icon.png';
 import league_icon from '../img/league_icon.png';
@@ -92,6 +93,7 @@ function MainPageMainArea(props) {
                 </div>
             </EventPreviewSection>
             <Modal title="Test Event" isOpen={isModalOpen} setIsOpen={setIsModalOpen}>
+                <HostForm/>
             </Modal>
         </div>
     );

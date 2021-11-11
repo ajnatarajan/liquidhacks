@@ -1,0 +1,50 @@
+.modal-overlay {
+    position: absolute;
+    top: calc(2.5vmin + 45px + 2rem); bottom: 0; left: 0; right: 0;
+    background-color: rgba(0,0,0,0.6);
+    border-radius: 10px;
+    padding: 46px;
+    backdrop-filter: blur(12px);
+    cursor: pointer;
+}
+
+.modal-container {
+    width: calc(20vw + 400px);
+    margin: 2vh auto;
+    background-color: rgba(200, 200, 255, 0.25);
+    border-radius: 15px;
+    padding: calc(1vw + 40px);
+    color: #fff;
+    backdrop-filter: blur(30px);
+    cursor: auto;
+}
+
+.modal-title {
+    font-family: 'Valorant';
+    font-size: calc(35px + 1vw);
+}
+
+.modal-overlay.closed {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 0.5s, opacity 0.5s;
+}
+
+.modal-overlay.open {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.5s;
+}
+
+.modal-close {
+    position: absolute;
+    top: calc(0.5vw + 15px);
+    right: calc(0.5vw + 15px);
+    width: calc(1vw + 25px);
+    cursor: pointer;
+    transition: transform 0.35s;
+}
+
+.modal-close:hover {
+    transform: scale(1.1);
+}

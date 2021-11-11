@@ -1,11 +1,12 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React, {useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import TopBar from './TopBar';
 import OurButton from './OurButton'
 import Landing from './Landing'
 import './MainPage.css'
 import EventPreviewSection from './EventPreviewSection';
+import Modal from './Modal';
 import { useAuth0 } from "@auth0/auth0-react";
 import valorant_icon from '../img/valorant_icon.png';
 import league_icon from '../img/league_icon.png';
@@ -35,6 +36,11 @@ function getUpcomingEvents() { // make our Liquipedia DB call here and store it
 }
 
 export default function MainPage() {
+    function openModal() {
+        setIsModalOpen(!isModalOpen);
+    }
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const { logout, isAuthenticated } = useAuth0();
     const navigate = useNavigate();
     const goToProfile = useCallback(() => navigate('/profile'), [navigate]);
@@ -48,6 +54,8 @@ export default function MainPage() {
             <TopBar button_text="PROFILE" on_click={goToProfile} button_text_2="LOG OUT" on_click_2={() => logout({ returnTo: "http://localhost:3000" })}/>
             <EventPreviewSection preview_section_title="Events Near You">
                 <OurButton type="button" onClick={getUpcomingEvents}> I want to host! </OurButton>
+                <OurButton type="button" onClick={openModal}> Open modal </OurButton>
+
                 <div class="game-filter-text-and-menu-bar">
                     <div class="main-page-game-text">
                         FILTER BY GAME
@@ -75,6 +83,8 @@ export default function MainPage() {
                     </div>
                 </div>
             </EventPreviewSection>
+            <Modal title="Test Event" isOpen={isModalOpen} setIsOpen={setIsModalOpen}>
+            </Modal>
         </div>
     );
 }

@@ -130,7 +130,7 @@ function MainPageMainArea(props) {
                     <DropdownUsingAPI options={props.cleanedNames} allowOther={true} otherName="Any"/>
                 </div>
             </EventPreviewSection>
-            <Modal title="Test Event" isOpen={isModalOpen} setIsOpen={setIsModalOpen}>
+            <Modal isOpen={isModalOpen} setIsOpen={setIsModalOpen}>
                 <EventModal
                     name="Event Name"
                     host="me"

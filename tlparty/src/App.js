@@ -29,6 +29,5 @@ export default function App() {
       snacks={["pogger", "wogger", "logger"]}
     />
     // <MainPage />
-    // <Host />
   );
 }

@@ -5,14 +5,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Formik } from 'formik';
 import OurButton from '../components/OurButton';
 import StaticTagList from './StaticTagList';
-import TagList from '../components/TagList';
-
-const KeyCodes = {
-    comma: 188,
-    enter: [10, 13],
-};
-  
-const delimiters = [...KeyCodes.enter, KeyCodes.comma];
 
 export default function EventModal(props) {
   const [formFields, setFormFields] = useState({
@@ -29,8 +21,6 @@ export default function EventModal(props) {
 
   const [showForm, setShowForm] = useState(false);
 
-  const [isKeyReleased, setIsKeyReleased] = useState(true);
-
   function handleFormSubmit() {
     setTimeout(() => {
       alert('Submitted to the "database"');
@@ -40,43 +30,6 @@ export default function EventModal(props) {
 
   function handleHostButtonClick() {
     setShowForm(!showForm);
-  }
-
-  function handleDeleteTag(index) {
-    setFormFields({...formFields, tags: formFields.tags.filter((tag, i) => i !== index)});
-    console.log('HELP why am I deleting something');
-  }
-
-  function handleTagInput(e) {
-    setFormFields({...formFields, tagInput: e.target.value});
-  }
-
-  function handleTagInputKeyDown(e) {
-    const trimmedInput = formFields.tagInput.trim();
-    if (delimiters.includes(e.keyCode) && trimmedInput.length && !formFields.tags.includes(trimmedInput)) {
-      e.preventDefault();
-      setFormFields({...formFields, tags: [...formFields.tags, trimmedInput], tagInput: ''});
-      console.log('adding', trimmedInput);
-    }
-
-    if (e.key === "Backspace" && !formFields.tagInput.length && formFields.tags.length && isKeyReleased) {
-      e.preventDefault();
-      const tagsCopy = [...formFields.tags];
-      const poppedTag = tagsCopy.pop();
-  
-      setFormFields({...formFields, tags: tagsCopy, tagInput: poppedTag});
-      console.log('popping');
-    }
-
-    setIsKeyReleased(false);
-  }
-
-  function handleTagInputKeyUp() {
-    setIsKeyReleased(true);
-  }
-
-  function handleClearTags() {
-    setFormFields({...formFields, tags: []});
   }
 
   function renderForm() {
@@ -113,9 +66,9 @@ export default function EventModal(props) {
                 <Form.Label className="host-form-label">Vibes:</Form.Label>
                 <Form.Label className="host-form-tags"> <StaticTagList tags={props.vibes}/> </Form.Label>
               </Form.Group>
-              
+
               <Form.Group className='mb-3'>
-                <Form.Label className="host-form-label">Snax:</Form.Label>
+                <Form.Label className="host-form-label">Snacks:</Form.Label>
                 <Form.Label className="host-form-tags"> <StaticTagList tags={props.snacks}/> </Form.Label>
               </Form.Group>
               
@@ -133,23 +86,28 @@ export default function EventModal(props) {
                 />
               </Form.Group>
 
-            <Form.Group className='mb-3' controlId='vibesList'>
-                <TagList
-                className='host-form-tags'
-                tags={formFields.tags}
-                input={formFields.tagInput}
-                deleteTag={handleDeleteTag}
-                onChange={handleTagInput}
-                onKeyDown={handleTagInputKeyDown}
-                onKeyUp={handleTagInputKeyUp}
-                clearTags={handleClearTags}
-                placeholderText={"Bringing any snacks?"}
-                />
-            </Form.Group>
-
             <div class='flexbox'>
-                <OurButton type="submit" onClick={handleSubmit}>Submit</OurButton>
+                <Form.Group as={Col} md={9}>
+                    <Form.Control
+                        autoFocus
+                        type="text"
+                        className="short-input-box"
+                        name='firstName'
+                        placeholder='Bringing a snack?'
+                        value={values.firstName}
+                        onChange={(e) => {
+                        handleChange(e);
+                        setFormFields({...formFields, firstName: e.target.value});
+                        }}
+                        isInvalid={!!errors.firstName}
+                    />
+                    <Form.Control.Feedback className='host-form-error-msg' type='invalid'>{errors.firstName}</Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group as={Col} md={9}>
+                    <OurButton type="submit" onClick={handleSubmit}>Register</OurButton>
+                </Form.Group>
             </div>
+
             </Form>
           )}
         </Formik>

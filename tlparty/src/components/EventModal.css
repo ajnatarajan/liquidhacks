@@ -65,12 +65,16 @@
     font-size: 3vmin;
 }
 
-.host-form-input {
+.host-form-input, .short-input-box {
     background-color: rgb(6, 3, 48) !important;
     font-family: "FFMark";
     color: white !important;
     font-weight: normal;
     font-size: 2vmin;
+}
+
+.short-input-box {
+    width: 50%;
 }
 
 .host-form-tags {
@@ -106,9 +110,10 @@
 }
 
 .flexbox {
-    display: flex;    
+    display: flex;
+    flex-direction: row;
 }
 
-.submit-button {
+.register {
     align-items: center;
 }

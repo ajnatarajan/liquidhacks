@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useState, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
 import TopBar from './TopBar';
 import OurButton from './OurButton'
@@ -16,37 +16,45 @@ import rainbowsix_icon from '../img/rainbowsix_icon.png';
 import starcraft_icon from '../img/starcraft_icon.png';
 import axios from 'axios';
 
-function getUpcomingEvents() { // make our Liquipedia DB call here and store it
+function getUpcomingEvents(upcoming_dictionary, game) { // make our Liquipedia DB call here and store it
     const FormData = require('form-data');
     const fs = require('fs');
     require('dotenv').config();
 
     const formData = new FormData();
     formData.append("apikey", process.env.REACT_APP_API_KEY);
-    formData.append("wiki", "starcraft2");
-    formData.append("limit", 2);
+    formData.append("wiki", game);
+    formData.append("limit", 5);
     formData.append("conditions", "([[opponent1::Team Liquid]] OR [[opponent2::Team Liquid]]) AND [[date::>2021-11-10 00:00:00]]");
 
     axios.post(
         'https://gentle-beyond-32691.herokuapp.com/https://api.liquipedia.net/api/v1/match',
         formData
     ).then(response => {
-        console.log(response);
+        upcoming_dictionary[game] = response.data.result;
     });
 }
 
-export default function MainPage() {
+function MainPageMainArea(props) {
     function openModal() {
         setIsModalOpen(!isModalOpen);
     }
 
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const { logout, isAuthenticated } = useAuth0();
+    const { logout } = useAuth0();
     const navigate = useNavigate();
     const goToProfile = useCallback(() => navigate('/profile'), [navigate]);
-    if (!isAuthenticated) {
-        return <Landing />
+    const { setUpcomingEvents } = props;
+    // Fetch the most recent API data every time the main page is reloaded
+    let upcoming_dictionary = {};
+    var games = ["leagueoflegends", "valorant", "dota2", "starcraft2","counterstrike","rainbowsix"];
+    for(let i=0; i < games.length; i++) {
+        getUpcomingEvents(upcoming_dictionary, games[i]);
     }
+    useEffect(() => {
+        setUpcomingEvents(upcoming_dictionary);
+    }, []);
+
     return (
         <div class="page-background-theme" style={{height: '100vh'}}>
             {/* if you change returnTo, talk to Ajay. He needs to change something
@@ -87,4 +95,15 @@ export default function MainPage() {
             </Modal>
         </div>
     );
+}
+
+
+export default function MainPage() {
+    const {isAuthenticated} = useAuth0();
+    const [upcoming_events, setUpcomingEvents] = useState({});
+    if (!isAuthenticated) {
+        return <Landing />;
+    }
+    console.log("UPCOMING EVENTS: ", upcoming_events);
+    return <MainPageMainArea setUpcomingEvents={setUpcomingEvents}/>;
 }

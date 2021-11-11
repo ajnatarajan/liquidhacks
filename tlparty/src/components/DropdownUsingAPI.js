@@ -6,7 +6,6 @@ import './DropdownUsingAPI.css';
 import { Form, Row, Col, Button } from 'react-bootstrap';
 
 export default function DropdownUsingAPI(props) {
-    console.log(props.options.length, "OY")
     if (props.allowOther && props.options[0] != props.otherName) { // prevent continuous fires of this appending to the front
         props.options.unshift(props.otherName)
     }

@@ -17,7 +17,7 @@ class Event(models.Model):
     video_game = models.CharField(max_length=50)
     image = models.BinaryField()
     num_attendees = models.IntegerField()
-    date_time = models.TimeField()
+    date_time = models.DateTimeField()
     timezone = models.CharField(max_length=10)
     vibes = ArrayField(
         models.CharField(max_length=50),
@@ -38,23 +38,12 @@ class Event(models.Model):
         return self.event_name
 
 
-class PastEvent(models.Model):
+class UserEvent(models.Model):
     email_address = models.CharField(primary_key=True, max_length=100)
     event_id = models.ForeignKey("Event", on_delete=models.CASCADE)
 
     class Meta:
-        db_table = 'past_event'
-    
-    def __str__(self):
-        return "{}, <{}>".format(self.event_id, self.email_address)
-
-
-class UpcomingEvent(models.Model):
-    email_address = models.CharField(primary_key=True, max_length=100)
-    event_id = models.ForeignKey("Event", on_delete=models.CASCADE)
-
-    class Meta:
-        db_table = 'upcoming_event'
+        db_table = 'user_event'
     
     def __str__(self):
         return "{}, <{}>".format(self.event_id, self.email_address)

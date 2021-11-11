@@ -1,7 +1,7 @@
 from django.db.models.fields import EmailField
 from django.http import HttpResponse
 from django.shortcuts import render
-from testapp.models import Event, PastEvent, UpcomingEvent, User
+from testapp.models import Event, UserEvent, User
 
 
 import os
@@ -36,8 +36,11 @@ def getUserEvents(request):
         if params:
             user_email = params['email'].strip('"')
             results = {
-                "past_events": [pe.event_id for pe in PastEvent.objects.filter(email_address=user_email)],
-                "upcoming_events": [ue.event_id for ue in UpcomingEvent.objects.filter(email_address=user_email)],
+                "user_events": [
+                    ue.event_id for ue in UserEvent.objects.filter(
+                        email_address=user_email
+                    )
+                ]
             }
             return HttpResponse(json.dumps(results))
         else:
@@ -123,33 +126,16 @@ def addEvent(request):
             print('{} was added to the database'.format(e.__str__()))
 
 
-def addPastEvent(request):
+def addUserEvent(request):
     if request.method == 'GET':
         params = request.GET.dict()
         clean_params = {key: params[key].strip('"') for key in params}
-        if PastEvent.objects.filter(email_address=clean_params['email_address']).exists():
+        if UserEvent.objects.filter(email_address=clean_params['email_address']).exists():
             print("{} already exists in the database".format(clean_params['email_address']))
         elif not Event.objects.filter(event_id=clean_params['event_id']).exists():
             print("Cannot add {} because event does not exist!".format(clean_params['event_id']))
         else:
-            pe = PastEvent(
-                email_address=clean_params['email_address'],
-                event_id=clean_params['event_id'],
-            )
-            pe.save()
-            print('{} was added to the database'.format(pe.__str__()))
-
-
-def addUpcomingEvent(request):
-    if request.method == 'GET':
-        params = request.GET.dict()
-        clean_params = {key: params[key].strip('"') for key in params}
-        if UpcomingEvent.objects.filter(email_address=clean_params['email_address']).exists():
-            print("{} already exists in the database".format(clean_params['email_address']))
-        elif not Event.objects.filter(event_id=clean_params['event_id']).exists():
-            print("Cannot add {} because event does not exist!".format(clean_params['event_id']))
-        else:
-            ue = UpcomingEvent(
+            ue = UserEvent(
                 email_address=clean_params['email_address'],
                 event_id=clean_params['event_id'],
             )

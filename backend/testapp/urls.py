@@ -10,7 +10,6 @@ urlpatterns = [
     path('getEvent/', views.getEvent, name='getEvent'),
     path('getAllEvents/', views.getAllEvents, name='getAllEvents'),
     path('addEvent/', views.addEvent, name='addEvent'),
-    path('addPastEvent/', views.addPastEvent, name='addPastEvent'),
-    path('addUpcomingEvent/', views.addUpcomingEvent, name='addUpcomingEvent'),
+    path('addUserEvent/', views.addUserEvent, name='addUserEvent'),
     path('addUser/', views.addUser, name='addUser'),
 ]

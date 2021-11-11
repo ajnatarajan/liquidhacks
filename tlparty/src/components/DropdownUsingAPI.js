@@ -6,10 +6,11 @@ import './DropdownUsingAPI.css';
 import { Form, Row, Col, Button } from 'react-bootstrap';
 
 export default function DropdownUsingAPI(props) {
-    if (props.allowOther) {
+    console.log(props.options.length, "OY")
+    if (props.allowOther && props.options[0] != props.otherName) { // prevent continuous fires of this appending to the front
         props.options.unshift(props.otherName)
     }
-    console.log(props.options, "BOKEH");
+
     var event = (
         <Form noValidate className='dropdown-using-api my-3'>
             <Form.Group as={Col} md={6}>

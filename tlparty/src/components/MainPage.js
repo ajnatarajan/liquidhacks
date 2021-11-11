@@ -18,6 +18,7 @@ import starcraft_icon from '../img/starcraft_icon.png';
 import DropdownUsingAPI from './DropdownUsingAPI';
 import EventModal from './EventModal';
 
+// This is for events from LIQUIPEDIA DB (NOT events that our users make)
 function getUpcomingEvents(upcoming_dictionary, game, setFunction) { // make our Liquipedia DB call here and store it
     const FormData = require('form-data');
     const fs = require('fs');
@@ -46,6 +47,16 @@ function getUpcomingEvents(upcoming_dictionary, game, setFunction) { // make our
     });
 }
 
+function getAllUpcomingParties(setAllUpcomingParties) {
+    fetch('/testapp/getAllEvents/',
+    {
+        method: "GET"
+    }).then(response => response.json())
+    .then(data => {
+        setAllUpcomingParties(data["events"])
+    });
+}
+
 function MainPageMainArea(props) {
     function openModal() {
         setIsModalOpen(!isModalOpen);
@@ -65,7 +76,7 @@ function MainPageMainArea(props) {
     const { logout } = useAuth0();
     const navigate = useNavigate();
     const goToProfile = useCallback(() => navigate('/profile'), [navigate]);
-    const { setUpcomingEvents } = props;
+    const { setUpcomingEvents, setAllUpcomingParties } = props;
     const [activeGames, setActiveGames] = useState({
         valorant: false,
         league: false,
@@ -82,16 +93,17 @@ function MainPageMainArea(props) {
         for(let i=0; i < games.length; i++) {
             getUpcomingEvents(upcoming_dictionary, games[i], setUpcomingEvents);
         }
+        getAllUpcomingParties(setAllUpcomingParties);
     }, []);
 
-    console.log("CLEANED EVENTS INSIDE: ", props.cleanedNames);
+    console.log("Upcoming Parties: ", props.upcomingParties);
 
     return (
         <div class="page-background-theme" style={{minHeight: '100vh'}}>
             {/* if you change returnTo, talk to Ajay. He needs to change something
             in his auth0 account otherwise this will break*/}
             <TopBar button_text="PROFILE" on_click={goToProfile} button_text_2="LOG OUT" on_click_2={() => logout({ returnTo: "http://localhost:3000" })}/>
-            <EventPreviewSection preview_section_title="Events Near You">
+            <EventPreviewSection preview_section_title="Events Near You" events={props.upcomingParties}>
                 <OurButton type="button" onClick={getUpcomingEvents}> I want to host! </OurButton>
                 <OurButton type="button" onClick={openModal}> Open modal </OurButton>
 
@@ -155,7 +167,7 @@ function clean_pagename(pagename) {
 export default function MainPage() {
     const {isAuthenticated} = useAuth0();
     const [upcoming_events, setUpcomingEvents] = useState({});
-    var cleaned_event_names = [];
+    const [all_upcoming_parties, setAllUpcomingParties] = useState([]);
     if (!isAuthenticated) {
         return <Landing />;
     }
@@ -183,7 +195,12 @@ export default function MainPage() {
 
     return  (
         <div>
-            <MainPageMainArea setUpcomingEvents={setUpcomingEvents} cleanedNames={cleaned_names}/>
+            <MainPageMainArea
+                setUpcomingEvents={setUpcomingEvents}
+                cleanedNames={cleaned_names}
+                setAllUpcomingParties={setAllUpcomingParties}
+                upcomingParties={all_upcoming_parties}
+            />
         </div>
     );
 }

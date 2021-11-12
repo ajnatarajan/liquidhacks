@@ -3,6 +3,8 @@
     overflow: hidden;
     border: solid 1px transparent;
     transition: transform 0.25s, border 0.25s;
+    height: 11.33vw;
+    min-height: 170px;
 }
 
 .event-preview-clickable-region:hover {

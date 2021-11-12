@@ -169,7 +169,7 @@ function MainPageMainArea(props) {
                 setIsOpen={setIsModalOpen}
                 title="Host an Event"
             >
-                <HostForm dropdown_event_options={props.cleanedNames}/>
+                <HostForm dropdown_event_options={props.cleanedNames} setIsOpen={setIsModalOpen}/>
             </Modal>
         </div>
     );

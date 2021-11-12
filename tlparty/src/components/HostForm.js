@@ -1,12 +1,13 @@
 import './HostForm.css';
 import React, { useState } from 'react';
-import { Form, Row, Col } from 'react-bootstrap';
+import { Form, Row, Col, Alert } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import OurButton from '../components/OurButton';
 import TagList from '../components/TagList';
 import DropdownUsingAPI from '../components/DropdownUsingAPI';
+import Modal from '../components/Modal';
 
 const KeyCodes = {
   comma: 188,
@@ -19,16 +20,17 @@ export default function HostForm(props) {
   const [formFields, setFormFields] = useState({
     eventName: '',
     eventLocation: '',
+    image: '',
+    numAttendees: "0",
     eventDateTime: new Date(),
     timezone: '',
-    tags: [],
-    tagInput: '',
+    vibes: [],
+    vibesInput: '',
     snacks: [],
     snackInput: '',
     firstName: '',
     lastName: '',
     email: '',
-    image: '',
     vaccinated: false,
   });
 
@@ -52,41 +54,40 @@ export default function HostForm(props) {
     console.log('Form fields', formFields);
   }
 
-  function handleDeleteTag(index) {
-    setFormFields({...formFields, tags: formFields.tags.filter((tag, i) => i !== index)});
-    console.log('HELP why am I deleting something');
+  function handleDeleteVibes(index) {
+    setFormFields({...formFields, vibes: formFields.vibes.filter((vibes, i) => i !== index)});
   }
 
-  function handleTagInput(e) {
-    setFormFields({...formFields, tagInput: e.target.value});
+  function handleVibesInput(e) {
+    setFormFields({...formFields, vibesInput: e.target.value});
   }
 
-  function handleTagInputKeyDown(e) {
-    const trimmedInput = formFields.tagInput.trim();
-    if (delimiters.includes(e.keyCode) && trimmedInput.length && !formFields.tags.includes(trimmedInput)) {
+  function handleVibesInputKeyDown(e) {
+    const trimmedInput = formFields.vibesInput.trim();
+    if (delimiters.includes(e.keyCode) && trimmedInput.length && !formFields.vibes.includes(trimmedInput)) {
       e.preventDefault();
-      setFormFields({...formFields, tags: [...formFields.tags, trimmedInput], tagInput: ''});
+      setFormFields({...formFields, vibes: [...formFields.vibes, trimmedInput], vibesInput: ''});
       console.log('adding', trimmedInput);
     }
 
-    if (e.key === "Backspace" && !formFields.tagInput.length && formFields.tags.length && isKeyReleased) {
+    if (e.key === "Backspace" && !formFields.vibesInput.length && formFields.vibes.length && isKeyReleased) {
       e.preventDefault();
-      const tagsCopy = [...formFields.tags];
-      const poppedTag = tagsCopy.pop();
+      const vibes = [...formFields.vibes];
+      const poppedVibes = vibes.pop();
 
-      setFormFields({...formFields, tags: tagsCopy, tagInput: poppedTag});
+      setFormFields({...formFields, vibes: vibes, vibesInput: poppedVibes});
       console.log('popping');
     }
 
     setIsKeyReleased(false);
   }
 
-  function handleTagInputKeyUp() {
+  function handleVibesInputKeyUp() {
     setIsKeyReleased(true);
   }
 
-  function handleClearTags() {
-    setFormFields({...formFields, tags: []});
+  function handleClearVibes() {
+    setFormFields({...formFields, vibes: []});
   }
 
   // imagine abstracting code out instead of copy-pasting to modify one attribute
@@ -148,7 +149,7 @@ export default function HostForm(props) {
 
   const englishToDbGameCode = objectFlip(dbGameCodeToEnglish);
 
-  function handleFormSubmitForReal() {
+  async function handleFormSubmitForReal() {
     const requestOptions = {
       method: 'POST',
       body: new URLSearchParams({
@@ -156,24 +157,26 @@ export default function HostForm(props) {
         location: formFields.eventLocation,
         game: official_event_option,
         video_game: englishToDbGameCode[video_game_option],
-        image: "images/RamenMulti_c2v02_2400x1800_cropped_widescreen.jpg",
-        num_attendees: "0", // When you create an event, it has zero attendees (initially)
-        // date_time: "2021-11-17 18:00",
-        date_time: formFields.eventDateTime.toString(),
-        // timezone: formFields.eventPST,
-        timezone: "beetc",
-        vibes: "{" + formFields.tags.toString() + "}",
-
-        // When you create an event, initially nobody's bringing any snacks.
-        // We probably want to change this lol
-        snacks: "{}",
+        image: formFields.image,
+        num_attendees: formFields.numAttendees, // When you create an event, it has zero attendees (initially)
+        date_time: formFields.eventDateTime,
+        timezone: formFields.timezone,
+        vibes: '{' + formFields.vibes + '}',
+        snacks: '{' + formFields.snacks + '}',
         contact_firstname: formFields.firstName,
         contact_lastname: formFields.lastName,
         contact_email: formFields.email
       })
     }
 
-    fetch('/api/addEvent/', requestOptions)
+    const response = await fetch('/api/addEvent/', requestOptions);
+    if (response.status === 200 || response.status === 201) {
+      props.setIsOpen(false);
+      alert("Event registered!");
+    } else {
+      // Something happened o_o
+      alert("Something unexpected happened :(. Please try again");
+    }
   }
 
   // console.log(formFields, "FORM FIELDS");
@@ -338,13 +341,13 @@ export default function HostForm(props) {
                 <Form.Label className="host-form-label">Vibes list</Form.Label>
                 <TagList
                   className='host-form-tags'
-                  tags={formFields.tags}
-                  input={formFields.tagInput}
-                  deleteTag={handleDeleteTag}
-                  onChange={handleTagInput}
-                  onKeyDown={handleTagInputKeyDown}
-                  onKeyUp={handleTagInputKeyUp}
-                  clearTags={handleClearTags}
+                  tags={formFields.vibes}
+                  input={formFields.vibesInput}
+                  deleteTag={handleDeleteVibes}
+                  onChange={handleVibesInput}
+                  onKeyDown={handleVibesInputKeyDown}
+                  onKeyUp={handleVibesInputKeyUp}
+                  clearTags={handleClearVibes}
                   placeholderText={"What's the mood?"}
                 />
               </Form.Group>

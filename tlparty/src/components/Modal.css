@@ -1,6 +1,7 @@
 .modal-overlay {
-    position: absolute;
-    top: calc(2.5vmin + 45px + 2rem);
+    position: fixed;
+    /* top: calc(2.5vmin + 45px + 2rem); */
+    top: 0;
     bottom: 0;
     left: 0;
     right: 0;
@@ -9,7 +10,8 @@
     padding: calc(5vh + 30px) 0;
     backdrop-filter: blur(12px);
     cursor: pointer;
-    z-index: 3; /* just bring a modal to the front */
+    z-index: 3;
+    /* just bring a modal to the front */
 }
 
 .modal-container {
@@ -21,7 +23,7 @@
     color: #fff;
     backdrop-filter: blur(30px);
     cursor: auto;
-    max-height: calc(100vh - 10vh - 60px - 2.5vmin - 45px - 2rem);
+    max-height: calc(100vh - 60px - 2.5vmin - 45px - 2rem);
     overflow-y: auto;
     overflow-x: hidden;
 }

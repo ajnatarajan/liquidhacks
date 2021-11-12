@@ -69,7 +69,8 @@
     font-size: 3vmin;
 }
 
-.host-form-input, .short-input-box {
+.host-form-input,
+.short-input-box {
     background-color: rgb(6, 3, 48) !important;
     font-family: "FFMark";
     color: white !important;
@@ -152,7 +153,6 @@
 .event-section-title {
     font-size: calc(1vmin + 6px);
 }
-
 
 .event-section-content {
     font-size: calc(1vmin + 12px);

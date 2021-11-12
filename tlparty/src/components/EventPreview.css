@@ -22,7 +22,7 @@
 
 .square.empty {
     border-radius: 5px;
-    border: dashed 1px #fff;
+    border: dashed 1px rgba(255, 255, 255, 0.35);
     color: #fff;
     font-size: calc(.5vw + 20px);
     font-weight: bold;

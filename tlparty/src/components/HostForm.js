@@ -175,6 +175,7 @@ export default function HostForm(props) {
                     autoFocus
                     type="datetime-local"
                     className="host-form-input"
+                    style={{cursor: "pointer"}}
                     name='eventDateTime'
                     placeholder='Event Time'
                     value={values.eventDateTime}
@@ -188,7 +189,7 @@ export default function HostForm(props) {
                 </Form.Group>
                 <Form.Group as={Col} md={6} controlId="eventPST">
                   <Form.Label className="host-form-label">Timezone</Form.Label>
-                  <Form.Select className="host-form-input" aria-label="Default select example">
+                  <Form.Select className="host-form-input" aria-label="Default select example" style={{cursor: "pointer"}}>
                     <option>Select a timezone</option>
                     <option value="-12:00">(GMT -12:00) Eniwetok, Kwajalein</option>
                     <option value="-11:00">(GMT -11:00) Midway Island, Samoa</option>

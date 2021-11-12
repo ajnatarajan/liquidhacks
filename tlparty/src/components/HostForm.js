@@ -25,6 +25,7 @@ export default function HostForm(props) {
     firstName: '',
     lastName: '',
     email: '',
+    image: '',
     vaccinated: false,
   });
 
@@ -251,6 +252,19 @@ export default function HostForm(props) {
                   onKeyUp={handleTagInputKeyUp}
                   clearTags={handleClearTags}
                 />
+              </Form.Group>
+              <Form.Group controlId="image" className="mb-3">
+                  <Form.Label>Background image</Form.Label>
+                  <Form.Control
+                    type="file"
+                    className="host-form-input"
+                    name='image'
+                    value={values.image}
+                    onChange={(e) => {
+                      handleChange(e);
+                      setFormFields({...formFields, image: e.target.value});
+                    }}
+                  />
               </Form.Group>
 
               <Form.Label className="mt-3 host-form-title">Contact Information</Form.Label>

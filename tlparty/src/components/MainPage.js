@@ -155,7 +155,7 @@ function MainPageMainArea(props) {
                         otherName="Any"
                         selection={dropdownSelection}
                         setSelection={setDropdownSelection}
-                        title_text="FILTER BY TEXT"
+                        title_text="FILTER BY EVENT"
                     />
                 </div>
             </EventPreviewSection>

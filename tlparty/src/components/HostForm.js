@@ -21,7 +21,7 @@ export default function HostForm(props) {
     eventName: '',
     eventLocation: '',
     image: '',
-    numAttendees: "0",
+    numAttendees: "1",
     eventDateTime: new Date(),
     timezone: '',
     vibes: [],

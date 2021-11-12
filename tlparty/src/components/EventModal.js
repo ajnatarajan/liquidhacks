@@ -16,6 +16,7 @@ import event_icon from '../img/event_icon.svg';
 import date_icon from '../img/date_icon.svg';
 import heart_icon from '../img/heart_icon.svg';
 import snacks_icon from '../img/snacks_icon.svg';
+import { useAuth0 } from "@auth0/auth0-react";
 
 const KeyCodes = {
     comma: 188,
@@ -26,6 +27,7 @@ const delimiters = [...KeyCodes.enter, KeyCodes.comma];
 
 
 export default function EventModal(props) {
+    const { user } = useAuth0();
     const [formFields, setFormFields] = useState({
         snacks: [],
         snacksInput: '',
@@ -73,7 +75,47 @@ export default function EventModal(props) {
         setFormFields({...formFields, snacks: []});
     }
 
+    async function addUser(user_email) {
+        const formData = new FormData()
+        formData.append("email_address", user_email);
+        formData.append("first_name", "dummy");
+        formData.append("last_name", "dummy");
+        formData.append("phone_number", "dummy");
+        formData.append("is_vaccinated", "True");
+
+        const requestOptions = {
+            method: "POST",
+            body: formData,
+        }
+        const response = await fetch('/api/addUser/', requestOptions);
+        console.log("added user: ", user_email);
+        console.log(response.status, "FIRST RESPONSE");
+        if (!(response.status === 200 || response.status === 201)) {
+            alert("Something unexpected happened :(. Please try again");
+        }
+    }
+
+    async function addUserEvent(user_email, event_id) {
+        const formData = new FormData()
+        formData.append("email_address", user_email);
+        formData.append("event_id", event_id);
+
+        const requestOptions = {
+            method: "POST",
+            body: formData,
+        }
+
+        const response = await fetch('/api/addUserEvent/', requestOptions);
+        console.log("added user event: ", user_email, event_id);
+        console.log(response.status, "USER EVENT RESPONSE");
+        if (!(response.status === 200 || response.status === 201)) {
+            alert("Something unexpected happened :(. Please try again");
+        }
+
+    }
+
     async function handleFormSubmitForReal() {
+        
         const formData = new FormData();
         formData.append("event_id", props.eventId);
         console.log('attendees', props.numAttendees)
@@ -85,7 +127,12 @@ export default function EventModal(props) {
             body: formData,
         }
 
+        await addUser(user.email);
+
+        await addUserEvent(user.email, props.eventId);
+
         const response = await fetch('/api/editEvent/', requestOptions);
+        console.log(response.status, "SECOND RESPONSE");
         if (response.status === 200 || response.status === 201) {
             props.setIsOpen(false);
             alert("You're on the list! Party on 🎉");

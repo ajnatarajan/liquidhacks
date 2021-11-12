@@ -276,8 +276,8 @@ def addUserEvent(request):
         return HttpResponse("Cannot add {} because event does not exist!".format(clean_params['event_id']))
     else:
         ue = UserEvent(
-            email_address=clean_params['email_address'],
-            event_id=clean_params['event_id'],
+            email_address_id=clean_params['email_address'],
+            event_id_id=clean_params['event_id'],
         )
         ue.save()
         return HttpResponse('{} was added to the database'.format(ue.__str__()))

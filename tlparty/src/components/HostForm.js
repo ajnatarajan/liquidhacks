@@ -20,6 +20,7 @@ export default function HostForm(props) {
     eventName: '',
     eventLocation: '',
     eventDateTime: new Date(), // TODO: Change to datetime format
+    // eventPST: '',
     tags: [],
     tagInput: '',
     firstName: '',
@@ -47,57 +48,6 @@ export default function HostForm(props) {
     }, 500);
     console.log('Form fields', formFields);
   }
-
-  function handleFormSubmitForReal() {
-    const params = {
-      event_name: "eatery_big_time",
-      location: "atlanta, ga",
-      game: "CSGO - Team Vitality vs. Team Liquid : BLAST Premier 2021 Fall",
-      video_game: "leagueoflegends",
-      image: "images/RamenMulti_c2v02_2400x1800_cropped_widescreen.jpg",
-      num_attendees: "5",
-      date_time: "2021-11-17 18:00",
-      timezone: "pst",
-      vibes: "{}",
-      snacks: "{}",
-      contact_firstname: "kyle",
-      contact_lastname: "weng",
-      contact_email: "kw@caksdfakl.com"
-    }
-
-    fetch('/api/addEvent/',
-    {
-      method: "post",
-      body: new URLSearchParams(params)
-    }).then(response => response.json())
-    .then(data => {return data});
-    
-    // const requestOptions = {
-    //   method: 'POST',
-    //   headers: {'Content-Type': 'application/json'},
-    //   body: new URLSearchParams(
-    //     { event_name: "eatery_big_time",
-    //       location: "atlanta, ga",
-    //       game: "CSGO - Team Vitality vs. Team Liquid : BLAST Premier 2021 Fall",
-    //       video_game: "leagueoflegends",
-    //       image: "images/RamenMulti_c2v02_2400x1800_cropped_widescreen.jpg",
-    //       num_attendees: "5",
-    //       date_time: "2021-11-17 18:00",
-    //       timezone: "pst",
-    //       vibes: "eat, this, cookie",
-    //       snacks: "no, really, cookies",
-    //       contact_firstname: "kyle",
-    //       contact_lastname: "weng",
-    //       contact_email: "kw@caksdfakl.com"
-    //     }
-    //   )
-    // };
-
-    // fetch('/api/addEvent/', requestOptions).then(
-    //   response => response.json()
-    // ).then(data => {return data})
-  }
-
 
   function handleDeleteTag(index) {
     setFormFields({...formFields, tags: formFields.tags.filter((tag, i) => i !== index)});
@@ -140,6 +90,52 @@ export default function HostForm(props) {
 
   const [video_game_option, setVideoGameOption] = useState("League of Legends");
   const [official_event_option, setOfficialEventOption] = useState("Not listed");
+
+  function objectFlip(obj) {
+    return Object.keys(obj).reduce((ret, key) => {
+      ret[obj[key]] = key;
+      return ret;
+    }, {});
+  }
+
+  const dbGameCodeToEnglish = {
+      "leagueoflegends": "League of Legends",
+      "valorant": "Valorant",
+      "dota2": "Dota 2",
+      "starcraft2": "Starcraft 2",
+      "counterstrike": "Counter-Strike: Global Offensive",
+      "rainbowsix": "Rainbow Six",
+  }
+
+  const englishToDbGameCode = objectFlip(dbGameCodeToEnglish);
+
+  function handleFormSubmitForReal() {
+    const requestOptions = {
+      method: 'POST',
+      body: new URLSearchParams({
+        event_name: formFields.eventName,
+        location: formFields.eventLocation,
+        game: official_event_option,
+        video_game: englishToDbGameCode[video_game_option],
+        image: "images/RamenMulti_c2v02_2400x1800_cropped_widescreen.jpg",
+        num_attendees: "0", // When you create an event, it has zero attendees (initially)
+        // date_time: "2021-11-17 18:00",
+        date_time: formFields.eventDateTime.toString(),
+        // timezone: formFields.eventPST,
+        timezone: "beetc",
+        vibes: "{" + formFields.tags.toString() + "}",
+
+        // When you create an event, initially nobody's bringing any snacks.
+        // We probably want to change this lol
+        snacks: "{}",
+        contact_firstname: formFields.firstName,
+        contact_lastname: formFields.lastName,
+        contact_email: formFields.email
+      })
+    }
+
+    fetch('/api/addEvent/', requestOptions)
+  }
 
   // console.log(formFields, "FORM FIELDS");
   // console.log(official_event_option, "OFFICIAL EVENT");

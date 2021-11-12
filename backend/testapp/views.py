@@ -240,14 +240,14 @@ def editEvent(request):
 
 @csrf_exempt
 def addEvent(request):
-    print('request', request.POST)
     params = getParams(request)
+    print('params', params)
     files = request.FILES.dict()
-    print('PARAMS', params)
     clean_params = {key: params[key].strip('"') for key in params}
-    print('CLEAN PARAMS', clean_params)
+    print('Clean params', clean_params)
     
     e = Event(
+        event_id=clean_params['event_id'],
         event_name=clean_params['event_name'],
         location=clean_params['location'],
         game=clean_params['game'],
@@ -270,8 +270,15 @@ def addEvent(request):
 def addUserEvent(request):
     params = getParams(request)
     clean_params = {key: params[key].strip('"') for key in params}
-    if UserEvent.objects.filter(email_address=clean_params['email_address']).exists():
-        return HttpResponse("{} already exists in the database".format(clean_params['email_address']))
+    if UserEvent.objects.filter(
+        email_address=clean_params['email_address'],
+        event_id=clean_params['event_id']
+    ).exists():
+        return HttpResponse("{}, {} already exists in the database".format(
+            clean_params['email_address'], clean_params['event_id']
+        ))
+    elif not User.objects.filter(email_address=clean_params['email_address']).exists():
+        return HttpResponse("Cannot add {} because user does not exist!".format(clean_params['email_address']))
     elif not Event.objects.filter(event_id=clean_params['event_id']).exists():
         return HttpResponse("Cannot add {} because event does not exist!".format(clean_params['event_id']))
     else:
@@ -287,6 +294,7 @@ def addUserEvent(request):
 def addUser(request):
     params = getParams(request)
     clean_params = {key: params[key].strip('"') for key in params}
+    print('user clean params', clean_params)
     if User.objects.filter(email_address=clean_params['email_address']).exists():
         return HttpResponse("{} already exists in the database".format(clean_params['email_address']))
     else:

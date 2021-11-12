@@ -3,7 +3,9 @@ import React, { useState } from 'react';
 import { Form, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Formik } from 'formik';
+import { v4 as uuidv4 } from 'uuid';
 import * as Yup from 'yup';
+import { useAuth0 } from "@auth0/auth0-react";
 import OurButton from '../components/OurButton';
 import TagList from '../components/TagList';
 import DropdownUsingAPI from '../components/DropdownUsingAPI';
@@ -17,6 +19,7 @@ const KeyCodes = {
 const delimiters = [...KeyCodes.enter, KeyCodes.comma];
 
 export default function HostForm(props) {
+  const { user } = useAuth0();
   const [formFields, setFormFields] = useState({
     eventName: '',
     eventLocation: '',
@@ -143,7 +146,12 @@ export default function HostForm(props) {
   const englishToDbGameCode = objectFlip(dbGameCodeToEnglish);
 
   async function handleFormSubmitForReal() {
+    console.log('what is happening');
+    const eventUUID = uuidv4();
+    console.log('uuid: ', eventUUID);
+
     const formData = new FormData();
+    formData.append("event_id", eventUUID);
     formData.append("event_name", formFields.eventName);
     formData.append("location", formFields.eventLocation);
     formData.append("game", official_event_option);
@@ -157,14 +165,45 @@ export default function HostForm(props) {
     formData.append("contact_firstname", formFields.firstName);
     formData.append("contact_lastname", formFields.lastName);
     formData.append("contact_email", formFields.email);
+
   
     const requestOptions = {
       method: "POST",
       body: formData,
     }
-
     const response = await fetch('/api/addEvent/', requestOptions);
-    if (response.status === 200 || response.status === 201) {
+
+
+    const formDataUser = new FormData();
+    formDataUser.append("email_address", user.email);
+    formDataUser.append("first_name", formFields.firstName);
+    formDataUser.append("last_name", formFields.lastName);
+    formDataUser.append("phone_number", "");
+    formDataUser.append("is_vaccinated", formFields.vaccinated ? "True" : "False");
+
+    const requestOptionsUser = {
+      method: "POST",
+      body: formDataUser ,
+    }
+
+    const responseUser = await fetch('/api/addUser/', requestOptionsUser);
+
+
+    const formDataUserEvent = new FormData();
+    formDataUserEvent.append("email_address", user.email);
+    formDataUserEvent.append("event_id", eventUUID);
+
+    const requestOptionsUserEvent = {
+      method: "POST",
+      body: formDataUserEvent,
+    }
+
+    const responseUserEvent = await fetch('/api/addUserEvent/', requestOptionsUserEvent);
+
+    const eventSuccess = (response.status === 200 || response.status === 201);
+    const userSuccess = (responseUser.status === 200 || responseUser.status === 201);
+    const userEventSuccess = (responseUserEvent.status === 200 || responseUserEvent.status === 201);
+    if (eventSuccess && userSuccess && userEventSuccess) {
       props.setIsOpen(false);
       alert("Event registered!");
     } else {

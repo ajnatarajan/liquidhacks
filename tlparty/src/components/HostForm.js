@@ -48,6 +48,57 @@ export default function HostForm(props) {
     console.log('Form fields', formFields);
   }
 
+  function handleFormSubmitForReal() {
+    const params = {
+      event_name: "eatery_big_time",
+      location: "atlanta, ga",
+      game: "CSGO - Team Vitality vs. Team Liquid : BLAST Premier 2021 Fall",
+      video_game: "leagueoflegends",
+      image: "images/RamenMulti_c2v02_2400x1800_cropped_widescreen.jpg",
+      num_attendees: "5",
+      date_time: "2021-11-17 18:00",
+      timezone: "pst",
+      vibes: "{}",
+      snacks: "{}",
+      contact_firstname: "kyle",
+      contact_lastname: "weng",
+      contact_email: "kw@caksdfakl.com"
+    }
+
+    fetch('/api/addEvent/',
+    {
+      method: "post",
+      body: new URLSearchParams(params)
+    }).then(response => response.json())
+    .then(data => {return data});
+    
+    // const requestOptions = {
+    //   method: 'POST',
+    //   headers: {'Content-Type': 'application/json'},
+    //   body: new URLSearchParams(
+    //     { event_name: "eatery_big_time",
+    //       location: "atlanta, ga",
+    //       game: "CSGO - Team Vitality vs. Team Liquid : BLAST Premier 2021 Fall",
+    //       video_game: "leagueoflegends",
+    //       image: "images/RamenMulti_c2v02_2400x1800_cropped_widescreen.jpg",
+    //       num_attendees: "5",
+    //       date_time: "2021-11-17 18:00",
+    //       timezone: "pst",
+    //       vibes: "eat, this, cookie",
+    //       snacks: "no, really, cookies",
+    //       contact_firstname: "kyle",
+    //       contact_lastname: "weng",
+    //       contact_email: "kw@caksdfakl.com"
+    //     }
+    //   )
+    // };
+
+    // fetch('/api/addEvent/', requestOptions).then(
+    //   response => response.json()
+    // ).then(data => {return data})
+  }
+
+
   function handleDeleteTag(index) {
     setFormFields({...formFields, tags: formFields.tags.filter((tag, i) => i !== index)});
     console.log('HELP why am I deleting something');
@@ -103,7 +154,7 @@ export default function HostForm(props) {
           validationSchema={formSchema}
           validateOnChange={false}
           validateOnBlur={false}
-          onSubmit={handleFormSubmit}
+          onSubmit={handleFormSubmitForReal}
           initialValues={formFields}
         >
           {({

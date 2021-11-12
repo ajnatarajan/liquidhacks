@@ -38,15 +38,10 @@ def omg(request):
 
 def getParams(request):
     params = dict()
-    print("big chomkus cookie", request)
     if request.method == 'GET':
         params = request.GET.dict()
     elif request.method == 'POST':
         params = request.POST.dict()
-        # https://stackoverflow.com/questions/24674978/django-cannot-parse-post-parameters-of-wsgirequest-on-internal-server-errors
-        # params = request.body
-    print("so many nights my tears fell harder than rain", request)
-    print("INFORMATION", request.POST.dict())
     return params
 
 
@@ -243,12 +238,8 @@ def editEvent(request):
 
 @csrf_exempt
 def addEvent(request):
-    print("holy shit big chomkus this db is sus", request)
     params = getParams(request)
     clean_params = {key: params[key].strip('"') for key in params}
-    print("FLYING IN CIRCLES JUST TRYING TO LAND", request)
-    print("CAP", params)
-    print("BIG CAP", clean_params)
     
     e = Event(
         event_name=clean_params['event_name'],

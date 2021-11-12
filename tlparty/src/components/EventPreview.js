@@ -7,30 +7,30 @@ import valorant_icon from '../img/valorant_icon.png';
 import league_icon from '../img/league_icon.png';
 import csgo_icon from '../img/csgo_icon.png';
 import dota_icon from '../img/dota_icon.png';
-import pubg_icon from '../img/pubg_icon.png';
-import smash_icon from '../img/smash_icon.png';
+import rainbowsix_icon from '../img/rainbowsix_icon.png';
+import starcraft_icon from '../img/starcraft_icon.png';
 import attendee_icon from '../img/attendee_icon.png';
 
 export const GameIcon = (props) => {
     let Output;
     switch (props.game) {
+        case 'League of Legends':
+            Output = (<img src={league_icon} class="event-game-icon"/>);
+            break;
         case 'Valorant':
             Output = (<img src={valorant_icon} class="event-game-icon"/>);
             break;
-        case 'League':
-            Output = (<img src={league_icon} class="event-game-icon"/>);
-            break;
-        case 'CSGO':
-            Output = (<img src={csgo_icon} class="event-game-icon"/>);
-            break;
-        case 'Dota':
+        case 'Dota 2':
             Output = (<img src={dota_icon} class="event-game-icon"/>);
             break;
-        case 'PUBG':
-            Output = (<img src={pubg_icon} class="event-game-icon"/>);
+        case 'Starcraft 2':
+            Output = (<img src={starcraft_icon} class="event-game-icon"/>);
             break;
-        case 'Smash':
-            Output = (<img src={smash_icon} class="event-game-icon"/>);
+        case 'Counter-Strike: Global Offensive':
+            Output = (<img src={csgo_icon} class="event-game-icon"/>);
+            break;
+        case 'Rainbow Six':
+            Output = (<img src={rainbowsix_icon} class="event-game-icon"/>);
             break;
         default:
             Output = (null);
@@ -43,14 +43,11 @@ export const GameIcon = (props) => {
 export const EventPic = (props) => {
     let Output;
     switch (props.event_pic) {
-        case 'tledm':
-            Output = (<img src={tl_background_old} class="event-pic"/>);
-            break;
         case 'tlvsmad':
             Output = (<img src={tlvsmad} class="event-pic"/>);
             break;
         default:
-            Output = (null);
+            Output = (<img src={tl_background_old} class="event-pic"/>);
             break;
     }
 

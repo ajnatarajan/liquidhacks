@@ -5,3 +5,11 @@
 .host-form-input {
     text-align: center;
 }
+
+.modal-text-label {
+    margin-bottom: 1%;
+    color: white;
+    font-family: "FFMark";
+    font-weight: bold;
+    font-size: 2vmin;
+}

@@ -157,6 +157,7 @@ export default function HostForm(props) {
                         setSelection={setVideoGameOption}
                         title_text="Game"
                         className="host-form-label"
+                        is_in_modal={true}
                   />
                 </div>
                 <div className="one-dropdown">
@@ -167,6 +168,7 @@ export default function HostForm(props) {
                         selection={official_event_option}
                         setSelection={setOfficialEventOption}
                         title_text="Official Event"
+                        is_in_modal={true}
                     />
                 </div>
               </Row>

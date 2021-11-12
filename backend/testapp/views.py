@@ -114,24 +114,24 @@ def getEvent(request):
 
     if params:
         event_id = params['event_id'].strip('"')
-        events = Event.objects.filter(event_id=event_id)
+        event = Event.objects.filter(event_id=event_id)[0]
         results = {
-            'event': [{
-                'event_id': e.event_id,
-                'event_name': e.event_name,
-                'location': e.location,
-                'game': e.game,
-                'video_game': e.video_game,
-                'image': e.image,
-                'num_attendees': e.num_attendees,
-                'date_time': e.date_time,
-                'timezone': e.timezone,
-                'vibes': e.vibes,
-                'snacks': e.snacks,
-                'contact_firstname': e.contact_firstname,
-                'contact_lastname': e.contact_lastname,
-                'contact_email': e.contact_email
-            } for e in events]
+            'event': {
+                'event_id': event.event_id,
+                'event_name': event.event_name,
+                'location': event.location,
+                'game': event.game,
+                'video_game': event.video_game,
+                'image': event.image,
+                'num_attendees': event.num_attendees,
+                'date_time': event.date_time,
+                'timezone': event.timezone,
+                'vibes': event.vibes,
+                'snacks': event.snacks,
+                'contact_firstname': event.contact_firstname,
+                'contact_lastname': event.contact_lastname,
+                'contact_email': event.contact_email
+            }
         }
         return HttpResponse(json.dumps(results, indent=4, sort_keys=True, default=str))
     else:

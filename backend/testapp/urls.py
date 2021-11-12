@@ -18,3 +18,4 @@ urlpatterns = [
     path('addUserEvent/', views.addUserEvent, name='addUserEvent'),
     path('addUser/', views.addUser, name='addUser'),
 ]
+

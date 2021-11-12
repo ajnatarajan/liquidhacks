@@ -40,22 +40,7 @@ export const GameIcon = (props) => {
     }
 
     return Output;
-};
-
-export const EventPic = ({ event_pic }) => {
-    let Output;
-    switch (event_pic) {
-        case 'tlvsmad':
-            console.log(require('../img/tlvsmad.jpg'));
-            Output = (<img src={require('../img/tlvsmad.jpg')} className="event-pic" alt="tlvsmad pic" />);
-            break;
-        default:
-            Output = (<img src={require('../img/tl_background_old.jpg')} className="event-pic" alt="default pic" />);
-            break;
-    }
-
-    return Output;
-};
+}
 
 
 export default function EventPreview(props) {
@@ -85,11 +70,10 @@ export default function EventPreview(props) {
         return dayName + " " + month + " " + date;
     }
 
-
     return (
         <div>
             <div className="event-preview-clickable-region" style={{cursor: "pointer"}} onClick={openModal}>
-            <span style={{display: "inline-block", backgroundImage: `url(${tl_background_old})`}} className="square">
+            <span style={{display: "inline-block", backgroundImage: `url('http://localhost:8000/media/${props.event_pic}`}} className="square">
                 <div className="event-preview-title-text">
                     {props.title}
                 </div>

@@ -213,6 +213,8 @@ def getAllUpcomingEvents(request):
 @csrf_exempt
 def editEvent(request):
     params = getParams(request)
+    files = request.FILES.dict()
+    print('PARAMS', params)
     clean_params = {key: params[key].strip('"') for key in params}
     e = Event.objects.filter(event_id=clean_params['event_id'])
     if not e.exists():
@@ -223,7 +225,7 @@ def editEvent(request):
         location=(clean_params['location'] if 'location' in params.keys() else e[0].location),
         game=(clean_params['game'] if 'game' in params.keys() else e[0].game),
         video_game=(clean_params['video_game'] if 'video_game' in params.keys() else e[0].video_game),
-        image=(clean_params['image'] if 'image' in params.keys() else e[0].image),
+        image=(files['image'] if 'image' in files.keys() else e[0].image),
         num_attendees=(clean_params['num_attendees'] if 'num_attendees' in params.keys() else e[0].num_attendees),
         date_time=(clean_params['date_time'] if 'date_time' in params.keys() else e[0].date_time),
         timezone=(clean_params['timezone'] if 'timezone' in params.keys() else e[0].timezone),
@@ -238,15 +240,19 @@ def editEvent(request):
 
 @csrf_exempt
 def addEvent(request):
+    print('request', request.POST)
     params = getParams(request)
+    files = request.FILES.dict()
+    print('PARAMS', params)
     clean_params = {key: params[key].strip('"') for key in params}
+    print('CLEAN PARAMS', clean_params)
     
     e = Event(
         event_name=clean_params['event_name'],
         location=clean_params['location'],
         game=clean_params['game'],
         video_game=clean_params['video_game'],
-        image=clean_params['image'],
+        image=files['image'],
         num_attendees=clean_params['num_attendees'],
         date_time=clean_params['date_time'],
         timezone=clean_params['timezone'],

@@ -143,14 +143,7 @@ function MainPageMainArea(props) {
                 </div>
             </EventPreviewSection>
             <Modal isOpen={isModalOpen} setIsOpen={setIsModalOpen}>
-                <EventModal
-                    name="Event Name"
-                    host="me"
-                    game="csgo"
-                    location="somewhere"
-                    date="tmrw sometime pst lol"
-                    vibes={["this", "category", "is", "deadass", "stupid"]}
-                    snacks={["pogger", "wogger", "logger"]}
+                <HostForm
                 />
             </Modal>
         </div>

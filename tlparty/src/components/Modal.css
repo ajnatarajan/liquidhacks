@@ -18,7 +18,8 @@
     backdrop-filter: blur(30px);
     cursor: auto;
     max-height: calc(100vh - 10vh - 60px - 2.5vmin - 45px - 2rem);
-    /* overflow-y: auto; */
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .modal-container::-webkit-scrollbar {

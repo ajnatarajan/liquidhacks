@@ -19,7 +19,8 @@ export default function HostForm(props) {
   const [formFields, setFormFields] = useState({
     eventName: '',
     eventLocation: '',
-    eventDateTime: new Date(), // TODO: Change to datetime format
+    eventDateTime: new Date(),
+    timezone: '',
     tags: [],
     tagInput: '',
     firstName: '',
@@ -195,7 +196,16 @@ export default function HostForm(props) {
                 </Form.Group>
                 <Form.Group as={Col} md={6} controlId="eventPST">
                   <Form.Label className="host-form-label">Timezone</Form.Label>
-                  <Form.Select className="host-form-input" aria-label="Default select example" style={{cursor: "pointer"}}>
+                  <Form.Control
+                    as="select"
+                    className="host-form-input"
+                    aria-label="Default select example"
+                    onChange={(e) => {
+                      handleChange(e);
+                      setFormFields({...formFields, timezone: e.target.value});
+                    }}
+                    style={{cursor: "pointer"}}
+                  >
                     <option>Select a timezone</option>
                     <option value="-12:00">(GMT -12:00) Eniwetok, Kwajalein</option>
                     <option value="-11:00">(GMT -11:00) Midway Island, Samoa</option>
@@ -237,7 +247,7 @@ export default function HostForm(props) {
                     <option value="+12:75">(GMT +12:45) Chatham Islands</option>
                     <option value="+13:00">(GMT +13:00) Apia, Nukualofa</option>
                     <option value="+14:00">(GMT +14:00) Line Islands, Tokelau</option>
-                  </Form.Select>
+                  </Form.Control>
                 </Form.Group>
               </Row>
               <Form.Group className='mb-3' controlId='vibesList'>
@@ -262,7 +272,7 @@ export default function HostForm(props) {
                     value={values.image}
                     onChange={(e) => {
                       handleChange(e);
-                      setFormFields({...formFields, image: e.target.value});
+                      setFormFields({...formFields, image: e.target.files[0]});
                     }}
                   />
               </Form.Group>
@@ -328,7 +338,10 @@ export default function HostForm(props) {
                   label="I have received 2 doses of the COVID-19 vaccine"
                   className="host-form-input"
                   value={values.vaccinated}
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    handleChange(e);
+                    setFormFields({...formFields, vaccinated: !formFields.vaccinated});
+                  }}
                   isInvalid={!!errors.vaccinated}
                   feedback={errors.vaccinated}
                   feedbackType="invalid"

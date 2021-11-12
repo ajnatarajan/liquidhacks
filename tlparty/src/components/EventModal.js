@@ -82,7 +82,7 @@ export default function EventModal(props) {
                 <Form.Label className="host-form-tags"> <StaticTagList tags={props.snacks}/> </Form.Label>
               </Form.Group>
               
-              <Form.Group className="mb-3" controlId="vaccinated">
+              <Form.Group className="mb-3 vaccine-container" controlId="vaccinated">
                 <Form.Check
                   required
                   name="vaccinated"

@@ -25,6 +25,10 @@
     color: white;
 }
 
+.vaccine-container {
+    display: flex !important;
+}
+
 .Host-link {
     color: #61dafb;
 }

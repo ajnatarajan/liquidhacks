@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Form, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './TagList.css'
@@ -8,7 +8,7 @@ import OurButton from './OurButton';
 
 export default function TagList(props) {
     const { tags, input, deleteTag, onKeyDown, onKeyUp, onChange, clearTags } = props;
-    const hasNoTags = (tags.length == 0);
+    const hasNoTags = (tags.length === 0);
     return (
         <div>
             <div className={`taglist-container ${props.className}`}>

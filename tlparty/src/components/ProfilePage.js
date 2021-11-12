@@ -3,7 +3,6 @@ import React, {useCallback, useState, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
 import { useAuth0 } from "@auth0/auth0-react";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import UserInformation from './UserInformation';
 import TopBar from './TopBar';
 import EventPreviewSection from './EventPreviewSection';
 import Landing from './Landing';
@@ -39,7 +38,6 @@ async function getPastUserEvents(emailAddress, setPastEvents) {
 
 async function getUpcomingUserEvents(emailAddress, setUpcomingEvents) {
     const params = {'email_address': emailAddress};
-    const upcomingEvents = [];
     const upcomingEventIds = await fetch('/testapp/getUpcomingUserEvents/',
     {
         method: "POST",
@@ -63,7 +61,7 @@ function MainProfilePage(props) {
     useEffect(() => {
         getPastUserEvents(user.name, setPastEvents);
         getUpcomingUserEvents(user.name, setUpcomingEvents);
-    }, []);
+    }, [user.name]);
 
     return (
         <div className="page-background-theme" style={{minHeight: '100vh'}}>

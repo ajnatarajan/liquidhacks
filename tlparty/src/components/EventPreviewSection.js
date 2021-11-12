@@ -21,6 +21,7 @@ export default function EventPreviewSection(props) {
             {props.children}
             <div className="event-listing-container-inner">
                 {
+                    (events.length > 0) ?
                     events.map(event => {
                         return (<EventPreview
                             key={event["event_id"]}
@@ -31,7 +32,8 @@ export default function EventPreviewSection(props) {
                             event_pic={event["image"]}
                             full_event={event} // need it for the modal
                         />)
-                    })
+                    }) :
+                    <span style={{display: "inline-block"}} className="square empty">{props.placeholder_text}</span>
                 }
                 {/* <EventPreview title="LCS Opening Day Party" game="Valorant" num_attendees="12" date="Friday November 12" event_pic="tledm"/>
                 <EventPreview title="LCS Opening Day Party" game="Valorant" num_attendees="12" date="Friday November 12" event_pic="tlvsmad"/>

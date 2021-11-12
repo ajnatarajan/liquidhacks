@@ -36,6 +36,7 @@ function getUpcomingEvents(upcoming_dictionary, game, setFunction) { // make our
 
     const formData = new FormData();
     var date_condition = "[[date::>" + getTodayInProperForm() + "]]";
+    console.log('REACT API KEY', process.env.REACT_APP_API_KEY);
     formData.append("apikey", process.env.REACT_APP_API_KEY);
     formData.append("wiki", game);
     formData.append("limit", 10);

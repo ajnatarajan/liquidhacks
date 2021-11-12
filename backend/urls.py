@@ -26,7 +26,6 @@ from testapp import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('testapp.urls')),
-    path('', views.index, name='index'),
     path('users/<email_address>/', views.detail, name='detail'),
     path('all/', views.all, name='all'),
     path('omg/', views.omg, name='omg'),

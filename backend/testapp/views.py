@@ -241,8 +241,6 @@ def editEvent(request):
 def addEvent(request):
     params = getParams(request)
     clean_params = {key: params[key].strip('"') for key in params}
-    if Event.objects.filter(event_id=clean_params['event_id']).exists():
-        return HttpResponse("{} already exists in the database".format(clean_params['event_id']))
     
     e = Event(
         event_name=clean_params['event_name'],

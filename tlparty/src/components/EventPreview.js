@@ -46,10 +46,11 @@ export const EventPic = ({ event_pic }) => {
     let Output;
     switch (event_pic) {
         case 'tlvsmad':
-            Output = (<img src={'../img/tlvsmad.jpg'} className="event-pic" alt="tlvsmad pic" />);
+            console.log(require('../img/tlvsmad.jpg'));
+            Output = (<img src={require('../img/tlvsmad.jpg')} className="event-pic" alt="tlvsmad pic" />);
             break;
         default:
-            Output = (<img src={'../img/tl_background_old.jpg'} className="event-pic" alt="default pic" />);
+            Output = (<img src={require('../img/tl_background_old.jpg')} className="event-pic" alt="default pic" />);
             break;
     }
 

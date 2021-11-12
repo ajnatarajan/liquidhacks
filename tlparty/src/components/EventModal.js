@@ -1,6 +1,6 @@
 import './EventModal.css';
 import React, { useState } from 'react';
-import { Form, Col } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Formik } from 'formik';
 import OurButton from '../components/OurButton';
@@ -28,17 +28,11 @@ export default function EventModal(props) {
         vaccinated: false,
     });
 
-    const [showForm, setShowForm] = useState(false);
-
     function handleFormSubmit() {
         setTimeout(() => {
             alert('Submitted to the "database"');
         }, 500);
         console.log('Form fields', formFields);
-    }
-
-    function handleHostButtonClick() {
-        setShowForm(!showForm);
     }
 
     function renderForm() {

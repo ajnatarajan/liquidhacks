@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './EventPreview.css'
-import tl_background_old from '../img/tl_background_old.jpg';
-import tlvsmad from '../img/tlvsmad.jpg';
 import valorant_icon from '../img/valorant_icon.png';
 import league_icon from '../img/league_icon.png';
 import csgo_icon from '../img/csgo_icon.png';

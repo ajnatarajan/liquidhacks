@@ -114,7 +114,7 @@ function MainPageMainArea(props) {
             {/* if you change returnTo, talk to Ajay. He needs to change something
             in his auth0 account otherwise this will break*/}
             <TopBar button_text="PROFILE" on_click={goToProfile} button_text_2="LOG OUT" on_click_2={() => logout({ returnTo: "http://localhost:3000" })}/>
-            <EventPreviewSection preview_section_title="Events Near You" events={filteredParties}>
+            <EventPreviewSection preview_section_title="Events Near You" events={filteredParties} placeholder_text="No events found!">
                 <OurButton type="button" onClick={openModal}> I want to host! </OurButton>
 
                 <div className="game-filter-text-and-menu-bar">

@@ -1,5 +1,4 @@
 .event-preview-clickable-region {
-    margin: 1%;
     border-radius: 5px;
     overflow: hidden;
     border: solid 1px transparent;
@@ -55,36 +54,29 @@
     bottom: 0;
     width: 100%;
     height: 25%;
+    display: flex;
+    align-items: center;
+    padding: 0 5%;
 }
 
 .event-time {
-    position: absolute;
-    right: 5%;
     color: #FFF;
     font-family: "FFMark";
     font-size: 80%;
-    top: 50%;
-    transform: translateY(-50%);
+    margin-left: auto;
 }
 
 .event-game-icon {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    left: 23%;
-    height: 46%
+    height: 46%;
+    margin-right: 5px;
 }
 
 .people-box {
-    position: absolute;
-    left: 1.5%;
-    padding-left: 11.5%;
     color: #FFF;
     font-family: "FFMark";
-    top: 50%;
-    transform: translateY(-50%);
     height: 100%;
-    line-height: 100%;
-    display: flex;
+    display: inline-flex;
     align-items: center;
+    margin: 0 5% 0 0;
+    min-width: 10%;
 }

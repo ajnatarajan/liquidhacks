@@ -76,8 +76,8 @@ function MainProfilePage(props) {
                     placeholder_email={user.email}
                     placeholder_phone={props.user_phone}
                 /> */}
-                <EventPreviewSection events={upcomingEvents} preview_section_title="My Upcoming Events"/>
-                <EventPreviewSection events={pastEvents} preview_section_title="Past Events"/>
+                <EventPreviewSection events={upcomingEvents} preview_section_title="My Upcoming Events" placeholder_text="No upcoming events!"/>
+                <EventPreviewSection events={pastEvents} preview_section_title="Past Events" placeholder_text="No past events!"/>
             </div>
         </div>
     );

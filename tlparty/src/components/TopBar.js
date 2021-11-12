@@ -11,7 +11,7 @@ export default function TopBar(props) {
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossOrigin="anonymous"></link>
       <nav className="navbar navbar-expand-lg dark-theme py-3">
         <div className="container-fluid mx-4">
-          <a href="/home">
+          <a href="/home" style={{width: "220px"}}>
             <img className="tl_icon" src={tl_icon} alt="Team Liquid icon ^_^"/>
           </a>
           <div className="tl_party">TL PARTY</div>

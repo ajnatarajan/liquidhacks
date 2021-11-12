@@ -9,7 +9,7 @@ from django.contrib.postgres.fields import ArrayField
 from django.core.files.storage import FileSystemStorage
 from django.db import models
 
-fs = FileSystemStorage(location='/media/photos')
+fs = FileSystemStorage()
 
 class Event(models.Model):
     event_id = models.UUIDField(primary_key=True)
@@ -17,7 +17,7 @@ class Event(models.Model):
     location = models.CharField(max_length=100)
     game = models.TextField()
     video_game = models.CharField(max_length=50)
-    image = models.ImageField(storage=fs)
+    image = models.ImageField(null=True, upload_to='images')
     num_attendees = models.IntegerField()
     date_time = models.DateTimeField()
     timezone = models.CharField(max_length=10)

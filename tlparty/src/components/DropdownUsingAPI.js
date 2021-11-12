@@ -9,12 +9,12 @@ export default function DropdownUsingAPI(props) {
         options.unshift(props.otherName)
     }
 
-    const { selection, setSelection, title_text } = props;
+    const { selection, setSelection, title_text, is_in_modal } = props;
 
     var event = (
         <Form noValidate className='dropdown-using-api my-3'>
             <Form.Group>
-                <Form.Label className="main-page-game-text">{title_text}</Form.Label>
+                <Form.Label className={is_in_modal ? "modal-text-label" : "main-page-game-text"}>{title_text}</Form.Label>
                 <Form.Control
                     className="host-form-input"
                     aria-label="Default select example"

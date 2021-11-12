@@ -73,6 +73,7 @@ function MainPageMainArea(props) {
     }
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [dropdownSelection, setDropdownSelection] = useState("Any");
     const { logout } = useAuth0();
     const navigate = useNavigate();
     const goToProfile = useCallback(() => navigate('/profile'), [navigate]);
@@ -97,6 +98,7 @@ function MainPageMainArea(props) {
     }, []);
 
     console.log("Upcoming Parties: ", props.upcomingParties);
+    console.log("Dropdown Selection: ", dropdownSelection);
 
     return (
         <div className="page-background-theme" style={{minHeight: '100vh'}}>
@@ -139,7 +141,13 @@ function MainPageMainArea(props) {
                     </div>
                 </div>
                 <div className="event-filter-dropdown">
-                    <DropdownUsingAPI options={props.cleanedNames} allowOther={true} otherName="Any"/>
+                    <DropdownUsingAPI
+                        options={props.cleanedNames}
+                        allowOther={true}
+                        otherName="Any"
+                        selection={dropdownSelection} 
+                        setSelection={setDropdownSelection}
+                    />
                 </div>
             </EventPreviewSection>
             <Modal isOpen={isModalOpen} setIsOpen={setIsModalOpen}>

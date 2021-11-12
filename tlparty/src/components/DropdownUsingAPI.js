@@ -10,17 +10,27 @@ export default function DropdownUsingAPI(props) {
         props.options.unshift(props.otherName)
     }
 
+    const { selection, setSelection } = props;
+
     var event = (
         <Form noValidate className='dropdown-using-api my-3'>
-            <Form.Group>
+            <Form.Group as={Col} md={5}>
                 <Form.Label className="main-page-game-text">FILTER BY EVENT</Form.Label>
-                <Form.Select className="host-form-input" aria-label="Default select example">
+                <Form.Control
+                    className="host-form-input"
+                    aria-label="Default select example"
+                    as="select"
+                    value={selection}
+                    onChange={e => {
+                        setSelection(e.target.value);
+                    }}
+                >
                     {
                         props.options.map(val => {
                             return (<option value={val}>{val}</option>)
                         })
                     }
-                </Form.Select>
+                </Form.Control>
             </Form.Group>
         </Form>
     );

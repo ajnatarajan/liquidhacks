@@ -64,7 +64,6 @@ export default function EventPreview(props) {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const { full_event } = props;
-    console.log("LETS SEE IF I HAVE ACCESS: ", full_event);
 
     const dbGameCodeToEnglish = {
         "leagueoflegends": "League of Legends",

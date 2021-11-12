@@ -37,6 +37,32 @@ export default function EventModal(props) {
         console.log('Form fields', formFields);
     }
 
+    function handleFormSubmitForReal() {
+      const requestOptions = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(
+          { event_name: "eatery_big_time",
+            location: "atlanta, ga",
+            game: "CSGO - Team Vitality vs. Team Liquid : BLAST Premier 2021 Fall",
+            video_game: "leagueoflegends",
+            image: "images/RamenMulti_c2v02_2400x1800_cropped_widescreen.jpg",
+            num_attendees: "5",
+            date_time: "2021-11-17 18:00",
+            timezone: "pst",
+            vibes: "eat, this, cookie",
+            snacks: "no, really, cookies",
+            contact_firstname: "kyle",
+            contact_lastname: "weng",
+            contact_email: "kw@caksdfakl.com"
+          }
+        )
+      };
+  
+      fetch('/api/addEvent/', requestOptions);
+    }
+  
+
     function handleHostButtonClick() {
         setShowForm(!showForm);
     }
@@ -61,7 +87,7 @@ export default function EventModal(props) {
             <Formik
                 validateOnChange={false}
                 validateOnBlur={false}
-                onSubmit={handleFormSubmit}
+                onSubmit={handleFormSubmitForReal}
                 initialValues={formFields}
             >
             {({

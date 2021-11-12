@@ -28,8 +28,9 @@ export default function ProfilePage(props) {
                     placeholder_email={user.email}
                     placeholder_phone={props.user_phone}
                 /> */}
-                <EventPreviewSection preview_section_title="My Upcoming Events"/>
-                <EventPreviewSection preview_section_title="Past Events"/>
+                <h1 style={{color: 'white'}}>Welcome {user.name}</h1>
+                <EventPreviewSection userId={user.name} preview_section_title="My Upcoming Events"/>
+                <EventPreviewSection userId={user.name} preview_section_title="Past Events"/>
             </div>
         </div>
     );

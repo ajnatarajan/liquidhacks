@@ -48,6 +48,14 @@
     font-size: 2vmin;
 }
 
+.two-dropdowns {
+    display: flex;
+}
+
+.one-dropdown {
+    width: 50% !important;
+}
+
 .host-form-title {
     color: white;
     font-family: "FFMark";

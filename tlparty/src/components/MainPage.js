@@ -155,6 +155,7 @@ function MainPageMainArea(props) {
                         otherName="Any"
                         selection={dropdownSelection}
                         setSelection={setDropdownSelection}
+                        title_text="FILTER BY TEXT"
                     />
                 </div>
             </EventPreviewSection>
@@ -163,7 +164,7 @@ function MainPageMainArea(props) {
                 setIsOpen={setIsModalOpen}
                 title="Host an Event"
             >
-                <HostForm/>
+                <HostForm dropdown_event_options={props.cleanedNames}/>
             </Modal>
         </div>
     );

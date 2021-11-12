@@ -14,10 +14,10 @@ export default function UserInformation(props) {
     }
 
     return (
-        <div class={"modal-overlay " + (props.isOpen ? "open" : "closed")} onClick={toggleModal}>
-            <div class="modal-container" onClick={modalClick}>
-                <div class="modal-title">{props.title}</div>
-                <img class="modal-close" src={close_icon} onClick={toggleModal} />
+        <div className={"modal-overlay " + (props.isOpen ? "open" : "closed")} onClick={toggleModal}>
+            <div className="modal-container" onClick={modalClick}>
+                <div className="modal-title">{props.title}</div>
+                <img className="modal-close" src={close_icon} onClick={toggleModal} />
                 {props.children}
             </div>
         </div>

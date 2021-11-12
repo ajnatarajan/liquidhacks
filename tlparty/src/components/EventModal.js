@@ -102,7 +102,7 @@ export default function EventModal(props) {
                 />
               </Form.Group>
 
-            <div class='flexbox'>
+            <div className='flexbox'>
                 <Form.Group as={Col} md={9}>
                     <Form.Control
                         autoFocus

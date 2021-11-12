@@ -16,12 +16,12 @@ export default function EventPreviewSection(props) {
 
     const { events } = props;
     return (
-        <div class="event-listing-container">
-            <div class="event-listing-title">
+        <div className="event-listing-container">
+            <div className="event-listing-title">
                 {props.preview_section_title}
             </div>
             {props.children}
-            <div class="event-listing-container-inner">
+            <div className="event-listing-container-inner">
                 {
                     events.map(event => {
                         return (<EventPreview

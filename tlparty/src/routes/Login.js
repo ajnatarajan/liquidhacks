@@ -12,31 +12,31 @@ function LoginForm() {
     const { loginWithRedirect } = useAuth0();
 
     return (
-        <div class="login-form-container">
-            <div class="login-title-text">
+        <div className="login-form-container">
+            <div className="login-title-text">
                 Login
             </div>
-            <div id="contact" class="login-info-outer-container">
-                <form class="contact-us-form form-font">
-                    <div class="mb-3">
-                        <div class="form-group info-block">
-                            <label for="email" class="input-label">Username:</label>
-                            <input type="text" class="form-control info-input page-background-theme"/>
+            <div id="contact" className="login-info-outer-container">
+                <form className="contact-us-form form-font">
+                    <div className="mb-3">
+                        <div className="form-group info-block">
+                            <label for="email" className="input-label">Username:</label>
+                            <input type="text" className="form-control info-input page-background-theme"/>
                         </div>
                     </div>
-                    <div class="mb-3">
-                        <div class="form-group info-block">
-                            <label for="email" class="input-label">Email address:</label>
-                            <input type="text" class="form-control info-input page-background-theme"/>
+                    <div className="mb-3">
+                        <div className="form-group info-block">
+                            <label for="email" className="input-label">Email address:</label>
+                            <input type="text" className="form-control info-input page-background-theme"/>
                         </div>
                     </div>
-                    <div class="mb-3">
-                        <div class="form-group info-block">
-                            <label for="subject" class="input-label">Password:</label>
-                            <input type="password" class="form-control info-input page-background-theme"/>
+                    <div className="mb-3">
+                        <div className="form-group info-block">
+                            <label for="subject" className="input-label">Password:</label>
+                            <input type="password" className="form-control info-input page-background-theme"/>
                         </div>
                     </div>
-                    <div class="mb-3">
+                    <div className="mb-3">
                         <OurButton onClick={() => loginWithRedirect()}>Log In</OurButton>
                     </div>
                 </form>
@@ -48,7 +48,7 @@ function LoginForm() {
 
 export default function Login() {
     return (
-        <div class="page-background-theme" style={{
+        <div className="page-background-theme" style={{
             minHeight: '100vh'
         }}>
             <TopBar button_text="Sign up"/>

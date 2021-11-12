@@ -28,7 +28,7 @@ export default function ProfilePage(props) {
 
 
     return (
-        <div class="page-background-theme" style={{minHeight: '100vh'}}>
+        <div className="page-background-theme" style={{minHeight: '100vh'}}>
             {/* if you change returnTo, talk to Ajay. He needs to change something
             in his auth0 account otherwise this will break*/}
             <TopBar button_text="PROFILE" on_click={goToProfile} button_text_2="LOG OUT" on_click_2={() => logout({ returnTo: "http://localhost:3000" })}/>

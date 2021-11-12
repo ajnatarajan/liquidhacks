@@ -17,22 +17,22 @@ export const GameIcon = (props) => {
     let Output;
     switch (props.game) {
         case 'League of Legends':
-            Output = (<img src={league_icon} class="event-game-icon"/>);
+            Output = (<img src={league_icon} className="event-game-icon"/>);
             break;
         case 'Valorant':
-            Output = (<img src={valorant_icon} class="event-game-icon"/>);
+            Output = (<img src={valorant_icon} className="event-game-icon"/>);
             break;
         case 'Dota 2':
-            Output = (<img src={dota_icon} class="event-game-icon"/>);
+            Output = (<img src={dota_icon} className="event-game-icon"/>);
             break;
         case 'Starcraft 2':
-            Output = (<img src={starcraft_icon} class="event-game-icon"/>);
+            Output = (<img src={starcraft_icon} className="event-game-icon"/>);
             break;
         case 'Counter-Strike: Global Offensive':
-            Output = (<img src={csgo_icon} class="event-game-icon"/>);
+            Output = (<img src={csgo_icon} className="event-game-icon"/>);
             break;
         case 'Rainbow Six':
-            Output = (<img src={rainbowsix_icon} class="event-game-icon"/>);
+            Output = (<img src={rainbowsix_icon} className="event-game-icon"/>);
             break;
         default:
             Output = (null);
@@ -46,10 +46,10 @@ export const EventPic = (props) => {
     let Output;
     switch (props.event_pic) {
         case 'tlvsmad':
-            Output = (<img src={tlvsmad} class="event-pic"/>);
+            Output = (<img src={tlvsmad} className="event-pic"/>);
             break;
         default:
-            Output = (<img src={tl_background_old} class="event-pic"/>);
+            Output = (<img src={tl_background_old} className="event-pic"/>);
             break;
     }
 
@@ -88,19 +88,19 @@ export default function EventPreview(props) {
 
     return (
         <div>
-            <div class="event-preview-clickable-region" style={{cursor: "pointer"}} onClick={openModal}>
-            <span style={{display: "inline-block"}} class="square">
+            <div className="event-preview-clickable-region" style={{cursor: "pointer"}} onClick={openModal}>
+            <span style={{display: "inline-block"}} className="square">
                 <EventPic {...props}/>
-                <div class="event-preview-title-text">
+                <div className="event-preview-title-text">
                     {props.title}
                 </div>
-                <div class="box black-opaque-box">
-                    <div class="people-box">
-                        <img src={attendee_icon} class="event-game-icon"/>
+                <div className="box black-opaque-box">
+                    <div className="people-box">
+                        <img src={attendee_icon} className="event-game-icon"/>
                         {props.num_attendees}
                     </div>
                     <GameIcon {...props} />
-                    <div class="event-time">
+                    <div className="event-time">
                         {dateToDayMonth(full_event["date_time"])}
                     </div>
                 </div>

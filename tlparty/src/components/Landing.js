@@ -9,15 +9,15 @@ import { useAuth0 } from "@auth0/auth0-react";
 function LandingMainArea() {
   const { loginWithRedirect } = useAuth0();
   return (
-    <div class="main-area-container">
-      <img class="tl_background" src={tl_background}/>
-      <div class="title-text">
+    <div className="main-area-container">
+      <img className="tl_background" src={tl_background}/>
+      <div className="title-text">
         Team Liquid Party
       </div>
-      <div class="one-liner">
+      <div className="one-liner">
         Discover in-person esports watch parties near you
       </div>
-      <div class="main-button-position">
+      <div className="main-button-position">
           <OurButton type='button' onClick={() => loginWithRedirect()}>JOIN THE PARTY</OurButton>
       </div>
     </div>

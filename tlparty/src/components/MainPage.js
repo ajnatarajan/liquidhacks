@@ -99,7 +99,7 @@ function MainPageMainArea(props) {
     console.log("Upcoming Parties: ", props.upcomingParties);
 
     return (
-        <div class="page-background-theme" style={{minHeight: '100vh'}}>
+        <div className="page-background-theme" style={{minHeight: '100vh'}}>
             {/* if you change returnTo, talk to Ajay. He needs to change something
             in his auth0 account otherwise this will break*/}
             <TopBar button_text="PROFILE" on_click={goToProfile} button_text_2="LOG OUT" on_click_2={() => logout({ returnTo: "http://localhost:3000" })}/>
@@ -107,38 +107,38 @@ function MainPageMainArea(props) {
                 <OurButton type="button" onClick={getUpcomingEvents}> I want to host! </OurButton>
                 <OurButton type="button" onClick={openModal}> Open modal </OurButton>
 
-                <div class="game-filter-text-and-menu-bar">
-                    <div class="main-page-game-text">
+                <div className="game-filter-text-and-menu-bar">
+                    <div className="main-page-game-text">
                         FILTER BY GAME
                     </div>
-                    <div class="game-filter-menu-bar">
+                    <div className="game-filter-menu-bar">
                         <button className={"btn btn-main-page-game-icon-filter left " + (activeGames.valorant ? "active" : "")}
                         onClick={() => setActiveGames({...activeGames, valorant: !activeGames.valorant})}>
-                            <img src={valorant_icon} class="main-page-filter-game-icon"/>
+                            <img src={valorant_icon} className="main-page-filter-game-icon"/>
                         </button>
                         <button className={"btn btn-main-page-game-icon-filter " + (activeGames.league ? "active" : "")}
                         onClick={() => setActiveGames({...activeGames, league: !activeGames.league})}>
-                            <img src={league_icon} class="main-page-filter-game-icon"/>
+                            <img src={league_icon} className="main-page-filter-game-icon"/>
                         </button>
                         <button className={"btn btn-main-page-game-icon-filter " + (activeGames.csgo ? "active" : "")}
                         onClick={() => setActiveGames({...activeGames, csgo: !activeGames.csgo})}>
-                            <img src={csgo_icon} class="main-page-filter-game-icon"/>
+                            <img src={csgo_icon} className="main-page-filter-game-icon"/>
                         </button>
                         <button className={"btn btn-main-page-game-icon-filter " + (activeGames.dota ? "active" : "")}
                         onClick={() => setActiveGames({...activeGames, dota: !activeGames.dota})}>
-                            <img src={dota_icon} class="main-page-filter-game-icon"/>
+                            <img src={dota_icon} className="main-page-filter-game-icon"/>
                         </button>
                         <button className={"btn btn-main-page-game-icon-filter " + (activeGames.starcraft ? "active" : "")}
                         onClick={() => setActiveGames({...activeGames, starcraft: !activeGames.starcraft})}>
-                            <img src={starcraft_icon} class="main-page-filter-game-icon"/>
+                            <img src={starcraft_icon} className="main-page-filter-game-icon"/>
                         </button>
                         <button className={"btn btn-main-page-game-icon-filter right " + (activeGames.rainbowsix ? "active" : "")}
                         onClick={() => setActiveGames({...activeGames, rainbowsix: !activeGames.rainbowsix})}>
-                            <img src={rainbowsix_icon} class="main-page-filter-game-icon"/>
+                            <img src={rainbowsix_icon} className="main-page-filter-game-icon"/>
                         </button>
                     </div>
                 </div>
-                <div class="event-filter-dropdown">
+                <div className="event-filter-dropdown">
                     <DropdownUsingAPI options={props.cleanedNames} allowOther={true} otherName="Any"/>
                 </div>
             </EventPreviewSection>

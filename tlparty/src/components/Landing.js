@@ -9,8 +9,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 function LandingMainArea() {
   const { loginWithRedirect } = useAuth0();
   return (
-    <div className="main-area-container">
-      <img className="tl_background" src={tl_background}/>
+    <div className="main-area-container" style={{backgroundImage: `url(${tl_background})`}}>
       <div className="title-text">
         TL PARTY
       </div>

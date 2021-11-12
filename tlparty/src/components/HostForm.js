@@ -102,7 +102,6 @@ export default function Host() {
             errors,
           }) => (
             <Form noValidate className='host-form my-3' onSubmit={handleSubmit}>
-              <Form.Label className="mt-3 host-form-title">Event Details</Form.Label>
               <Form.Group className='mb-3' controlId="eventName">
                 <Form.Label className="host-form-label">Event Name</Form.Label>
                 <Form.Control

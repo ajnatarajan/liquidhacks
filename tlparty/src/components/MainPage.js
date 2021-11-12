@@ -156,7 +156,11 @@ function MainPageMainArea(props) {
                     />
                 </div>
             </EventPreviewSection>
-            <Modal isOpen={isModalOpen} setIsOpen={setIsModalOpen}>
+            <Modal
+                isOpen={isModalOpen}
+                setIsOpen={setIsModalOpen}
+                title="Host an Event"
+            >
                 <HostForm/>
             </Modal>
         </div>

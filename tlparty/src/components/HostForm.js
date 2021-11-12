@@ -254,7 +254,7 @@ export default function HostForm(props) {
                 />
               </Form.Group>
               <Form.Group controlId="image" className="mb-3">
-                  <Form.Label>Background image</Form.Label>
+                  <Form.Label className="host-form-label">Background image</Form.Label>
                   <Form.Control
                     type="file"
                     className="host-form-input"

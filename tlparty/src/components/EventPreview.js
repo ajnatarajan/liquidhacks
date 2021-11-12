@@ -98,14 +98,17 @@ export default function EventPreview(props) {
             </div>
             <Modal isOpen={isModalOpen} setIsOpen={setIsModalOpen} title={full_event["event_name"]}>
                 <EventModal
+                    eventId={full_event["event_id"]}
                     name={full_event["event_name"]}
                     host={full_event["contact_firstname"] + " " + full_event["contact_lastname"]}
                     liquipedia_pagename={full_event["game"]}
                     game={dbGameCodeToEnglish[full_event["video_game"]]}
                     location={full_event["location"]}
                     date={full_event["date_time"]}
+                    numAttendees={full_event["num_attendees"]}
                     vibes={full_event["vibes"]}
                     snacks={full_event["snacks"]}
+                    setIsOpen={setIsModalOpen}
                 />
             </Modal>
         </div>

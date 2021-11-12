@@ -41,7 +41,7 @@ export default function TagList(props) {
                     <Form.Control
                         className={props.className}
                         value={input}
-                        placeholder={props.placeholderText}
+                        placeholder={props.placeholder}
                         onKeyDown={onKeyDown}
                         onChange={onChange}
                         onKeyUp={onKeyUp}

@@ -1,13 +1,13 @@
 import './HostForm.css';
 import React, { useState } from 'react';
-import { Form, Row, Col, Alert } from 'react-bootstrap';
+import { Form, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import OurButton from '../components/OurButton';
 import TagList from '../components/TagList';
 import DropdownUsingAPI from '../components/DropdownUsingAPI';
-import Modal from '../components/Modal';
+import FormData from 'form-data';
 
 const KeyCodes = {
   comma: 188,
@@ -27,7 +27,7 @@ export default function HostForm(props) {
     vibes: [],
     vibesInput: '',
     snacks: [],
-    snackInput: '',
+    snacksInput: '',
     firstName: '',
     lastName: '',
     email: '',
@@ -45,14 +45,7 @@ export default function HostForm(props) {
   });
 
   const [isKeyReleased, setIsKeyReleased] = useState(true);
-
-
-  function handleFormSubmit() {
-    setTimeout(() => {
-      alert('Submitted to the "database"');
-    }, 500);
-    console.log('Form fields', formFields);
-  }
+  
 
   function handleDeleteVibes(index) {
     setFormFields({...formFields, vibes: formFields.vibes.filter((vibes, i) => i !== index)});
@@ -95,30 +88,30 @@ export default function HostForm(props) {
     setFormFields({...formFields, snacks: formFields.snacks.filter((snack, i) => i !== index)});
   }
 
-  function handleSnackInput(e) {
-    setFormFields({...formFields, snackInput: e.target.value});
+  function handleSnacksInput(e) {
+    setFormFields({...formFields, snacksInput: e.target.value});
   }
 
-  function handleSnackInputKeyDown(e) {
-    const trimmedInput = formFields.snackInput.trim();
+  function handleSnacksInputKeyDown(e) {
+    const trimmedInput = formFields.snacksInput.trim();
     if (delimiters.includes(e.keyCode) && trimmedInput.length && !formFields.snacks.includes(trimmedInput)) {
       e.preventDefault();
-      setFormFields({...formFields, snacks: [...formFields.snacks, trimmedInput], snackInput: ''});
+      setFormFields({...formFields, snacks: [...formFields.snacks, trimmedInput], snacksInput: ''});
     }
 
-    if (e.key === "Backspace" && !formFields.snackInput.length && formFields.snacks.length && isKeyReleased) {
+    if (e.key === "Backspace" && !formFields.snacksInput.length && formFields.snacks.length && isKeyReleased) {
       e.preventDefault();
       const snacksCopy = [...formFields.snacks];
       const poppedSnack = snacksCopy.pop();
 
-      setFormFields({...formFields, snacks: snacksCopy, snackInput: poppedSnack});
+      setFormFields({...formFields, snacks: snacksCopy, snacksInput: poppedSnack});
       console.log('popping');
     }
 
     setIsKeyReleased(false);
   }
 
-  function handleSnackInputKeyUp() {
+  function handleSnacksInputKeyUp() {
     setIsKeyReleased(true);
   }
 
@@ -150,23 +143,24 @@ export default function HostForm(props) {
   const englishToDbGameCode = objectFlip(dbGameCodeToEnglish);
 
   async function handleFormSubmitForReal() {
+    const formData = new FormData();
+    formData.append("event_name", formFields.eventName);
+    formData.append("location", formFields.eventLocation);
+    formData.append("game", official_event_option);
+    formData.append("video_game", englishToDbGameCode[video_game_option]);
+    formData.append("image", formFields.image);
+    formData.append("num_attendees", formFields.numAttendees);
+    formData.append("date_time", formFields.eventDateTime);
+    formData.append("timezone", formFields.timezone);
+    formData.append("vibes", "{" + formFields.vibes + "}");
+    formData.append("snacks", "{" + formFields.snacks + "}");
+    formData.append("contact_firstname", formFields.firstName);
+    formData.append("contact_lastname", formFields.lastName);
+    formData.append("contact_email", formFields.email);
+  
     const requestOptions = {
-      method: 'POST',
-      body: new URLSearchParams({
-        event_name: formFields.eventName,
-        location: formFields.eventLocation,
-        game: official_event_option,
-        video_game: englishToDbGameCode[video_game_option],
-        image: formFields.image,
-        num_attendees: formFields.numAttendees, // When you create an event, it has zero attendees (initially)
-        date_time: formFields.eventDateTime,
-        timezone: formFields.timezone,
-        vibes: '{' + formFields.vibes + '}',
-        snacks: '{' + formFields.snacks + '}',
-        contact_firstname: formFields.firstName,
-        contact_lastname: formFields.lastName,
-        contact_email: formFields.email
-      })
+      method: "POST",
+      body: formData,
     }
 
     const response = await fetch('/api/addEvent/', requestOptions);
@@ -348,7 +342,7 @@ export default function HostForm(props) {
                   onKeyDown={handleVibesInputKeyDown}
                   onKeyUp={handleVibesInputKeyUp}
                   clearTags={handleClearVibes}
-                  placeholderText={"What's the mood?"}
+                  placeholder={"What's the mood?"}
                 />
               </Form.Group>
 
@@ -358,13 +352,13 @@ export default function HostForm(props) {
                 <TagList
                   className='host-form-tags'
                   tags={formFields.snacks}
-                  input={formFields.snackInput}
+                  input={formFields.snacksInput}
                   deleteTag={handleDeleteSnack}
-                  onChange={handleSnackInput}
-                  onKeyDown={handleSnackInputKeyDown}
-                  onKeyUp={handleSnackInputKeyUp}
+                  onChange={handleSnacksInput}
+                  onKeyDown={handleSnacksInputKeyDown}
+                  onKeyUp={handleSnacksInputKeyUp}
                   clearTags={handleClearSnacks}
-                  placeholderText={"Any munchies?"}
+                  placeholder={"Any munchies?"}
                 />
               </Form.Group>
               <Form.Group controlId="image" className="mb-3">
@@ -376,6 +370,7 @@ export default function HostForm(props) {
                     value={values.image}
                     onChange={(e) => {
                       handleChange(e);
+                      console.log('IMAGE SETTING TO', e.target.files[0]);
                       setFormFields({...formFields, image: e.target.files[0]});
                     }}
                   />

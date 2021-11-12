@@ -3,8 +3,11 @@ import React, { useState } from 'react';
 import { Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Formik } from 'formik';
+import * as Yup from 'yup';
 import OurButton from '../components/OurButton';
 import StaticTagList from './StaticTagList';
+import FormData from 'form-data';
+import TagList from '../components/TagList'
 
 import user_icon from '../img/user_icon.svg';
 import gamepad_icon from '../img/gamepad_icon.svg';
@@ -14,52 +17,83 @@ import date_icon from '../img/date_icon.svg';
 import heart_icon from '../img/heart_icon.svg';
 import snacks_icon from '../img/snacks_icon.svg';
 
+const KeyCodes = {
+    comma: 188,
+    enter: [10, 13],
+};
+
+const delimiters = [...KeyCodes.enter, KeyCodes.comma];
+
 
 export default function EventModal(props) {
     const [formFields, setFormFields] = useState({
-        eventName: '',
-        eventLocation: '',
-        eventDateTime: new Date(), // TODO: Change to datetime format
-        tags: [],
-        tagInput: '',
-        firstName: '',
-        lastName: '',
-        email: '',
+        snacks: [],
+        snacksInput: '',
         vaccinated: false,
     });
 
-    function handleFormSubmit() {
-        setTimeout(() => {
-            alert('Submitted to the "database"');
-        }, 500);
-        console.log('Form fields', formFields);
+    const formSchema = Yup.object().shape({
+        vaccinated: Yup.bool().required().oneOf([true], 'Vaccination is required to keep TL fans safe :)'),
+    })
+
+    const [isKeyReleased, setIsKeyReleased] = useState(true);
+
+    function handleDeleteSnack(index) {
+        setFormFields({...formFields, snacks: formFields.snacks.filter((snack, i) => i !== index)});
     }
 
-    function handleFormSubmitForReal() {
-      const requestOptions = {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(
-          { event_name: "eatery_big_time",
-            location: "atlanta, ga",
-            game: "CSGO - Team Vitality vs. Team Liquid : BLAST Premier 2021 Fall",
-            video_game: "leagueoflegends",
-            image: "images/RamenMulti_c2v02_2400x1800_cropped_widescreen.jpg",
-            num_attendees: "5",
-            date_time: "2021-11-17 18:00",
-            timezone: "pst",
-            vibes: "eat, this, cookie",
-            snacks: "no, really, cookies",
-            contact_firstname: "kyle",
-            contact_lastname: "weng",
-            contact_email: "kw@caksdfakl.com"
-          }
-        )
-      };
-  
-      fetch('/api/addEvent/', requestOptions);
+    function handleSnacksInput(e) {
+        setFormFields({...formFields, snacksInput: e.target.value});
+    }
+    
+    function handleSnacksInputKeyDown(e) {
+        const trimmedInput = formFields.snacksInput.trim();
+        if (delimiters.includes(e.keyCode) && trimmedInput.length && !formFields.snacks.includes(trimmedInput)) {
+            e.preventDefault();
+            setFormFields({...formFields, snacks: [...formFields.snacks, trimmedInput], snacksInput: ''});
+        }
+
+        if (e.key === "Backspace" && !formFields.snacksInput.length && formFields.snacks.length && isKeyReleased) {
+            e.preventDefault();
+            const snacksCopy = [...formFields.snacks];
+            const poppedSnack = snacksCopy.pop();
+
+            setFormFields({...formFields, snacks: snacksCopy, snacksInput: poppedSnack});
+            console.log('popping');
+        }
+
+        setIsKeyReleased(false);
     }
 
+    function handleSnacksInputKeyUp() {
+        setIsKeyReleased(true);
+    }
+
+    function handleClearSnacks() {
+        setFormFields({...formFields, snacks: []});
+    }
+
+    async function handleFormSubmitForReal() {
+        const formData = new FormData();
+        formData.append("event_id", props.eventId);
+        console.log('attendees', props.numAttendees)
+        formData.append("num_attendees", parseInt(props.numAttendees) + 1);
+        formData.append("snacks", "{" + Array.from(new Set([...props.snacks, ...formFields.snacks])).toString() + "}");
+
+        const requestOptions = {
+            method: "POST",
+            body: formData,
+        }
+
+        const response = await fetch('/api/editEvent/', requestOptions);
+        if (response.status === 200 || response.status === 201) {
+            props.setIsOpen(false);
+            alert("You're on the list! Party on 🎉");
+        } else {
+            // Something happened o_o
+            alert("Something unexpected happened :(. Please try again");
+        }
+    }
 
     function renderForm() {
         function dateToDayMonthTime(dateString) {
@@ -77,8 +111,9 @@ export default function EventModal(props) {
         }
 
         return (
-            <div className='host-form-container'>
+            <div className='event-modal-container'>
             <Formik
+                validationSchema={formSchema}
                 validateOnChange={false}
                 validateOnBlur={false}
                 onSubmit={handleFormSubmitForReal}
@@ -90,8 +125,7 @@ export default function EventModal(props) {
                 values,
                 errors,
             }) => (
-
-                <Form noValidate className='host-form my-3' onSubmit={handleSubmit}>
+                <Form noValidate className='event-modal my-3' onSubmit={handleSubmit}>
                     <div className="event-section">
                         <img className="event-section-icon" src={user_icon} />
                         <div className="event-section-text">
@@ -157,31 +191,31 @@ export default function EventModal(props) {
                             required
                             name="vaccinated"
                             label="I have received 2 doses of the COVID-19 vaccine"
-                            className="host-form-input"
+                            className="event-modal-input"
                             value={values.vaccinated}
-                            onChange={handleChange}
+                            onChange={(e) => {
+                                handleChange(e);
+                                setFormFields({...formFields, vaccinated: !formFields.vaccinated})
+                            }}
                             isInvalid={!!errors.vaccinated}
                             feedback={errors.vaccinated}
                             feedbackType="invalid"
                         />
                     </Form.Group>
 
-                    <div className='flexbox'>
+                    <div className='event-modal-flexbox'>
                         <Form.Group className="event-text-input">
-                            <Form.Control
-                                autoFocus
-                                type="text"
-                                className="short-input-box"
-                                name='firstName'
-                                placeholder='What snack are you bringing?'
-                                value={values.firstName}
-                                onChange={(e) => {
-                                    handleChange(e);
-                                    setFormFields({...formFields, firstName: e.target.value});
-                                }}
-                                isInvalid={!!errors.firstName}
+                            <TagList
+                                className='event-modal-tags'
+                                tags={formFields.snacks}
+                                input={formFields.snacksInput}
+                                deleteTag={handleDeleteSnack}
+                                onChange={handleSnacksInput}
+                                onKeyDown={handleSnacksInputKeyDown}
+                                onKeyUp={handleSnacksInputKeyUp}
+                                clearTags={handleClearSnacks}
+                                placeholder='Bringing any snacks? 😎'
                             />
-                            <Form.Control.Feedback className='host-form-error-msg' type='invalid'>{errors.firstName}</Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group className="event-submit">
                             <OurButton type="submit" onClick={handleSubmit}>Register</OurButton>

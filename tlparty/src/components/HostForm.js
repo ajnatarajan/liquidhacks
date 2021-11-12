@@ -23,6 +23,8 @@ export default function HostForm(props) {
     // eventPST: '',
     tags: [],
     tagInput: '',
+    snacks: [],
+    snackInput: '',
     firstName: '',
     lastName: '',
     email: '',
@@ -84,6 +86,42 @@ export default function HostForm(props) {
 
   function handleClearTags() {
     setFormFields({...formFields, tags: []});
+  }
+
+  // imagine abstracting code out instead of copy-pasting to modify one attribute
+  function handleDeleteSnack(index) {
+    setFormFields({...formFields, snacks: formFields.snacks.filter((snack, i) => i !== index)});
+  }
+
+  function handleSnackInput(e) {
+    setFormFields({...formFields, snackInput: e.target.value});
+  }
+
+  function handleSnackInputKeyDown(e) {
+    const trimmedInput = formFields.snackInput.trim();
+    if (delimiters.includes(e.keyCode) && trimmedInput.length && !formFields.snacks.includes(trimmedInput)) {
+      e.preventDefault();
+      setFormFields({...formFields, snacks: [...formFields.snacks, trimmedInput], snackInput: ''});
+    }
+
+    if (e.key === "Backspace" && !formFields.snackInput.length && formFields.snacks.length && isKeyReleased) {
+      e.preventDefault();
+      const snacksCopy = [...formFields.snacks];
+      const poppedSnack = snacksCopy.pop();
+
+      setFormFields({...formFields, snacks: snacksCopy, snackInput: poppedSnack});
+      console.log('popping');
+    }
+
+    setIsKeyReleased(false);
+  }
+
+  function handleSnackInputKeyUp() {
+    setIsKeyReleased(true);
+  }
+
+  function handleClearSnacks() {
+    setFormFields({...formFields, snacks: []});
   }
 
   const { dropdown_event_options } = props;
@@ -295,6 +333,23 @@ export default function HostForm(props) {
                   onKeyDown={handleTagInputKeyDown}
                   onKeyUp={handleTagInputKeyUp}
                   clearTags={handleClearTags}
+                  placeholderText={"What's the mood?"}
+                />
+              </Form.Group>
+
+              {/* alternatively, snack tags, or snags! */}
+              <Form.Group className='mb-3' controlId='snacks'>
+                <Form.Label className="host-form-label">Snacks</Form.Label>
+                <TagList
+                  className='host-form-tags'
+                  tags={formFields.snacks}
+                  input={formFields.tagInput}
+                  deleteTag={handleDeleteSnack}
+                  onChange={handleSnackInput}
+                  onKeyDown={handleSnackInputKeyDown}
+                  onKeyUp={handleSnackInputKeyUp}
+                  clearTags={handleClearSnacks}
+                  placeholderText={"Any munchies?"}
                 />
               </Form.Group>
 

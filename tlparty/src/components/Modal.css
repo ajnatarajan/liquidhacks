@@ -9,6 +9,7 @@
     padding: calc(5vh + 30px) 0;
     backdrop-filter: blur(12px);
     cursor: pointer;
+    z-index: 3; /* just bring a modal to the front */
 }
 
 .modal-container {

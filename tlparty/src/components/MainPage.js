@@ -160,6 +160,7 @@ function MainPageMainArea(props) {
                         selection={dropdownSelection}
                         setSelection={setDropdownSelection}
                         title_text="FILTER BY EVENT"
+                        is_in_modal={false}
                     />
                 </div>
             </EventPreviewSection>

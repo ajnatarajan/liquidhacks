@@ -23,6 +23,8 @@ export default function HostForm(props) {
     timezone: '',
     tags: [],
     tagInput: '',
+    snacks: [],
+    snackInput: '',
     firstName: '',
     lastName: '',
     email: '',
@@ -87,10 +89,92 @@ export default function HostForm(props) {
     setFormFields({...formFields, tags: []});
   }
 
+  // imagine abstracting code out instead of copy-pasting to modify one attribute
+  function handleDeleteSnack(index) {
+    setFormFields({...formFields, snacks: formFields.snacks.filter((snack, i) => i !== index)});
+  }
+
+  function handleSnackInput(e) {
+    setFormFields({...formFields, snackInput: e.target.value});
+  }
+
+  function handleSnackInputKeyDown(e) {
+    const trimmedInput = formFields.snackInput.trim();
+    if (delimiters.includes(e.keyCode) && trimmedInput.length && !formFields.snacks.includes(trimmedInput)) {
+      e.preventDefault();
+      setFormFields({...formFields, snacks: [...formFields.snacks, trimmedInput], snackInput: ''});
+    }
+
+    if (e.key === "Backspace" && !formFields.snackInput.length && formFields.snacks.length && isKeyReleased) {
+      e.preventDefault();
+      const snacksCopy = [...formFields.snacks];
+      const poppedSnack = snacksCopy.pop();
+
+      setFormFields({...formFields, snacks: snacksCopy, snackInput: poppedSnack});
+      console.log('popping');
+    }
+
+    setIsKeyReleased(false);
+  }
+
+  function handleSnackInputKeyUp() {
+    setIsKeyReleased(true);
+  }
+
+  function handleClearSnacks() {
+    setFormFields({...formFields, snacks: []});
+  }
+
   const { dropdown_event_options } = props;
 
   const [video_game_option, setVideoGameOption] = useState("League of Legends");
   const [official_event_option, setOfficialEventOption] = useState("Not listed");
+
+  function objectFlip(obj) {
+    return Object.keys(obj).reduce((ret, key) => {
+      ret[obj[key]] = key;
+      return ret;
+    }, {});
+  }
+
+  const dbGameCodeToEnglish = {
+      "leagueoflegends": "League of Legends",
+      "valorant": "Valorant",
+      "dota2": "Dota 2",
+      "starcraft2": "Starcraft 2",
+      "counterstrike": "Counter-Strike: Global Offensive",
+      "rainbowsix": "Rainbow Six",
+  }
+
+  const englishToDbGameCode = objectFlip(dbGameCodeToEnglish);
+
+  function handleFormSubmitForReal() {
+    const requestOptions = {
+      method: 'POST',
+      body: new URLSearchParams({
+        event_name: formFields.eventName,
+        location: formFields.eventLocation,
+        game: official_event_option,
+        video_game: englishToDbGameCode[video_game_option],
+        image: "images/RamenMulti_c2v02_2400x1800_cropped_widescreen.jpg",
+        num_attendees: "0", // When you create an event, it has zero attendees (initially)
+        // date_time: "2021-11-17 18:00",
+        date_time: formFields.eventDateTime.toString(),
+        // timezone: formFields.eventPST,
+        timezone: "beetc",
+        vibes: "{" + formFields.tags.toString() + "}",
+
+        // When you create an event, initially nobody's bringing any snacks.
+        // We probably want to change this lol
+        snacks: "{}",
+        contact_firstname: formFields.firstName,
+        contact_lastname: formFields.lastName,
+        contact_email: formFields.email
+      })
+    }
+
+    fetch('/api/addEvent/', requestOptions)
+  }
 
   // console.log(formFields, "FORM FIELDS");
   // console.log(official_event_option, "OFFICIAL EVENT");
@@ -105,7 +189,7 @@ export default function HostForm(props) {
           validationSchema={formSchema}
           validateOnChange={false}
           validateOnBlur={false}
-          onSubmit={handleFormSubmit}
+          onSubmit={handleFormSubmitForReal}
           initialValues={formFields}
         >
           {({
@@ -261,6 +345,23 @@ export default function HostForm(props) {
                   onKeyDown={handleTagInputKeyDown}
                   onKeyUp={handleTagInputKeyUp}
                   clearTags={handleClearTags}
+                  placeholderText={"What's the mood?"}
+                />
+              </Form.Group>
+
+              {/* alternatively, snack tags, or snags! */}
+              <Form.Group className='mb-3' controlId='snacks'>
+                <Form.Label className="host-form-label">Snacks</Form.Label>
+                <TagList
+                  className='host-form-tags'
+                  tags={formFields.snacks}
+                  input={formFields.tagInput}
+                  deleteTag={handleDeleteSnack}
+                  onChange={handleSnackInput}
+                  onKeyDown={handleSnackInputKeyDown}
+                  onKeyUp={handleSnackInputKeyUp}
+                  clearTags={handleClearSnacks}
+                  placeholderText={"Any munchies?"}
                 />
               </Form.Group>
               <Form.Group controlId="image" className="mb-3">

@@ -42,7 +42,6 @@ def getParams(request):
         params = request.GET.dict()
     elif request.method == 'POST':
         params = request.POST.dict()
-
     return params
 
 

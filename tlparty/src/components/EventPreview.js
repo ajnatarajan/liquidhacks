@@ -49,6 +49,13 @@ export default function EventPreview(props) {
 
     const { full_event } = props;
 
+    function objectFlip(obj) {
+      return Object.keys(obj).reduce((ret, key) => {
+        ret[obj[key]] = key;
+        return ret;
+      }, {});
+    }
+
     const dbGameCodeToEnglish = {
         "leagueoflegends": "League of Legends",
         "valorant": "Valorant",
@@ -57,6 +64,8 @@ export default function EventPreview(props) {
         "counterstrike": "Counter-Strike: Global Offensive",
         "rainbowsix": "Rainbow Six",
     }
+
+    const englishToDbGameCode = objectFlip(dbGameCodeToEnglish);
 
     function dateToDayMonth(dateString) {
         var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];

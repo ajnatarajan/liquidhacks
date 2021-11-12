@@ -24,7 +24,7 @@ export default function TagList(props) {
                     <Form.Control
                         className={props.className}
                         value={input}
-                        placeholder="what's the mood?"
+                        placeholder={props.placeholderText}
                         onKeyDown={onKeyDown}
                         onChange={onChange}
                         onKeyUp={onKeyUp}

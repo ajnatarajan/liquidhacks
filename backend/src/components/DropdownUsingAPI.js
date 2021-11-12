@@ -32,11 +32,5 @@ export default function DropdownUsingAPI(props) {
             </Form.Control>
         </Form.Group>
     );
-    // console.log(props.options, "OY");
-    // for(let i = 0; i < props.options.length; i++) {
-    //     var name = props.options[i]
-    //     console.log(name);
-    //     event.options[event.options.length] = new Option(name, name);
-    // }
     return event;
 }

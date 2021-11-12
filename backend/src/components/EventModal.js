@@ -61,7 +61,6 @@ export default function EventModal(props) {
             const poppedSnack = snacksCopy.pop();
 
             setFormFields({...formFields, snacks: snacksCopy, snacksInput: poppedSnack});
-            console.log('popping');
         }
 
         setIsKeyReleased(false);
@@ -88,8 +87,6 @@ export default function EventModal(props) {
             body: formData,
         }
         const response = await fetch('/api/addUser/', requestOptions);
-        console.log("added user: ", user_email);
-        console.log(response.status, "FIRST RESPONSE");
         if (!(response.status === 200 || response.status === 201)) {
             alert("Something unexpected happened :(. Please try again");
         }
@@ -106,8 +103,6 @@ export default function EventModal(props) {
         }
 
         const response = await fetch('/api/addUserEvent/', requestOptions);
-        console.log("added user event: ", user_email, event_id);
-        console.log(response.status, "USER EVENT RESPONSE");
         if (!(response.status === 200 || response.status === 201)) {
             alert("Something unexpected happened :(. Please try again");
         }
@@ -118,7 +113,6 @@ export default function EventModal(props) {
         
         const formData = new FormData();
         formData.append("event_id", props.eventId);
-        console.log('attendees', props.numAttendees)
         formData.append("num_attendees", parseInt(props.numAttendees) + 1);
         formData.append("snacks", "{" + Array.from(new Set([...props.snacks, ...formFields.snacks])).toString() + "}");
 
@@ -132,7 +126,6 @@ export default function EventModal(props) {
         await addUserEvent(user.email, props.eventId);
 
         const response = await fetch('/api/editEvent/', requestOptions);
-        console.log(response.status, "SECOND RESPONSE");
         if (response.status === 200 || response.status === 201) {
             props.setIsOpen(false);
             alert("You're on the list! Party on 🎉");

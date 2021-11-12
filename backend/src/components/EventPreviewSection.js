@@ -13,6 +13,7 @@ export default function EventPreviewSection(props) {
     }
 
     const { events } = props;
+    
     return (
         <div className="event-listing-container">
             <div className="event-listing-title">

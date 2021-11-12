@@ -63,7 +63,6 @@ export default function HostForm(props) {
     if (delimiters.includes(e.keyCode) && trimmedInput.length && !formFields.vibes.includes(trimmedInput)) {
       e.preventDefault();
       setFormFields({...formFields, vibes: [...formFields.vibes, trimmedInput], vibesInput: ''});
-      console.log('adding', trimmedInput);
     }
 
     if (e.key === "Backspace" && !formFields.vibesInput.length && formFields.vibes.length && isKeyReleased) {
@@ -72,7 +71,6 @@ export default function HostForm(props) {
       const poppedVibes = vibes.pop();
 
       setFormFields({...formFields, vibes: vibes, vibesInput: poppedVibes});
-      console.log('popping');
     }
 
     setIsKeyReleased(false);
@@ -108,7 +106,6 @@ export default function HostForm(props) {
       const poppedSnack = snacksCopy.pop();
 
       setFormFields({...formFields, snacks: snacksCopy, snacksInput: poppedSnack});
-      console.log('popping');
     }
 
     setIsKeyReleased(false);
@@ -146,9 +143,7 @@ export default function HostForm(props) {
   const englishToDbGameCode = objectFlip(dbGameCodeToEnglish);
 
   async function handleFormSubmitForReal() {
-    console.log('what is happening');
     const eventUUID = uuidv4();
-    console.log('uuid: ', eventUUID);
 
     const formData = new FormData();
     formData.append("event_id", eventUUID);
@@ -212,9 +207,6 @@ export default function HostForm(props) {
     }
   }
 
-  // console.log(formFields, "FORM FIELDS");
-  // console.log(official_event_option, "OFFICIAL EVENT");
-  // console.log(video_game_option, "VIDEO GAME");
 
   function renderForm() {
 
@@ -409,7 +401,6 @@ export default function HostForm(props) {
                     value={values.image}
                     onChange={(e) => {
                       handleChange(e);
-                      console.log('IMAGE SETTING TO', e.target.files[0]);
                       setFormFields({...formFields, image: e.target.files[0]});
                     }}
                   />

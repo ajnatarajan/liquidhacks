@@ -20,12 +20,12 @@
     align-items: center;
     margin-bottom: 10px;
     margin-right: 10px;
-    padding: 3px 9px;
-    border: 1px solid red;
-    border-radius: 8px;
+    padding: 2px 9px;
+    border-radius: 5px;
     background-color: red;
     white-space: nowrap;
     color: white;
+    font-size: calc(1vmin + 8px);
 }
 
 .taglist-tag button {
@@ -43,5 +43,5 @@
     max-width: 100%;
     flex-wrap: wrap;
     color: black;
-    margin-left: 5px;
+    margin-top: 5px;
 }

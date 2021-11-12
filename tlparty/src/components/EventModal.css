@@ -117,3 +117,55 @@
 .register {
     align-items: center;
 }
+
+.event-section {
+    color: white;
+    font-family: "FFMark";
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    padding-left: calc(0.5vmin + 5px);
+    margin-bottom: calc(1.2vmin + 12px);
+    width: 50%;
+}
+
+.event-section.full {
+    width: 100%;
+}
+
+.event-section-icon {
+    width: calc(1.75vmin + 17.5px);
+    height: calc(1.75vmin + 17.5px);
+    display: inline-block;
+}
+
+.event-section-text {
+    width: calc(100% - 2vmin - 20px);
+    display: inline-block;
+    padding-left: calc(1vmin + 10px);
+}
+
+.event-section-title {
+    font-size: calc(1vmin + 6px);
+}
+
+
+.event-section-content {
+    font-size: calc(1vmin + 12px);
+    margin-top: calc(-0.25vmin - 2px);
+}
+
+.event-text-input {
+    width: 80%;
+    display: inline-block;
+}
+
+.event-submit {
+    width: 20%;
+    padding-left: 10px;
+    display: inline-block;
+}
+
+.form-control {
+    background-color: transparent !important;
+}

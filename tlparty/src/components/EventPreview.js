@@ -104,7 +104,7 @@ export default function EventPreview(props) {
                 </div>
             </span>
             </div>
-            <Modal isOpen={isModalOpen} setIsOpen={setIsModalOpen}>
+            <Modal isOpen={isModalOpen} setIsOpen={setIsModalOpen} title={full_event["event_name"]}>
                 <EventModal
                     name={full_event["event_name"]}
                     host={full_event["contact_firstname"] + " " + full_event["contact_lastname"]}

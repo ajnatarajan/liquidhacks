@@ -14,7 +14,7 @@ export default function DropdownUsingAPI(props) {
 
     var event = (
         <Form noValidate className='dropdown-using-api my-3'>
-            <Form.Group as={Col} md={5}>
+            <Form.Group>
                 <Form.Label className="main-page-game-text">FILTER BY EVENT</Form.Label>
                 <Form.Control
                     className="host-form-input"

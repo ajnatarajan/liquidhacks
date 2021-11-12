@@ -79,12 +79,12 @@ function MainPageMainArea(props) {
     const goToProfile = useCallback(() => navigate('/profile'), [navigate]);
     const { setUpcomingEvents, setAllUpcomingParties } = props;
     const [activeGames, setActiveGames] = useState({
-        valorant: false,
-        league: false,
-        csgo: false,
-        dota: false,
-        starcraft: false,
-        rainbowsix: false,
+        valorant: true,
+        leagueoflegends: true,
+        dota2: true,
+        starcraft2: true,
+        rainbowsix: true,
+        counterstrike: true,
     });
 
     // Fetch the most recent API data every time the main page is reloaded
@@ -100,12 +100,19 @@ function MainPageMainArea(props) {
     console.log("Upcoming Parties: ", props.upcomingParties);
     console.log("Dropdown Selection: ", dropdownSelection);
 
+    let filteredParties = [];
+    for (const party of props.upcomingParties) {
+        if (activeGames[party.video_game] && (dropdownSelection == "Any" || dropdownSelection == party.game)) {
+            filteredParties.push(party);
+        }
+    }
+
     return (
         <div className="page-background-theme" style={{minHeight: '100vh'}}>
             {/* if you change returnTo, talk to Ajay. He needs to change something
             in his auth0 account otherwise this will break*/}
             <TopBar button_text="PROFILE" on_click={goToProfile} button_text_2="LOG OUT" on_click_2={() => logout({ returnTo: "http://localhost:3000" })}/>
-            <EventPreviewSection preview_section_title="Events Near You" events={props.upcomingParties}>
+            <EventPreviewSection preview_section_title="Events Near You" events={filteredParties}>
                 <OurButton type="button" onClick={openModal}> I want to host! </OurButton>
 
                 <div className="game-filter-text-and-menu-bar">
@@ -117,25 +124,25 @@ function MainPageMainArea(props) {
                         onClick={() => setActiveGames({...activeGames, valorant: !activeGames.valorant})}>
                             <img src={valorant_icon} className="main-page-filter-game-icon"/>
                         </button>
-                        <button className={"btn btn-main-page-game-icon-filter " + (activeGames.league ? "active" : "")}
-                        onClick={() => setActiveGames({...activeGames, league: !activeGames.league})}>
+                        <button className={"btn btn-main-page-game-icon-filter " + (activeGames.leagueoflegends ? "active" : "")}
+                        onClick={() => setActiveGames({...activeGames, leagueoflegends: !activeGames.leagueoflegends})}>
                             <img src={league_icon} className="main-page-filter-game-icon"/>
                         </button>
-                        <button className={"btn btn-main-page-game-icon-filter " + (activeGames.csgo ? "active" : "")}
-                        onClick={() => setActiveGames({...activeGames, csgo: !activeGames.csgo})}>
-                            <img src={csgo_icon} className="main-page-filter-game-icon"/>
-                        </button>
-                        <button className={"btn btn-main-page-game-icon-filter " + (activeGames.dota ? "active" : "")}
-                        onClick={() => setActiveGames({...activeGames, dota: !activeGames.dota})}>
+                        <button className={"btn btn-main-page-game-icon-filter " + (activeGames.dota2 ? "active" : "")}
+                        onClick={() => setActiveGames({...activeGames, dota2: !activeGames.dota2})}>
                             <img src={dota_icon} className="main-page-filter-game-icon"/>
                         </button>
-                        <button className={"btn btn-main-page-game-icon-filter " + (activeGames.starcraft ? "active" : "")}
-                        onClick={() => setActiveGames({...activeGames, starcraft: !activeGames.starcraft})}>
+                        <button className={"btn btn-main-page-game-icon-filter " + (activeGames.starcraft2 ? "active" : "")}
+                        onClick={() => setActiveGames({...activeGames, starcraft2: !activeGames.starcraft2})}>
                             <img src={starcraft_icon} className="main-page-filter-game-icon"/>
                         </button>
-                        <button className={"btn btn-main-page-game-icon-filter right " + (activeGames.rainbowsix ? "active" : "")}
+                        <button className={"btn btn-main-page-game-icon-filter " + (activeGames.rainbowsix ? "active" : "")}
                         onClick={() => setActiveGames({...activeGames, rainbowsix: !activeGames.rainbowsix})}>
                             <img src={rainbowsix_icon} className="main-page-filter-game-icon"/>
+                        </button>
+                        <button className={"btn btn-main-page-game-icon-filter right " + (activeGames.counterstrike ? "active" : "")}
+                        onClick={() => setActiveGames({...activeGames, counterstrike: !activeGames.counterstrike})}>
+                            <img src={csgo_icon} className="main-page-filter-game-icon"/>
                         </button>
                     </div>
                 </div>
@@ -144,7 +151,7 @@ function MainPageMainArea(props) {
                         options={props.cleanedNames}
                         allowOther={true}
                         otherName="Any"
-                        selection={dropdownSelection} 
+                        selection={dropdownSelection}
                         setSelection={setDropdownSelection}
                     />
                 </div>

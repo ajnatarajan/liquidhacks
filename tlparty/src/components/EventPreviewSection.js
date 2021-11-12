@@ -30,6 +30,7 @@ export default function EventPreviewSection(props) {
                             num_attendees={event["num_attendees"]}
                             date={event["date_time"].split(" ")[0]}
                             event_pic={event["image"]}
+                            full_event={event} // need it for the modal
                         />)
                     })
                 }

@@ -33,6 +33,19 @@ export default function EventModal(props) {
   }
 
   function renderForm() {
+    function dateToDayMonthTime(dateString) {
+      var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+      var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      const d = new Date(dateString);
+      var dayName = days[d.getDay()];
+      var month = months[d.getMonth()];
+      var date = d.getDate();
+
+      var strTime = d.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+
+      return dayName + " " + month + " " + date + " @ " + strTime;
+    }
+
     return (
       <div className='host-form-container'>
         <Formik
@@ -56,10 +69,13 @@ export default function EventModal(props) {
                 <Form.Label className="host-form-label">Game: {props.game}</Form.Label>
               </Form.Group>
               <Form.Group className='mb-3'>
+                <Form.Label className="host-form-label">Event: {props.liquipedia_pagename}</Form.Label>
+              </Form.Group>
+              <Form.Group className='mb-3'>
                 <Form.Label className="host-form-label">Location: {props.location}</Form.Label>
               </Form.Group>
               <Form.Group className='mb-3'>
-                <Form.Label className="host-form-label">Date: {props.date}</Form.Label>
+                <Form.Label className="host-form-label">Date: {dateToDayMonthTime(props.date)}</Form.Label>
               </Form.Group>
 
               <Form.Group className='mb-3'>
@@ -93,7 +109,7 @@ export default function EventModal(props) {
                         type="text"
                         className="short-input-box"
                         name='firstName'
-                        placeholder='Bringing a snack?'
+                        placeholder='What snack are you bringing?'
                         value={values.firstName}
                         onChange={(e) => {
                         handleChange(e);

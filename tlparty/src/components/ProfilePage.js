@@ -12,7 +12,7 @@ async function getUserEventsHelper(eventIds) {
     const events = []
     for await (const eventId of eventIds) {
         const eventParams = {'event_id': eventId}
-        events.push(await fetch('/testapp/getEvent/',
+        events.push(await fetch('/api/getEvent/',
         {
             method: "POST",
             body: new URLSearchParams(eventParams),
@@ -25,7 +25,7 @@ async function getUserEventsHelper(eventIds) {
 
 async function getPastUserEvents(emailAddress, setPastEvents) {
     const params = {'email_address': emailAddress};
-    const pastEventIds = await fetch('/testapp/getPastUserEvents/',
+    const pastEventIds = await fetch('/api/getPastUserEvents/',
     {
         method: "POST",
         body: new URLSearchParams(params),
@@ -38,7 +38,7 @@ async function getPastUserEvents(emailAddress, setPastEvents) {
 
 async function getUpcomingUserEvents(emailAddress, setUpcomingEvents) {
     const params = {'email_address': emailAddress};
-    const upcomingEventIds = await fetch('/testapp/getUpcomingUserEvents/',
+    const upcomingEventIds = await fetch('/api/getUpcomingUserEvents/',
     {
         method: "POST",
         body: new URLSearchParams(params),

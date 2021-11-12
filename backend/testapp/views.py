@@ -1,4 +1,5 @@
 from django.http import HttpResponse
+from django.http.request import HttpRequest
 from django.shortcuts import render
 from testapp.models import Event, UserEvent, User
 from django.views.decorators.csrf import csrf_exempt
@@ -211,30 +212,57 @@ def getAllUpcomingEvents(request):
 
 
 @csrf_exempt
+def editEvent(request):
+    params = getParams(request)
+    clean_params = {key: params[key].strip('"') for key in params}
+    e = Event.objects.filter(event_id=clean_params['event_id'])
+    if not e.exists():
+        return HttpResponse("{}, {} is not an existing event in the database".format(clean_params['event_id'], clean_params['event_name']))
+    
+    e.update(
+        event_id=(clean_params['event_id'] if 'event_id' in params.keys() else e[0].event_id),
+        event_name=(clean_params['event_name'] if 'event_name' in params.keys() else e[0].event_name),
+        location=(clean_params['location'] if 'location' in params.keys() else e[0].location),
+        game=(clean_params['game'] if 'game' in params.keys() else e[0].game),
+        video_game=(clean_params['video_game'] if 'video_game' in params.keys() else e[0].video_game),
+        image=(clean_params['image'] if 'image' in params.keys() else e[0].image),
+        num_attendees=(clean_params['num_attendees'] if 'num_attendees' in params.keys() else e[0].num_attendees),
+        date_time=(clean_params['date_time'] if 'date_time' in params.keys() else e[0].date_time),
+        timezone=(clean_params['timezone'] if 'timezone' in params.keys() else e[0].timezone),
+        vibes=(clean_params['vibes'] if 'vibes' in params.keys() else e[0].vibes),
+        snacks=(clean_params['snacks'] if 'snacks' in params.keys() else e[0].snacks),
+        contact_firstname=(clean_params['contact_firstname'] if 'contact_firstname' in params.keys() else e[0].contact_firstname),
+        contact_lastname=(clean_params['contact_lastname'] if 'contact_lastname' in params.keys() else e[0].contact_lastname),
+        contact_email=(clean_params['contact_email'] if 'contact_email' in params.keys() else e[0].contact_email),
+    )
+    return HttpResponse('{} was edited in the database'.format(e.__str__()))
+
+
+@csrf_exempt
 def addEvent(request):
     params = getParams(request)
     clean_params = {key: params[key].strip('"') for key in params}
     if Event.objects.filter(event_id=clean_params['event_id']).exists():
-        print("{} already exists in the database".format(clean_params['event_id']))
-    else:
-        e = Event(
-            event_id=clean_params['event_id'],
-            event_name=clean_params['event_name'],
-            location=clean_params['location'],
-            game=clean_params['game'],
-            video_game=clean_params['video_game'],
-            image=clean_params['image'],
-            num_attendees=clean_params['num_attendees'],
-            date_time=clean_params['date_time'],
-            timezone=clean_params['timezone'],
-            vibes=clean_params['vibes'],
-            snacks=clean_params['snacks'],
-            contact_firstname=clean_params['contact_firstname'],
-            contact_lastname=clean_params['contact_lastname'],
-            contact_email=clean_params['contact_email'],
-        )
-        e.save()
-        print('{} was added to the database'.format(e.__str__()))
+        return HttpResponse("{} already exists in the database".format(clean_params['event_id']))
+    
+    e = Event(
+        event_id=clean_params['event_id'],
+        event_name=clean_params['event_name'],
+        location=clean_params['location'],
+        game=clean_params['game'],
+        video_game=clean_params['video_game'],
+        image=clean_params['image'],
+        num_attendees=clean_params['num_attendees'],
+        date_time=clean_params['date_time'],
+        timezone=clean_params['timezone'],
+        vibes=clean_params['vibes'],
+        snacks=clean_params['snacks'],
+        contact_firstname=clean_params['contact_firstname'],
+        contact_lastname=clean_params['contact_lastname'],
+        contact_email=clean_params['contact_email'],
+    )
+    e.save()
+    return HttpResponse('{} was added to the database'.format(e.__str__()))
 
 
 @csrf_exempt
@@ -242,16 +270,16 @@ def addUserEvent(request):
     params = getParams(request)
     clean_params = {key: params[key].strip('"') for key in params}
     if UserEvent.objects.filter(email_address=clean_params['email_address']).exists():
-        print("{} already exists in the database".format(clean_params['email_address']))
+        return HttpResponse("{} already exists in the database".format(clean_params['email_address']))
     elif not Event.objects.filter(event_id=clean_params['event_id']).exists():
-        print("Cannot add {} because event does not exist!".format(clean_params['event_id']))
+        return HttpResponse("Cannot add {} because event does not exist!".format(clean_params['event_id']))
     else:
         ue = UserEvent(
             email_address=clean_params['email_address'],
             event_id=clean_params['event_id'],
         )
         ue.save()
-        print('{} was added to the database'.format(ue.__str__()))
+        return HttpResponse('{} was added to the database'.format(ue.__str__()))
 
 
 @csrf_exempt
@@ -259,7 +287,7 @@ def addUser(request):
     params = getParams(request)
     clean_params = {key: params[key].strip('"') for key in params}
     if User.objects.filter(email_address=clean_params['email_address']).exists():
-        print("{} already exists in the database".format(clean_params['email_address']))
+        return HttpResponse("{} already exists in the database".format(clean_params['email_address']))
     else:
         u = User(
             email_address=clean_params['email_address'],
@@ -269,4 +297,4 @@ def addUser(request):
             is_vaccinated=clean_params['is_vaccinated'],
         )
         u.save()
-        print('{} was added to the database'.format(u.__str__()))
+        return HttpResponse('{} was added to the database'.format(u.__str__()))

@@ -58,7 +58,7 @@ function getUpcomingEvents(upcoming_dictionary, game, setFunction) { // make our
 }
 
 function getAllUpcomingParties(setAllUpcomingParties) {
-    fetch('/testapp/getAllEvents/',
+    fetch('/api/getAllEvents/',
     {
         method: "GET"
     }).then(response => response.json())

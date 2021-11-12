@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './EventPreview.css'
-import tl_background_old from '../img/tl_background_old.jpg';
-import tlvsmad from '../img/tlvsmad.jpg';
 import valorant_icon from '../img/valorant_icon.png';
 import league_icon from '../img/league_icon.png';
 import csgo_icon from '../img/csgo_icon.png';
@@ -40,22 +38,7 @@ export const GameIcon = (props) => {
     }
 
     return Output;
-};
-
-export const EventPic = ({ event_pic }) => {
-    let Output;
-    switch (event_pic) {
-        case 'tlvsmad':
-            console.log(require('../img/tlvsmad.jpg'));
-            Output = (<img src={require('../img/tlvsmad.jpg')} className="event-pic" alt="tlvsmad pic" />);
-            break;
-        default:
-            Output = (<img src={require('../img/tl_background_old.jpg')} className="event-pic" alt="default pic" />);
-            break;
-    }
-
-    return Output;
-};
+}
 
 
 export default function EventPreview(props) {
@@ -94,11 +77,10 @@ export default function EventPreview(props) {
         return dayName + " " + month + " " + date;
     }
 
-
     return (
-        <div style={{margin: "calc(3vh + 10px) calc(10px + 2vw) 0 0"}}>
+        <div style={{margin: "0 calc(10px + 2vw) 0 0"}}>
             <div className="event-preview-clickable-region" style={{cursor: "pointer"}} onClick={openModal}>
-            <span style={{display: "inline-block", backgroundImage: `url(${tl_background_old})`}} className="square">
+            <span style={{display: "inline-block", backgroundImage: `url('http://localhost:8000/media/${props.event_pic}`}} className="square">
                 <div className="event-preview-title-text">
                     {props.title}
                 </div>

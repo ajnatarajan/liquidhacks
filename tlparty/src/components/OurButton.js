@@ -8,6 +8,7 @@ export default function OurButton(props) {
             type={props.type}
             onClick={props.onClick}
             className={`btn btn-join-the-party`}
+            style={props.style}
         >
             {props.children}
         </button>

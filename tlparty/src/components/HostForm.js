@@ -19,8 +19,8 @@ export default function HostForm(props) {
   const [formFields, setFormFields] = useState({
     eventName: '',
     eventLocation: '',
-    eventDateTime: new Date(), // TODO: Change to datetime format
-    // eventPST: '',
+    eventDateTime: new Date(),
+    timezone: '',
     tags: [],
     tagInput: '',
     snacks: [],
@@ -28,6 +28,7 @@ export default function HostForm(props) {
     firstName: '',
     lastName: '',
     email: '',
+    image: '',
     vaccinated: false,
   });
 
@@ -242,6 +243,7 @@ export default function HostForm(props) {
                         setSelection={setVideoGameOption}
                         title_text="Game"
                         className="host-form-label"
+                        is_in_modal={true}
                   />
                 </div>
                 <div className="one-dropdown">
@@ -252,6 +254,7 @@ export default function HostForm(props) {
                         selection={official_event_option}
                         setSelection={setOfficialEventOption}
                         title_text="Official Event"
+                        is_in_modal={true}
                     />
                 </div>
               </Row>
@@ -277,7 +280,16 @@ export default function HostForm(props) {
                 </Form.Group>
                 <Form.Group as={Col} md={6} controlId="eventPST">
                   <Form.Label className="host-form-label">Timezone</Form.Label>
-                  <Form.Select className="host-form-input" aria-label="Default select example" style={{cursor: "pointer"}}>
+                  <Form.Control
+                    as="select"
+                    className="host-form-input"
+                    aria-label="Default select example"
+                    onChange={(e) => {
+                      handleChange(e);
+                      setFormFields({...formFields, timezone: e.target.value});
+                    }}
+                    style={{cursor: "pointer"}}
+                  >
                     <option>Select a timezone</option>
                     <option value="-12:00">(GMT -12:00) Eniwetok, Kwajalein</option>
                     <option value="-11:00">(GMT -11:00) Midway Island, Samoa</option>
@@ -319,7 +331,7 @@ export default function HostForm(props) {
                     <option value="+12:75">(GMT +12:45) Chatham Islands</option>
                     <option value="+13:00">(GMT +13:00) Apia, Nukualofa</option>
                     <option value="+14:00">(GMT +14:00) Line Islands, Tokelau</option>
-                  </Form.Select>
+                  </Form.Control>
                 </Form.Group>
               </Row>
               <Form.Group className='mb-3' controlId='vibesList'>
@@ -351,6 +363,19 @@ export default function HostForm(props) {
                   clearTags={handleClearSnacks}
                   placeholderText={"Any munchies?"}
                 />
+              </Form.Group>
+              <Form.Group controlId="image" className="mb-3">
+                  <Form.Label className="host-form-label">Background image</Form.Label>
+                  <Form.Control
+                    type="file"
+                    className="host-form-input"
+                    name='image'
+                    value={values.image}
+                    onChange={(e) => {
+                      handleChange(e);
+                      setFormFields({...formFields, image: e.target.files[0]});
+                    }}
+                  />
               </Form.Group>
 
               <Form.Label className="mt-3 host-form-title">Contact Information</Form.Label>
@@ -414,7 +439,10 @@ export default function HostForm(props) {
                   label="I have received 2 doses of the COVID-19 vaccine"
                   className="host-form-input"
                   value={values.vaccinated}
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    handleChange(e);
+                    setFormFields({...formFields, vaccinated: !formFields.vaccinated});
+                  }}
                   isInvalid={!!errors.vaccinated}
                   feedback={errors.vaccinated}
                   feedbackType="invalid"

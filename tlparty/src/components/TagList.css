@@ -29,6 +29,16 @@
     color: white;
 }
 
+.tag-color-red {
+    border: 1px solid red !important;
+    background-color: red !important;
+}
+
+.tag-color-orange {
+    border: 1px solid orange !important;
+    background-color: orange !important;
+}
+
 .taglist-tag button {
     margin-left: 5px;
     display: flex;

@@ -338,6 +338,7 @@ export default function HostForm(props) {
                 <Form.Label className="host-form-label">Vibes list</Form.Label>
                 <TagList
                   className='host-form-tags'
+                  tagColor='red'
                   tags={formFields.tags}
                   input={formFields.tagInput}
                   deleteTag={handleDeleteTag}
@@ -354,6 +355,7 @@ export default function HostForm(props) {
                 <Form.Label className="host-form-label">Snacks</Form.Label>
                 <TagList
                   className='host-form-tags'
+                  tagColor='orange'
                   tags={formFields.snacks}
                   input={formFields.snackInput}
                   deleteTag={handleDeleteSnack}

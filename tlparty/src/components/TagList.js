@@ -7,13 +7,13 @@ import OurButton from './OurButton';
 
 
 export default function TagList(props) {
-    const { tags, input, deleteTag, onKeyDown, onKeyUp, onChange, clearTags } = props;
+    const { tags, tagColor, input, deleteTag, onKeyDown, onKeyUp, onChange, clearTags } = props;
     const hasNoTags = (tags.length === 0);
     return (
         <div>
             <div className={`taglist-container ${props.className}`}>
                 {tags.map((tag, index) => (
-                    <div className="taglist-tag" key={tag}>
+                    <div className={`taglist-tag tag-color-${props.tagColor}`} key={tag}>
                         {tag}
                         <button type='button' onClick={() => deleteTag(index)}>x</button>
                     </div>

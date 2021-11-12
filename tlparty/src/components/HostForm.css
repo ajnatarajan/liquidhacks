@@ -63,6 +63,10 @@
     font-size: 2vmin;
 }
 
+.host-form-input option {
+    color: black !important;
+}
+
 .host-form-tags {
     background-color: transparent !important;
     font-family: "FFMark";

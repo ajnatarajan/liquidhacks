@@ -15,6 +15,18 @@ export default function ProfilePage(props) {
     if (!isAuthenticated) {
         return <Landing />
     }
+    // user.name contains email_address
+    // need pastEvents and upcomingEvents
+    const pastEvents = [];
+    const upcomingEvents = [];
+    const params = {'email_address': user.name}
+    console.log('params', params);
+    console.log(fetch('/testapp/getPastUserEvents/', {
+        body: new URLSearchParams(params),
+        method: 'post',
+    }));
+
+
     return (
         <div class="page-background-theme" style={{minHeight: '100vh'}}>
             {/* if you change returnTo, talk to Ajay. He needs to change something
@@ -29,8 +41,8 @@ export default function ProfilePage(props) {
                     placeholder_phone={props.user_phone}
                 /> */}
                 <h1 style={{color: 'white'}}>Welcome {user.name}</h1>
-                <EventPreviewSection userId={user.name} preview_section_title="My Upcoming Events"/>
-                <EventPreviewSection userId={user.name} preview_section_title="Past Events"/>
+                <EventPreviewSection events={pastEvents} preview_section_title="My Upcoming Events"/>
+                <EventPreviewSection events={upcomingEvents} preview_section_title="Past Events"/>
             </div>
         </div>
     );

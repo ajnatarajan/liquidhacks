@@ -14,7 +14,11 @@
 .square {
     position: relative;
     width: 20vw;
+    height: 11.33vw;
     min-width: 300px;
+    min-height: 170px;
+    background-position: center;
+    background-size: cover;
 }
 
 .event-pic {

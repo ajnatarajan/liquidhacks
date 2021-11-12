@@ -18,6 +18,18 @@ import starcraft_icon from '../img/starcraft_icon.png';
 import DropdownUsingAPI from './DropdownUsingAPI';
 import EventModal from './EventModal';
 
+function getTodayInProperForm() {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth() + 1;
+    const day = today.getDate();
+    const hour = today.getHours();
+    const minute = today.getMinutes();
+    const second = today.getSeconds();
+
+    const dateString = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
+    return dateString;
+}
 // This is for events from LIQUIPEDIA DB (NOT events that our users make)
 function getUpcomingEvents(upcoming_dictionary, game, setFunction) { // make our Liquipedia DB call here and store it
     const FormData = require('form-data');
@@ -25,10 +37,12 @@ function getUpcomingEvents(upcoming_dictionary, game, setFunction) { // make our
     require('dotenv').config();
 
     const formData = new FormData();
+    var date_condition = "[[date::>" + getTodayInProperForm() + "]]";
+    console.log("TODAY IS: ", date_condition);
     formData.append("apikey", process.env.REACT_APP_API_KEY);
     formData.append("wiki", game);
     formData.append("limit", 10);
-    formData.append("conditions", "([[opponent1::Team Liquid]] OR [[opponent2::Team Liquid]]) AND [[date::>2021-11-10 00:00:00]]");
+    formData.append("conditions", "([[opponent1::Team Liquid]] OR [[opponent2::Team Liquid]]) AND " + date_condition);
 
     // axios.post(
     //     'https://gentle-beyond-32691.herokuapp.com/https://api.liquipedia.net/api/v1/match',

@@ -6,6 +6,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import OurButton from '../components/OurButton';
 import TagList from '../components/TagList';
+import DropdownUsingAPI from '../components/DropdownUsingAPI';
 
 const KeyCodes = {
   comma: 188,
@@ -14,7 +15,7 @@ const KeyCodes = {
 
 const delimiters = [...KeyCodes.enter, KeyCodes.comma];
 
-export default function Host() {
+export default function HostForm(props) {
   const [formFields, setFormFields] = useState({
     eventName: '',
     eventLocation: '',
@@ -84,7 +85,15 @@ export default function Host() {
     setFormFields({...formFields, tags: []});
   }
 
+  const { dropdown_event_options } = props;
+  console.log(dropdown_event_options, "OPTIONERINOS");
+
+  const [video_game_option, setVideoGameOption] = useState("League of Legends");
+  const [official_event_option, setOfficialEventOption] = useState("Not listed");
+
   function renderForm() {
+
+    const video_game_options = ["League of Legends", "Valorant", "Dota 2", "Starcraft 2", "Counter-Strike: Global Offensive", "Rainbow Six"];
     return (
       <div className='host-form-container'>
         <Formik
@@ -135,6 +144,30 @@ export default function Host() {
                 />
                 <Form.Control.Feedback className='host-form-error-msg' type='invalid'>{errors.eventLocation}</Form.Control.Feedback>
               </Form.Group>
+              
+              <Row className='mb-3 two-dropdowns'>
+                <div className="one-dropdown">
+                  <DropdownUsingAPI
+                        options={video_game_options}
+                        allowOther={false}
+                        selection={video_game_option}
+                        setSelection={setVideoGameOption}
+                        title_text="Game"
+                        className="host-form-label"
+                  />
+                </div>
+                <div className="one-dropdown">
+                    <DropdownUsingAPI
+                        options={dropdown_event_options}
+                        allowOther={true}
+                        otherName="Not listed"
+                        selection={official_event_option}
+                        setSelection={setOfficialEventOption}
+                        title_text="Official Event"
+                    />
+                </div>
+              </Row>
+
               <Row className='mb-3'>
                 <Form.Group as={Col} md={6} controlId="eventDateTime">
                   <Form.Label className="host-form-label">When</Form.Label>
@@ -268,7 +301,7 @@ export default function Host() {
                 />
                 <Form.Control.Feedback className='host-form-error-msg' type='invalid'>{errors.email}</Form.Control.Feedback>
               </Form.Group>
-              <Form.Group className="mb-3" controlId="vaccinated">
+              <Form.Group className="mb-3 vaccine-container" controlId="vaccinated">
                 <Form.Check
                   required
                   name="vaccinated"
@@ -294,3 +327,4 @@ export default function Host() {
       renderForm()
   );
 }
+

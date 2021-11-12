@@ -17,7 +17,7 @@ function LandingMainArea() {
         Discover in-person esports watch parties near you
       </div>
       <div className="main-button-position">
-          <OurButton type='button' onClick={() => loginWithRedirect()}>JOIN THE PARTY</OurButton>
+          <OurButton type='button' onClick={() => loginWithRedirect()} style={{fontSize: 'x-large'}}>JOIN THE PARTY</OurButton>
       </div>
     </div>
   );

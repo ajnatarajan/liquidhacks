@@ -19,27 +19,28 @@
 
 .title-text {
     position: absolute;
-    top: 15%;
+    top: 10%;
     left: 5%;
     right: 5%;
+    letter-spacing: 8px;
     font-family: "Valorant";
     font-weight: bold;
-    font-size: calc(8vmin);
+    font-size: calc(10vmin);
 }
 
 .one-liner {
     position: absolute;
-    bottom: 20%;
+    bottom: 21%;
     left: 1%;
     right: 1%;
     font-family: "Valorant";
     font-weight: bold;
-    font-size: calc(2.5vmin);
+    font-size: calc(3vmin);
 }
 
 .main-button-position {
     position: absolute;
-    bottom: 4%;
+    bottom: 5%;
     left: 50%;
     transform: translate(-50%, -50%);
 }

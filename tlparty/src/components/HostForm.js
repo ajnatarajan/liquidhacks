@@ -86,10 +86,13 @@ export default function HostForm(props) {
   }
 
   const { dropdown_event_options } = props;
-  console.log(dropdown_event_options, "OPTIONERINOS");
 
   const [video_game_option, setVideoGameOption] = useState("League of Legends");
   const [official_event_option, setOfficialEventOption] = useState("Not listed");
+
+  // console.log(formFields, "FORM FIELDS");
+  // console.log(official_event_option, "OFFICIAL EVENT");
+  // console.log(video_game_option, "VIDEO GAME");
 
   function renderForm() {
 

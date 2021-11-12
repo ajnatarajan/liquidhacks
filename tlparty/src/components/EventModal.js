@@ -59,10 +59,7 @@ export default function EventModal(props) {
   
       fetch('/api/addEvent/', requestOptions);
     }
-  
-    function handleHostButtonClick() {
-        setShowForm(!showForm);
-    }
+
 
     function renderForm() {
         function dateToDayMonthTime(dateString) {

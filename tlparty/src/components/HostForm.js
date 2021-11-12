@@ -355,7 +355,7 @@ export default function HostForm(props) {
                 <TagList
                   className='host-form-tags'
                   tags={formFields.snacks}
-                  input={formFields.tagInput}
+                  input={formFields.snackInput}
                   deleteTag={handleDeleteSnack}
                   onChange={handleSnackInput}
                   onKeyDown={handleSnackInputKeyDown}

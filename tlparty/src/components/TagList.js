@@ -15,7 +15,7 @@ export default function TagList(props) {
         return hash;
     }
 
-    const choices = ['#ffc100', '#c356ea', '#8ff243', '#71aef2', '#ea5645']
+    const choices = ['#ffc100', '#c356ea', '#71aef2', '#ea5645']
     const { tags, input, deleteTag, onKeyDown, onKeyUp, onChange, clearTags } = props;
     const hasNoTags = (tags.length === 0);
     return (

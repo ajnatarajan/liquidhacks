@@ -14,7 +14,7 @@ export default function TopBar(props) {
           <a href="/home">
             <img className="tl_icon" src={tl_icon}/>
           </a>
-          <div className="tl_party">Team Liquid Party</div>
+          <div className="tl_party">TL PARTY</div>
           <div className="top-bar-right-side-buttons">
             <OurButton type='button' onClick={props.on_click}>{props.button_text}</OurButton>
             <OurButton type='button' onClick={props.on_click_2}>{props.button_text_2}</OurButton>

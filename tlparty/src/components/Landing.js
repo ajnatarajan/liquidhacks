@@ -12,7 +12,7 @@ function LandingMainArea() {
     <div className="main-area-container">
       <img className="tl_background" src={tl_background}/>
       <div className="title-text">
-        Team Liquid Party
+        TL PARTY
       </div>
       <div className="one-liner">
         Discover in-person esports watch parties near you

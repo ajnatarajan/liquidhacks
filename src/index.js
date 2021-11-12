@@ -24,7 +24,7 @@ render(
     // redirectUri must match what is in my auth0 account so if you change
     // this, talk to Ajay since Ajay will need to update his auth0 account
     // stuff to match whatever you change this to.
-    redirectUri="http://localhost:3000/home"
+    redirectUri="https://tlparty.herokuapp.com/home"
     useRefreshTokens={ true }
     cacheLocation="localstorage"
   >

@@ -1,20 +1,11 @@
 from django.http import HttpResponse
-from django.http.request import HttpRequest
-from django.shortcuts import render
 from testapp.models import Event, UserEvent, User
 from django.views.decorators.csrf import csrf_exempt
 
 
-import os
-import requests
 import json
 from datetime import datetime
 import random
-
-
-def index(request):
-    r = requests.get('http://httpbin.org/status/418')
-    return HttpResponse('<pre>' + r.text + '</pre>')
 
 
 def detail(request, email_address):

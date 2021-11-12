@@ -18,6 +18,18 @@ import starcraft_icon from '../img/starcraft_icon.png';
 import DropdownUsingAPI from './DropdownUsingAPI';
 import EventModal from './EventModal';
 
+function getTodayInProperForm() {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth() + 1;
+    const day = today.getDate();
+    const hour = today.getHours();
+    const minute = today.getMinutes();
+    const second = today.getSeconds();
+
+    const dateString = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
+    return dateString;
+}
 // This is for events from LIQUIPEDIA DB (NOT events that our users make)
 function getUpcomingEvents(upcoming_dictionary, game, setFunction) { // make our Liquipedia DB call here and store it
     const FormData = require('form-data');
@@ -25,10 +37,12 @@ function getUpcomingEvents(upcoming_dictionary, game, setFunction) { // make our
     require('dotenv').config();
 
     const formData = new FormData();
+    var date_condition = "[[date::>" + getTodayInProperForm() + "]]";
+    console.log("TODAY IS: ", date_condition);
     formData.append("apikey", process.env.REACT_APP_API_KEY);
     formData.append("wiki", game);
     formData.append("limit", 10);
-    formData.append("conditions", "([[opponent1::Team Liquid]] OR [[opponent2::Team Liquid]]) AND [[date::>2021-11-10 00:00:00]]");
+    formData.append("conditions", "([[opponent1::Team Liquid]] OR [[opponent2::Team Liquid]]) AND " + date_condition);
 
     // axios.post(
     //     'https://gentle-beyond-32691.herokuapp.com/https://api.liquipedia.net/api/v1/match',
@@ -73,17 +87,18 @@ function MainPageMainArea(props) {
     }
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [dropdownSelection, setDropdownSelection] = useState("Any");
     const { logout } = useAuth0();
     const navigate = useNavigate();
     const goToProfile = useCallback(() => navigate('/profile'), [navigate]);
     const { setUpcomingEvents, setAllUpcomingParties } = props;
     const [activeGames, setActiveGames] = useState({
-        valorant: false,
-        league: false,
-        csgo: false,
-        dota: false,
-        starcraft: false,
-        rainbowsix: false,
+        valorant: true,
+        leagueoflegends: true,
+        dota2: true,
+        starcraft2: true,
+        rainbowsix: true,
+        counterstrike: true,
     });
 
     // Fetch the most recent API data every time the main page is reloaded
@@ -97,15 +112,22 @@ function MainPageMainArea(props) {
     }, []);
 
     console.log("Upcoming Parties: ", props.upcomingParties);
+    console.log("Dropdown Selection: ", dropdownSelection);
+
+    let filteredParties = [];
+    for (const party of props.upcomingParties) {
+        if (activeGames[party.video_game] && (dropdownSelection == "Any" || dropdownSelection == party.game)) {
+            filteredParties.push(party);
+        }
+    }
 
     return (
         <div className="page-background-theme" style={{minHeight: '100vh'}}>
             {/* if you change returnTo, talk to Ajay. He needs to change something
             in his auth0 account otherwise this will break*/}
             <TopBar button_text="PROFILE" on_click={goToProfile} button_text_2="LOG OUT" on_click_2={() => logout({ returnTo: "http://localhost:3000" })}/>
-            <EventPreviewSection preview_section_title="Events Near You" events={props.upcomingParties}>
-                <OurButton type="button" onClick={getUpcomingEvents}> I want to host! </OurButton>
-                <OurButton type="button" onClick={openModal}> Open modal </OurButton>
+            <EventPreviewSection preview_section_title="Events Near You" events={filteredParties}>
+                <OurButton type="button" onClick={openModal}> I want to host! </OurButton>
 
                 <div className="game-filter-text-and-menu-bar">
                     <div className="main-page-game-text">
@@ -116,33 +138,43 @@ function MainPageMainArea(props) {
                         onClick={() => setActiveGames({...activeGames, valorant: !activeGames.valorant})}>
                             <img src={valorant_icon} className="main-page-filter-game-icon"/>
                         </button>
-                        <button className={"btn btn-main-page-game-icon-filter " + (activeGames.league ? "active" : "")}
-                        onClick={() => setActiveGames({...activeGames, league: !activeGames.league})}>
+                        <button className={"btn btn-main-page-game-icon-filter " + (activeGames.leagueoflegends ? "active" : "")}
+                        onClick={() => setActiveGames({...activeGames, leagueoflegends: !activeGames.leagueoflegends})}>
                             <img src={league_icon} className="main-page-filter-game-icon"/>
                         </button>
-                        <button className={"btn btn-main-page-game-icon-filter " + (activeGames.csgo ? "active" : "")}
-                        onClick={() => setActiveGames({...activeGames, csgo: !activeGames.csgo})}>
-                            <img src={csgo_icon} className="main-page-filter-game-icon"/>
-                        </button>
-                        <button className={"btn btn-main-page-game-icon-filter " + (activeGames.dota ? "active" : "")}
-                        onClick={() => setActiveGames({...activeGames, dota: !activeGames.dota})}>
+                        <button className={"btn btn-main-page-game-icon-filter " + (activeGames.dota2 ? "active" : "")}
+                        onClick={() => setActiveGames({...activeGames, dota2: !activeGames.dota2})}>
                             <img src={dota_icon} className="main-page-filter-game-icon"/>
                         </button>
-                        <button className={"btn btn-main-page-game-icon-filter " + (activeGames.starcraft ? "active" : "")}
-                        onClick={() => setActiveGames({...activeGames, starcraft: !activeGames.starcraft})}>
+                        <button className={"btn btn-main-page-game-icon-filter " + (activeGames.starcraft2 ? "active" : "")}
+                        onClick={() => setActiveGames({...activeGames, starcraft2: !activeGames.starcraft2})}>
                             <img src={starcraft_icon} className="main-page-filter-game-icon"/>
                         </button>
-                        <button className={"btn btn-main-page-game-icon-filter right " + (activeGames.rainbowsix ? "active" : "")}
+                        <button className={"btn btn-main-page-game-icon-filter " + (activeGames.rainbowsix ? "active" : "")}
                         onClick={() => setActiveGames({...activeGames, rainbowsix: !activeGames.rainbowsix})}>
                             <img src={rainbowsix_icon} className="main-page-filter-game-icon"/>
+                        </button>
+                        <button className={"btn btn-main-page-game-icon-filter right " + (activeGames.counterstrike ? "active" : "")}
+                        onClick={() => setActiveGames({...activeGames, counterstrike: !activeGames.counterstrike})}>
+                            <img src={csgo_icon} className="main-page-filter-game-icon"/>
                         </button>
                     </div>
                 </div>
                 <div className="event-filter-dropdown">
-                    <DropdownUsingAPI options={props.cleanedNames} allowOther={true} otherName="Any"/>
+                    <DropdownUsingAPI
+                        options={props.cleanedNames}
+                        allowOther={true}
+                        otherName="Any"
+                        selection={dropdownSelection}
+                        setSelection={setDropdownSelection}
+                    />
                 </div>
             </EventPreviewSection>
-            <Modal isOpen={isModalOpen} setIsOpen={setIsModalOpen}>
+            <Modal
+                isOpen={isModalOpen}
+                setIsOpen={setIsModalOpen}
+                title="Host an Event"
+            >
                 <HostForm/>
             </Modal>
         </div>

@@ -220,7 +220,6 @@ def editEvent(request):
         return HttpResponse("{}, {} is not an existing event in the database".format(clean_params['event_id'], clean_params['event_name']))
     
     e.update(
-        event_id=(clean_params['event_id'] if 'event_id' in params.keys() else e[0].event_id),
         event_name=(clean_params['event_name'] if 'event_name' in params.keys() else e[0].event_name),
         location=(clean_params['location'] if 'location' in params.keys() else e[0].location),
         game=(clean_params['game'] if 'game' in params.keys() else e[0].game),
@@ -246,7 +245,6 @@ def addEvent(request):
         return HttpResponse("{} already exists in the database".format(clean_params['event_id']))
     
     e = Event(
-        event_id=clean_params['event_id'],
         event_name=clean_params['event_name'],
         location=clean_params['location'],
         game=clean_params['game'],

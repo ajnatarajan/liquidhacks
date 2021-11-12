@@ -42,14 +42,14 @@ export const GameIcon = (props) => {
     return Output;
 };
 
-export const EventPic = (props) => {
+export const EventPic = ({ event_pic }) => {
     let Output;
-    switch (props.event_pic) {
+    switch (event_pic) {
         case 'tlvsmad':
-            Output = (<img src={tlvsmad} className="event-pic" alt="tlvsmad pic" />);
+            Output = (<img src={'../img/tlvsmad.jpg'} className="event-pic" alt="tlvsmad pic" />);
             break;
         default:
-            Output = (<img src={tl_background_old} className="event-pic" alt="default pic" />);
+            Output = (<img src={'../img/tl_background_old.jpg'} className="event-pic" alt="default pic" />);
             break;
     }
 

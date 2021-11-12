@@ -1,4 +1,3 @@
-from django.db.models.fields import EmailField
 from django.http import HttpResponse
 from django.shortcuts import render
 from testapp.models import Event, UserEvent, User
@@ -11,9 +10,11 @@ import json
 from datetime import datetime
 import random
 
+
 def index(request):
     r = requests.get('http://httpbin.org/status/418')
     return HttpResponse('<pre>' + r.text + '</pre>')
+
 
 def detail(request, email_address):
     users = User.objects.filter(email_address=email_address)
@@ -22,96 +23,120 @@ def detail(request, email_address):
         names.append(user.first_name + ' ' + user.last_name)
     return HttpResponse("there are {} matching users: {}".format(len(users), ''.join(names)))
 
+
 def all(request):
     users = User.objects.all()
     names = [user.first_name + ' ' + user.last_name for user in users]
     return HttpResponse("List of all users: {}".format(', '.join(names)))
 
+
 def omg(request):
     times = random.randint(1, 1000)
     return HttpResponse("OMG HI! " * times)
 
-@csrf_exempt
-def getUserEvents(request):
+
+def getParams(request):
+    params = dict()
     if request.method == 'GET':
         params = request.GET.dict()
-        if params:
-            user_email = params['email'].strip('"')
-            results = {
-                "user_events": [
-                    ue.event_id for ue in UserEvent.objects.filter(
-                        email_address=user_email
-                    )
-                ]
-            },
-            return HttpResponse(json.dumps(results, indent=4, sort_keys=True, default=str))
-        else:
-            return HttpResponse("There are no user events")
+    elif request.method == 'POST':
+        params = request.POST.dict()
+
+    return params
+
+
+@csrf_exempt
+def getUserEvents(request):
+    params = getParams(request)
+
+    if params:
+        user_email = params['email_address'].strip('"')
+        results = {
+            "user_events": [
+                ue.event_id for ue in UserEvent.objects.filter(
+                    email_address=user_email
+                )
+            ]
+        }
+
+        return HttpResponse(json.dumps(results, indent=4, sort_keys=True, default=str))
+    else:
+        return HttpResponse("There are no user events")
+
 
 @csrf_exempt
 def getPastUserEvents(request):
-    if request.method == 'GET':
-        params = request.GET.dict()
-        if params:
-            user_email = params['email'].strip('"')
-            results = {
-                "past_events": [
-                    pe.event_id for pe in UserEvent.objects.filter(
-                        email_address=user_email,
-                        date_time__lte=datetime.now(),
-                    )
-                ]
-            },
-            return HttpResponse(json.dumps(results, indent=4, sort_keys=True, default=str))
-        else:
-            return HttpResponse("There are no user events")
+    params = getParams(request)
+    
+    if params:
+        user_email = params['email_address'].strip('"')
+        events = [
+            str(e.event_id) for e in UserEvent.objects.filter(
+                email_address=user_email
+            )
+        ]
+        past_events = []
+        for event in events:
+            if Event.objects.filter(event_id=event, date_time__lte=datetime.now()).exists():
+                past_events.append(event)
+        results = {"past_events": past_events}
+        
+        return HttpResponse(json.dumps(results, indent=4, sort_keys=True, default=str))
+    else:
+        return HttpResponse("There are no user events")
+
 
 @csrf_exempt
 def getUpcomingUserEvents(request):
-    if request.method == 'GET':
-        params = request.GET.dict()
-        if params:
-            user_email = params['email'].strip('"')
-            results = {
-                "past_events": [
-                    ue.event_id for ue in UserEvent.objects.filter(
-                        email_address=user_email,
-                        date_time__gt=datetime.now(),
-                    )
-                ]
-            },
-            return HttpResponse(json.dumps(results, indent=4, sort_keys=True, default=str))
-        else:
-            return HttpResponse("There are no user events")
+    params = getParams(request)
+    
+    if params:
+        user_email = params['email_address'].strip('"')
+        events = [
+            str(e.event_id) for e in UserEvent.objects.filter(
+                email_address=user_email
+            )
+        ]
+        upcoming_events = []
+        for event in events:
+            if Event.objects.filter(event_id=event, date_time__gt=datetime.now()).exists():
+                upcoming_events.append(event)
+        results = {"upcoming_events": upcoming_events}
+        
+        return HttpResponse(json.dumps(results, indent=4, sort_keys=True, default=str))
+    else:
+        return HttpResponse("There are no user events")
+
 
 @csrf_exempt
 def getEvent(request):
-    if request.method == 'GET':
-        params = request.GET.dict()
-        if params:
-            event_id = params['event_id'].strip('"')
-            events = Event.objects.filter(event_id=event_id)
-            results = {
-                'event': [{
-                    'event_id': e.event_id,
-                    'event_name': e.event_name,
-                    'location': e.location,
-                    'game': e.game,
-                    'video_game': e.video_game,
-                    'image': e.image,
-                    'num_attendees': e.num_attendees,
-                    'date_time': e.date_time,
-                    'timezone': e.timezone,
-                    'vibes': e.vibes,
-                    'snacks': e.snacks,
-                    'contact_firstname': e.contact_firstname,
-                    'contact_lastname': e.contact_lastname,
-                    'contact_email': e.contact_email
-                } for e in events]
-            }
-            return HttpResponse(json.dumps(results, indent=4, sort_keys=True, default=str))
-        else:
-            return HttpResponse("There are no events")
+    params = getParams(request)
+
+    if params:
+        event_id = params['event_id'].strip('"')
+        events = Event.objects.filter(event_id=event_id)
+        results = {
+            'event': [{
+                'event_id': e.event_id,
+                'event_name': e.event_name,
+                'location': e.location,
+                'game': e.game,
+                'video_game': e.video_game,
+                'image': e.image,
+                'num_attendees': e.num_attendees,
+                'date_time': e.date_time,
+                'timezone': e.timezone,
+                'vibes': e.vibes,
+                'snacks': e.snacks,
+                'contact_firstname': e.contact_firstname,
+                'contact_lastname': e.contact_lastname,
+                'contact_email': e.contact_email
+            } for e in events]
+        }
+        return HttpResponse(json.dumps(results, indent=4, sort_keys=True, default=str))
+    else:
+        return HttpResponse("There are no events")
+
 
 @csrf_exempt
 def getAllEvents(request):
@@ -136,6 +161,7 @@ def getAllEvents(request):
         }
         return HttpResponse(json.dumps(events, indent=4, sort_keys=True, default=str))
 
+
 @csrf_exempt
 def getAllPastEvents(request):
     if request.method == 'GET':
@@ -158,6 +184,7 @@ def getAllPastEvents(request):
             } for e in Event.objects.filter(date_time__lte=datetime.now())]
         }
         return HttpResponse(json.dumps(events, indent=4, sort_keys=True, default=str))
+
 
 @csrf_exempt
 def getAllUpcomingEvents(request):
@@ -182,64 +209,64 @@ def getAllUpcomingEvents(request):
         }
         return HttpResponse(json.dumps(events, indent=4, sort_keys=True, default=str))
 
+
 @csrf_exempt
 def addEvent(request):
-    if request.method == 'GET':
-        params = request.GET.dict()
-        clean_params = {key: params[key].strip('"') for key in params}
-        if Event.objects.filter(event_id=clean_params['event_id']).exists():
-            print("{} already exists in the database".format(clean_params['event_id']))
-        else:
-            e = Event(
-                event_id=clean_params['event_id'],
-                event_name=clean_params['event_name'],
-                location=clean_params['location'],
-                game=clean_params['game'],
-                video_game=clean_params['video_game'],
-                image=clean_params['image'],
-                num_attendees=clean_params['num_attendees'],
-                date_time=clean_params['date_time'],
-                timezone=clean_params['timezone'],
-                vibes=clean_params['vibes'],
-                snacks=clean_params['snacks'],
-                contact_firstname=clean_params['contact_firstname'],
-                contact_lastname=clean_params['contact_lastname'],
-                contact_email=clean_params['contact_email'],
-            )
-            e.save()
-            print('{} was added to the database'.format(e.__str__()))
+    params = getParams(request)
+    clean_params = {key: params[key].strip('"') for key in params}
+    if Event.objects.filter(event_id=clean_params['event_id']).exists():
+        print("{} already exists in the database".format(clean_params['event_id']))
+    else:
+        e = Event(
+            event_id=clean_params['event_id'],
+            event_name=clean_params['event_name'],
+            location=clean_params['location'],
+            game=clean_params['game'],
+            video_game=clean_params['video_game'],
+            image=clean_params['image'],
+            num_attendees=clean_params['num_attendees'],
+            date_time=clean_params['date_time'],
+            timezone=clean_params['timezone'],
+            vibes=clean_params['vibes'],
+            snacks=clean_params['snacks'],
+            contact_firstname=clean_params['contact_firstname'],
+            contact_lastname=clean_params['contact_lastname'],
+            contact_email=clean_params['contact_email'],
+        )
+        e.save()
+        print('{} was added to the database'.format(e.__str__()))
+
 
 @csrf_exempt
 def addUserEvent(request):
-    if request.method == 'GET':
-        params = request.GET.dict()
-        clean_params = {key: params[key].strip('"') for key in params}
-        if UserEvent.objects.filter(email_address=clean_params['email_address']).exists():
-            print("{} already exists in the database".format(clean_params['email_address']))
-        elif not Event.objects.filter(event_id=clean_params['event_id']).exists():
-            print("Cannot add {} because event does not exist!".format(clean_params['event_id']))
-        else:
-            ue = UserEvent(
-                email_address=clean_params['email_address'],
-                event_id=clean_params['event_id'],
-            )
-            ue.save()
-            print('{} was added to the database'.format(ue.__str__()))
+    params = getParams(request)
+    clean_params = {key: params[key].strip('"') for key in params}
+    if UserEvent.objects.filter(email_address=clean_params['email_address']).exists():
+        print("{} already exists in the database".format(clean_params['email_address']))
+    elif not Event.objects.filter(event_id=clean_params['event_id']).exists():
+        print("Cannot add {} because event does not exist!".format(clean_params['event_id']))
+    else:
+        ue = UserEvent(
+            email_address=clean_params['email_address'],
+            event_id=clean_params['event_id'],
+        )
+        ue.save()
+        print('{} was added to the database'.format(ue.__str__()))
+
 
 @csrf_exempt
 def addUser(request):
-    if request.method == 'GET':
-        params = request.GET.dict()
-        clean_params = {key: params[key].strip('"') for key in params}
-        if User.objects.filter(email_address=clean_params['email_address']).exists():
-            print("{} already exists in the database".format(clean_params['email_address']))
-        else:
-            u = User(
-                email_address=clean_params['email_address'],
-                first_name=clean_params['first_name'],
-                last_name=clean_params['last_name'],
-                phone_number=clean_params['phone_number'],
-                is_vaccinated=clean_params['is_vaccinated'],
-            )
-            u.save()
-            print('{} was added to the database'.format(u.__str__()))
+    params = getParams(request)
+    clean_params = {key: params[key].strip('"') for key in params}
+    if User.objects.filter(email_address=clean_params['email_address']).exists():
+        print("{} already exists in the database".format(clean_params['email_address']))
+    else:
+        u = User(
+            email_address=clean_params['email_address'],
+            first_name=clean_params['first_name'],
+            last_name=clean_params['last_name'],
+            phone_number=clean_params['phone_number'],
+            is_vaccinated=clean_params['is_vaccinated'],
+        )
+        u.save()
+        print('{} was added to the database'.format(u.__str__()))

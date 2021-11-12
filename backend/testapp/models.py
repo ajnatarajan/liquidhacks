@@ -9,10 +9,12 @@ from django.contrib.postgres.fields import ArrayField
 from django.core.files.storage import FileSystemStorage
 from django.db import models
 
+import uuid
+
 fs = FileSystemStorage()
 
 class Event(models.Model):
-    event_id = models.UUIDField(primary_key=True)
+    event_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     event_name = models.CharField(max_length=100)
     location = models.CharField(max_length=100)
     game = models.TextField()
@@ -37,15 +39,21 @@ class Event(models.Model):
         db_table = 'event'
     
     def __str__(self):
-        return self.event_name
+        return str(self.event_id)
 
 
 class UserEvent(models.Model):
-    email_address = models.CharField(primary_key=True, max_length=100)
+    email_address = models.ForeignKey('User', on_delete=models.CASCADE)
     event_id = models.ForeignKey("Event", on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'user_event'
+        constraints = [
+            models.UniqueConstraint(
+                fields=['email_address', 'event_id'],
+                name='users can attend an event at most once',
+            )
+        ]
     
     def __str__(self):
         return "{}, <{}>".format(self.event_id, self.email_address)

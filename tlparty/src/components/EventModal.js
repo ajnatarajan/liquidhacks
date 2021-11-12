@@ -1,6 +1,6 @@
 import './EventModal.css';
 import React, { useState } from 'react';
-import { Form, Row, Col } from 'react-bootstrap';
+import { Form, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Formik } from 'formik';
 import OurButton from '../components/OurButton';
@@ -131,6 +131,20 @@ export default function EventModal(props) {
                             </div>
                         </div>
                     </div>
+
+                    <Form.Group className="mb-3 vaccine-container" controlId="vaccinated">
+                        <Form.Check
+                            required
+                            name="vaccinated"
+                            label="I have received 2 doses of the COVID-19 vaccine"
+                            className="host-form-input"
+                            value={values.vaccinated}
+                            onChange={handleChange}
+                            isInvalid={!!errors.vaccinated}
+                            feedback={errors.vaccinated}
+                            feedbackType="invalid"
+                        />
+                    </Form.Group>
 
                     <div className='flexbox'>
                         <Form.Group className="event-text-input">

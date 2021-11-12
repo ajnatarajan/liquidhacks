@@ -13,6 +13,7 @@ urlpatterns = [
     path('getAllEvents/', views.getAllEvents, name='getAllEvents'),
     path('getAllPastEvents/', views.getAllPastEvents, name='getAllPastEvents'),
     path('getAllUpcomingEvents/', views.getAllUpcomingEvents, name='getAllUpcomingEvents'),
+    path('editEvent/', views.editEvent, name='editEvent'),
     path('addEvent/', views.addEvent, name='addEvent'),
     path('addUserEvent/', views.addUserEvent, name='addUserEvent'),
     path('addUser/', views.addUser, name='addUser'),

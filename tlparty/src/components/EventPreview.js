@@ -17,22 +17,22 @@ export const GameIcon = (props) => {
     let Output;
     switch (props.game) {
         case 'League of Legends':
-            Output = (<img src={league_icon} className="event-game-icon"/>);
+            Output = (<img src={league_icon} className="event-game-icon" alt="League of Legends logo" />);
             break;
         case 'Valorant':
-            Output = (<img src={valorant_icon} className="event-game-icon"/>);
+            Output = (<img src={valorant_icon} className="event-game-icon" alt="Valorant logo" />);
             break;
         case 'Dota 2':
-            Output = (<img src={dota_icon} className="event-game-icon"/>);
+            Output = (<img src={dota_icon} className="event-game-icon" alt="Dota 2 logo" />);
             break;
         case 'Starcraft 2':
-            Output = (<img src={starcraft_icon} className="event-game-icon"/>);
+            Output = (<img src={starcraft_icon} className="event-game-icon" alt="Starcraft 2 logo" />);
             break;
         case 'Counter-Strike: Global Offensive':
-            Output = (<img src={csgo_icon} className="event-game-icon"/>);
+            Output = (<img src={csgo_icon} className="event-game-icon" alt="CSGO logo" />);
             break;
         case 'Rainbow Six':
-            Output = (<img src={rainbowsix_icon} className="event-game-icon"/>);
+            Output = (<img src={rainbowsix_icon} className="event-game-icon" alt="Rainbow Six logo" />);
             break;
         default:
             Output = (null);
@@ -46,10 +46,10 @@ export const EventPic = (props) => {
     let Output;
     switch (props.event_pic) {
         case 'tlvsmad':
-            Output = (<img src={tlvsmad} className="event-pic"/>);
+            Output = (<img src={tlvsmad} className="event-pic" alt="tlvsmad pic" />);
             break;
         default:
-            Output = (<img src={tl_background_old} className="event-pic"/>);
+            Output = (<img src={tl_background_old} className="event-pic" alt="default pic" />);
             break;
     }
 
@@ -94,7 +94,7 @@ export default function EventPreview(props) {
                 </div>
                 <div className="box black-opaque-box">
                     <div className="people-box">
-                        <img src={attendee_icon} className="event-game-icon"/>
+                        <img src={attendee_icon} className="event-game-icon" alt="event game icon" />
                         {props.num_attendees}
                     </div>
                     <GameIcon {...props} />

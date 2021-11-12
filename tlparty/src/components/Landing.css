@@ -12,6 +12,9 @@
     position: relative;
     text-align: center;
     color: #FFF;
+    min-height: calc(100vh - 2rem - 2.5vmin - 45px);
+    background-position: center;
+    background-size: cover;
 }
 
 .title-text {

@@ -12,7 +12,7 @@ export default function TopBar(props) {
       <nav className="navbar navbar-expand-lg dark-theme py-3">
         <div className="container-fluid mx-4">
           <a href="/home">
-            <img className="tl_icon" src={tl_icon}/>
+            <img className="tl_icon" src={tl_icon} alt="Team Liquid icon ^_^"/>
           </a>
           <div className="tl_party">TL PARTY</div>
           <div className="top-bar-right-side-buttons">

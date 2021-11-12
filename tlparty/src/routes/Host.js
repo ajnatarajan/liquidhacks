@@ -1,13 +1,8 @@
 import './Host.css';
 import React, { useState } from 'react';
-import { Form, Row, Col, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Formik } from 'formik';
-import * as Yup from 'yup';
 import OurButton from '../components/OurButton';
 import HostForm from '../components/HostForm';
-import TagList from '../components/TagList';
-import DropdownUsingAPI from '../components/DropdownUsingAPI';
 
 export default function Host() {
     const [showForm, setShowForm] = useState(false);

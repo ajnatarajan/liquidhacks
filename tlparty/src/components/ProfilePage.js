@@ -1,31 +1,67 @@
 import './ProfilePage.css'
-import React, {useCallback} from 'react';
+import React, {useCallback, useState, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
 import { useAuth0 } from "@auth0/auth0-react";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import UserInformation from './UserInformation';
 import TopBar from './TopBar';
 import EventPreviewSection from './EventPreviewSection';
 import Landing from './Landing';
 
-export default function ProfilePage(props) {
-    const { logout, user, isAuthenticated } = useAuth0();
+
+async function getUserEventsHelper(eventIds) {
+    const events = []
+    for await (const eventId of eventIds) {
+        const eventParams = {'event_id': eventId}
+        events.push(await fetch('/api/getEvent/',
+        {
+            method: "POST",
+            body: new URLSearchParams(eventParams),
+        }).then(response => response.json())
+        .then(data => {return data['event']}));
+    }
+    return events;
+}
+
+
+async function getPastUserEvents(emailAddress, setPastEvents) {
+    const params = {'email_address': emailAddress};
+    const pastEventIds = await fetch('/api/getPastUserEvents/',
+    {
+        method: "POST",
+        body: new URLSearchParams(params),
+    }).then(response => response.json())
+    .then(data => {return data['past_events']});
+
+    setPastEvents(await getUserEventsHelper(pastEventIds));
+}
+
+
+async function getUpcomingUserEvents(emailAddress, setUpcomingEvents) {
+    const params = {'email_address': emailAddress};
+    const upcomingEventIds = await fetch('/api/getUpcomingUserEvents/',
+    {
+        method: "POST",
+        body: new URLSearchParams(params),
+    }).then(response => response.json())
+    .then(data => {return data['upcoming_events']});
+
+    setUpcomingEvents(await getUserEventsHelper(upcomingEventIds));
+}
+
+
+function MainProfilePage(props) {
     const navigate = useNavigate();
     const goToProfile = useCallback(() => navigate('/profile'), [navigate]);
-    if (!isAuthenticated) {
-        return <Landing />
-    }
-    // user.name contains email_address
-    // need pastEvents and upcomingEvents
-    const pastEvents = [];
-    const upcomingEvents = [];
-    const params = {'email_address': user.name}
-    console.log('params', params);
-    console.log(fetch('/testapp/getPastUserEvents/', {
-        body: new URLSearchParams(params),
-        method: 'post',
-    }));
 
+    const [pastEvents, setPastEvents] = useState([]);
+    const [upcomingEvents, setUpcomingEvents] = useState([]);
+
+    const { user, logout } = props;
+
+    useEffect(() => {
+        getPastUserEvents(user.name, setPastEvents);
+        getUpcomingUserEvents(user.name, setUpcomingEvents);
+    }, [user.name]);
 
     return (
         <div className="page-background-theme" style={{minHeight: '100vh'}}>
@@ -40,10 +76,17 @@ export default function ProfilePage(props) {
                     placeholder_email={user.email}
                     placeholder_phone={props.user_phone}
                 /> */}
-                <h1 style={{color: 'white'}}>Welcome {user.name}</h1>
-                <EventPreviewSection events={pastEvents} preview_section_title="My Upcoming Events"/>
-                <EventPreviewSection events={upcomingEvents} preview_section_title="Past Events"/>
+                <EventPreviewSection events={upcomingEvents} preview_section_title="My Upcoming Events"/>
+                <EventPreviewSection events={pastEvents} preview_section_title="Past Events"/>
             </div>
         </div>
     );
+}
+
+export default function ProfilePage(props) {
+    const { logout, user, isAuthenticated } = useAuth0();
+    if (!isAuthenticated) {
+        return <Landing />
+    }
+    return <MainProfilePage {...props} user={user} logout={logout} />
 }

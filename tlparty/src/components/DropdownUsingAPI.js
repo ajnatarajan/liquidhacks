@@ -1,12 +1,10 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
 import './DropdownUsingAPI.css';
-import { Form, Row, Col, Button } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 
 export default function DropdownUsingAPI(props) {
-    if (props.allowOther && props.options[0] != props.otherName) { // prevent continuous fires of this appending to the front
+    if (props.allowOther && props.options[0] !== props.otherName) { // prevent continuous fires of this appending to the front
         props.options.unshift(props.otherName)
     }
 
@@ -26,8 +24,8 @@ export default function DropdownUsingAPI(props) {
                     }}
                 >
                     {
-                        props.options.map(val => {
-                            return (<option value={val}>{val}</option>)
+                        props.options.map((val, idx) => {
+                            return (<option key={idx} value={val}>{val}</option>)
                         })
                     }
                 </Form.Control>

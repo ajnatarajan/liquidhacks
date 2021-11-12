@@ -16,19 +16,30 @@ import dota_icon from '../img/dota_icon.png';
 import rainbowsix_icon from '../img/rainbowsix_icon.png';
 import starcraft_icon from '../img/starcraft_icon.png';
 import DropdownUsingAPI from './DropdownUsingAPI';
-import EventModal from './EventModal';
 
+function getTodayInProperForm() {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth() + 1;
+    const day = today.getDate();
+    const hour = today.getHours();
+    const minute = today.getMinutes();
+    const second = today.getSeconds();
+
+    const dateString = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
+    return dateString;
+}
 // This is for events from LIQUIPEDIA DB (NOT events that our users make)
 function getUpcomingEvents(upcoming_dictionary, game, setFunction) { // make our Liquipedia DB call here and store it
     const FormData = require('form-data');
-    const fs = require('fs');
     require('dotenv').config();
 
     const formData = new FormData();
+    var date_condition = "[[date::>" + getTodayInProperForm() + "]]";
     formData.append("apikey", process.env.REACT_APP_API_KEY);
     formData.append("wiki", game);
     formData.append("limit", 10);
-    formData.append("conditions", "([[opponent1::Team Liquid]] OR [[opponent2::Team Liquid]]) AND [[date::>2021-11-10 00:00:00]]");
+    formData.append("conditions", "([[opponent1::Team Liquid]] OR [[opponent2::Team Liquid]]) AND " + date_condition);
 
     // axios.post(
     //     'https://gentle-beyond-32691.herokuapp.com/https://api.liquipedia.net/api/v1/match',
@@ -42,17 +53,17 @@ function getUpcomingEvents(upcoming_dictionary, game, setFunction) { // make our
     }).then(response => response.json())
     .then(data => {
         upcoming_dictionary[game] = Array.from(data.result);
-        // console.log(Array.from(data.result), "ARRAY");
         setFunction({...upcoming_dictionary});
     });
 }
 
 function getAllUpcomingParties(setAllUpcomingParties) {
-    fetch('/testapp/getAllEvents/',
+    fetch('/api/getAllEvents/',
     {
         method: "GET"
     }).then(response => response.json())
     .then(data => {
+        data["events"].sort()
         setAllUpcomingParties(data["events"])
     });
 }
@@ -62,15 +73,6 @@ function MainPageMainArea(props) {
         setIsModalOpen(!isModalOpen);
     }
 
-    function toggleActiveGame(e) {
-        console.log(e);
-        switch(e) {
-            case "valorant":
-                setActiveGames({valorant: !activeGames.valorant});
-                break;
-
-        }
-    }
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [dropdownSelection, setDropdownSelection] = useState("Any");
@@ -95,17 +97,17 @@ function MainPageMainArea(props) {
             getUpcomingEvents(upcoming_dictionary, games[i], setUpcomingEvents);
         }
         getAllUpcomingParties(setAllUpcomingParties);
-    }, []);
+    }, [setUpcomingEvents, setAllUpcomingParties]);
 
-    console.log("Upcoming Parties: ", props.upcomingParties);
-    console.log("Dropdown Selection: ", dropdownSelection);
 
     let filteredParties = [];
     for (const party of props.upcomingParties) {
-        if (activeGames[party.video_game] && (dropdownSelection == "Any" || dropdownSelection == party.game)) {
+        if (activeGames[party.video_game] && (dropdownSelection === "Any" || dropdownSelection === party.game)) {
             filteredParties.push(party);
         }
     }
+
+    props.cleanedNames.sort();
 
     return (
         <div className="page-background-theme" style={{minHeight: '100vh'}}>
@@ -122,27 +124,27 @@ function MainPageMainArea(props) {
                     <div className="game-filter-menu-bar">
                         <button className={"btn btn-main-page-game-icon-filter left " + (activeGames.valorant ? "active" : "")}
                         onClick={() => setActiveGames({...activeGames, valorant: !activeGames.valorant})}>
-                            <img src={valorant_icon} className="main-page-filter-game-icon"/>
+                            <img src={valorant_icon} className="main-page-filter-game-icon" alt="Valorant icon" />
                         </button>
                         <button className={"btn btn-main-page-game-icon-filter " + (activeGames.leagueoflegends ? "active" : "")}
                         onClick={() => setActiveGames({...activeGames, leagueoflegends: !activeGames.leagueoflegends})}>
-                            <img src={league_icon} className="main-page-filter-game-icon"/>
+                            <img src={league_icon} className="main-page-filter-game-icon" alt="League icon" />
                         </button>
                         <button className={"btn btn-main-page-game-icon-filter " + (activeGames.dota2 ? "active" : "")}
                         onClick={() => setActiveGames({...activeGames, dota2: !activeGames.dota2})}>
-                            <img src={dota_icon} className="main-page-filter-game-icon"/>
+                            <img src={dota_icon} className="main-page-filter-game-icon" alt="Dota icon" />
                         </button>
                         <button className={"btn btn-main-page-game-icon-filter " + (activeGames.starcraft2 ? "active" : "")}
                         onClick={() => setActiveGames({...activeGames, starcraft2: !activeGames.starcraft2})}>
-                            <img src={starcraft_icon} className="main-page-filter-game-icon"/>
+                            <img src={starcraft_icon} className="main-page-filter-game-icon" alt="Starcraft icon" />
                         </button>
                         <button className={"btn btn-main-page-game-icon-filter " + (activeGames.rainbowsix ? "active" : "")}
                         onClick={() => setActiveGames({...activeGames, rainbowsix: !activeGames.rainbowsix})}>
-                            <img src={rainbowsix_icon} className="main-page-filter-game-icon"/>
+                            <img src={rainbowsix_icon} className="main-page-filter-game-icon" alt="Rainbow six icon" />
                         </button>
                         <button className={"btn btn-main-page-game-icon-filter right " + (activeGames.counterstrike ? "active" : "")}
                         onClick={() => setActiveGames({...activeGames, counterstrike: !activeGames.counterstrike})}>
-                            <img src={csgo_icon} className="main-page-filter-game-icon"/>
+                            <img src={csgo_icon} className="main-page-filter-game-icon" alt="CSGO icon" />
                         </button>
                     </div>
                 </div>
@@ -156,7 +158,11 @@ function MainPageMainArea(props) {
                     />
                 </div>
             </EventPreviewSection>
-            <Modal isOpen={isModalOpen} setIsOpen={setIsModalOpen}>
+            <Modal
+                isOpen={isModalOpen}
+                setIsOpen={setIsModalOpen}
+                title="Host an Event"
+            >
                 <HostForm/>
             </Modal>
         </div>
@@ -187,8 +193,8 @@ export default function MainPage() {
         "starcraft2": "SC2",
         "valorant": "VAL"
     };
-    for (var game_code in upcoming_events) {
-        upcoming_events[game_code].forEach((event, index) => {
+    for (let game_code in upcoming_events) {
+        upcoming_events[game_code].forEach(event => {
             var opp1 = event["opponent1"];
             var opp2 = event["opponent2"];
             var pagename = event["pagename"]

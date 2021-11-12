@@ -1,7 +1,6 @@
 import './Modal.css'
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import OurButton from './OurButton';
 import close_icon from '../img/close_icon.png';
 
 export default function UserInformation(props) {
@@ -17,7 +16,7 @@ export default function UserInformation(props) {
         <div className={"modal-overlay " + (props.isOpen ? "open" : "closed")} onClick={toggleModal}>
             <div className="modal-container" onClick={modalClick}>
                 <div className="modal-title">{props.title}</div>
-                <img className="modal-close" src={close_icon} onClick={toggleModal} />
+                <img className="modal-close" src={close_icon} onClick={toggleModal} alt="Close" />
                 {props.children}
             </div>
         </div>

@@ -1,6 +1,4 @@
 import './EventPreviewSection.css'
-import UserInformation from './UserInformation';
-import TopBar from './TopBar';
 import EventPreview from './EventPreview';
 
 export default function EventPreviewSection(props) {
@@ -25,6 +23,7 @@ export default function EventPreviewSection(props) {
                 {
                     events.map(event => {
                         return (<EventPreview
+                            key={event["event_id"]}
                             title={event["event_name"]}
                             game={dbGameCodeToEnglish[event["video_game"]]}
                             num_attendees={event["num_attendees"]}

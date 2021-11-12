@@ -80,7 +80,7 @@ export default function EventPreview(props) {
     return (
         <div style={{margin: "0 calc(10px + 2vw) 0 0"}}>
             <div className="event-preview-clickable-region" style={{cursor: "pointer"}} onClick={openModal}>
-            <span style={{display: "inline-block", backgroundImage: `url('http://localhost:8000/media/${props.event_pic}'`}} className="square">
+            <span style={{display: "inline-block", backgroundImage: `url('/media/${props.event_pic}'`}} className="square">
                 <div className="event-preview-title-text">
                     {props.title}
                 </div>

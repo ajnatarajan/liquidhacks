@@ -38,7 +38,6 @@ function getUpcomingEvents(upcoming_dictionary, game, setFunction) { // make our
 
     const formData = new FormData();
     var date_condition = "[[date::>" + getTodayInProperForm() + "]]";
-    console.log("TODAY IS: ", date_condition);
     formData.append("apikey", process.env.REACT_APP_API_KEY);
     formData.append("wiki", game);
     formData.append("limit", 10);
@@ -56,7 +55,6 @@ function getUpcomingEvents(upcoming_dictionary, game, setFunction) { // make our
     }).then(response => response.json())
     .then(data => {
         upcoming_dictionary[game] = Array.from(data.result);
-        // console.log(Array.from(data.result), "ARRAY");
         setFunction({...upcoming_dictionary});
     });
 }
@@ -67,6 +65,7 @@ function getAllUpcomingParties(setAllUpcomingParties) {
         method: "GET"
     }).then(response => response.json())
     .then(data => {
+        data["events"].sort()
         setAllUpcomingParties(data["events"])
     });
 }
@@ -111,8 +110,8 @@ function MainPageMainArea(props) {
         getAllUpcomingParties(setAllUpcomingParties);
     }, []);
 
-    console.log("Upcoming Parties: ", props.upcomingParties);
-    console.log("Dropdown Selection: ", dropdownSelection);
+    // console.log("Upcoming Parties: ", props.upcomingParties);
+    // console.log("Dropdown Selection: ", dropdownSelection);
 
     let filteredParties = [];
     for (const party of props.upcomingParties) {
@@ -120,6 +119,8 @@ function MainPageMainArea(props) {
             filteredParties.push(party);
         }
     }
+
+    props.cleanedNames.sort();
 
     return (
         <div className="page-background-theme" style={{minHeight: '100vh'}}>

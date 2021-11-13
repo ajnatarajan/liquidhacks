@@ -40,8 +40,7 @@ urlpatterns = [
     path('addEvent/', views.addEvent, name='addEvent'),
     path('addUserEvent/', views.addUserEvent, name='addUserEvent'),
     path('addUser/', views.addUser, name='addUser'),
-    re_path('.*', TemplateView.as_view(template_name='index.html'))
+    path('', TemplateView.as_view(template_name='index.html'))
 ]
 
 urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-urlpatterns = urlpatterns + static("/react", document_root=os.path.join(BASE_DIR, 'src'))
